@@ -241,18 +241,21 @@ def main():
     linhas = []
     for sv, trechos in legendas.items():
         it = por_v.get(int(sv), {'v': int(sv), 'no': '', 'pa': ''})
-        achados = paises_no_texto(' '.join(trechos))
-        fortes = {p: x for p, x in achados.items() if p not in FRACOS}
-        escolha = fortes or achados
-        if not escolha: continue
-        sug = max(escolha, key=lambda p: escolha[p]['n'])
+        # Brasil não entra: "Bauru"/"Brasil" aparecem porque a faculdade fica aqui, não porque o aluno é brasileiro
+        achados = {p: x for p, x in paises_no_texto(' '.join(trechos)).items() if p not in FRACOS}
+        if not achados: continue
+        ordem = sorted(achados, key=lambda p: -achados[p]['n'])
         atual = [norm(p.strip()) for p in (it.get('pa') or '').split('/') if p.strip()]
-        if norm(sug) in atual: continue
-        trecho = next((t for t in trechos if any(k in norm(t) for k in escolha[sug]['chaves'])), '')
+        novos = [p for p in ordem if norm(p) not in atual]
+        if not novos: continue
+        sug = ' / '.join(ordem) if len(ordem) > 1 else ordem[0]
+        chaves = set().union(*[achados[p]['chaves'] for p in ordem])
+        trecho = next((t for t in trechos if any(k in norm(t) for k in chaves)), '')
         linhas.append({'video': sv, 'nome': it.get('no', ''), 'pais_atual': it.get('pa') or '(vazio)', 'pais_sugerido': sug,
-                       'palavras': ', '.join(sorted(escolha[sug]['chaves'])), 'trecho_da_legenda': trecho[:200]})
+                       'tipo': 'vários países' if len(ordem) > 1 else 'um país',
+                       'palavras': ', '.join(sorted(chaves)), 'trecho_da_legenda': trecho[:200]})
     with open(os.path.join(SAIDA, 'sugestoes-paises.csv'), 'w', newline='', encoding='utf-8-sig') as f:
-        w = csv.DictWriter(f, fieldnames=['video', 'nome', 'pais_atual', 'pais_sugerido', 'palavras', 'trecho_da_legenda'])
+        w = csv.DictWriter(f, fieldnames=['video', 'nome', 'pais_atual', 'pais_sugerido', 'tipo', 'palavras', 'trecho_da_legenda'])
         w.writeheader(); w.writerows(linhas)
 
     print('\nProcessados: %d · já feitos antes: %d · sem arquivo ou com erro: %d' % (feitos, pulados, faltando))
