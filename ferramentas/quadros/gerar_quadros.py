@@ -196,7 +196,9 @@ def main():
     itens = sorted(itens, key=lambda it: (it.get('t') != 'Depoimento', bool((it.get('pa') or '').strip()), it.get('du') or 0))
     if a.limite:
         fal = json.load(open(os.path.join(SAIDA, 'falhas.json'), encoding='utf-8')) if os.path.exists(os.path.join(SAIDA, 'falhas.json')) else {}
-        pend = [it for it in itens if a.refazer or (not os.path.exists(os.path.join(VT, 'quadros', '%d.jpg' % it['v'])) and str(it['v']) not in fal)]
+        leg = json.load(open(os.path.join(SAIDA, 'legendas.json'), encoding='utf-8')) if os.path.exists(os.path.join(SAIDA, 'legendas.json')) else {}
+        # pendente = sem faixa de quadros OU sem legenda lida (um lote interrompido pode deixar só a faixa)
+        pend = [it for it in itens if a.refazer or ((not os.path.exists(os.path.join(VT, 'quadros', '%d.jpg' % it['v'])) or str(it['v']) not in leg) and str(it['v']) not in fal)]
         itens = pend[:a.limite]
 
     os.makedirs(os.path.join(VT, 'quadros'), exist_ok=True); os.makedirs(SAIDA, exist_ok=True)
@@ -259,7 +261,7 @@ def main():
         w.writeheader(); w.writerows(linhas)
 
     print('\nProcessados: %d · já feitos antes: %d · sem arquivo ou com erro: %d' % (feitos, pulados, faltando))
-    print('PENDENTES: %d' % sum(1 for it in cat['items'] if not os.path.exists(os.path.join(VT, 'quadros', '%d.jpg' % it['v'])) and str(it['v']) not in falhas))
+    print('PENDENTES: %d' % sum(1 for it in cat['items'] if (not os.path.exists(os.path.join(VT, 'quadros', '%d.jpg' % it['v'])) or str(it['v']) not in legendas) and str(it['v']) not in falhas))
     print('Sugestões de país: %d (ferramentas/quadros/saida/sugestoes-paises.csv)' % len(linhas))
     print('Próximo passo: node ferramentas/gerar-indice-print.js')
 
