@@ -5,52 +5,107 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Mundo Marketing · UniCPO</title>
 <meta name="robots" content="noindex,nofollow">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap">
 <link rel="stylesheet" href="assets/portal.css">
 <style>
-.hero{background:var(--navy);color:var(--navy-ink)}
-.hero .wrap{padding-block:40px 44px}
-.hero .eyebrow{color:var(--navy-muted)}
-.hero .lead{color:var(--navy-muted)}
-.hero h1{max-width:20ch}
-.quick{display:flex;gap:8px;flex-wrap:wrap;margin-top:20px}
-.quick a{display:inline-flex;align-items:center;gap:8px;text-decoration:none;font-weight:700;font-size:14px;border-radius:10px;padding:10px 14px;background:rgba(255,255,255,.1);color:var(--navy-ink);border:1px solid rgba(255,255,255,.2)}
-.quick a.pri{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
-main{padding-top:36px}
-.home-cols{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:32px;align-items:start}
-@media (max-width:960px){.home-cols{grid-template-columns:minmax(0,1fr)}}
-.grupo + .grupo{margin-top:30px}
-.grupo h2{font-size:18px;margin-bottom:12px}
-.novas{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:18px}
-.novas h2{font-size:18px;margin-bottom:12px}
-.novas .mural{margin-left:4px}
-.novas .post{padding-bottom:16px}
-.novas .post h3{font-size:15px}
+/* Página inicial: busca estilo "comando" no centro + áreas em blocos (bento) */
+.hero{padding-block:84px 40px;text-align:center}
+.hero .eyebrow{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line-2);background:rgba(13,20,34,.7);border-radius:999px;padding:5px 12px 5px 8px;font-size:12px;letter-spacing:.06em}
+.hero .eyebrow i{width:8px;height:8px;border-radius:50%;background:var(--ok);box-shadow:0 0 10px var(--ok)}
+.hero h1{font-size:clamp(38px,6.4vw,76px);max-width:16ch;margin:22px auto 16px}
+.hero .lead{margin:0 auto;text-align:center}
+
+/* paleta de comando */
+.cmd{max-width:680px;margin:38px auto 0;text-align:left;border-radius:18px;padding:1px;
+  background:linear-gradient(180deg,rgba(124,196,255,.45),rgba(61,139,255,.08) 40%,rgba(255,255,255,.06));box-shadow:0 30px 80px -30px var(--glow),0 0 0 1px rgba(0,0,0,.4)}
+.cmd-in{background:linear-gradient(180deg,#111a2b,#0b1220);border-radius:17px;overflow:hidden}
+.cmd form{display:flex;align-items:center;gap:12px;padding:0 18px;border-bottom:1px solid var(--line)}
+.cmd svg{color:var(--muted);flex:none}
+.cmd input{flex:1;min-width:0;border:0;outline:0;background:transparent;color:var(--ink);font:inherit;font-size:17px;padding:19px 0}
+.cmd input::placeholder{color:#5E6B80}
+.cmd-list{padding:8px}
+.cmd-list .lbl{font-size:11.5px;font-weight:600;color:#5E6B80;padding:8px 10px 6px}
+.cmd-row{display:flex;align-items:center;gap:12px;padding:9px 10px;border-radius:10px;text-decoration:none;color:var(--ink);font-size:14.5px}
+.cmd-row:hover,.cmd-row:focus-visible{background:rgba(255,255,255,.05);outline:none}
+.cmd-row .ri{width:28px;height:28px;border-radius:8px;display:grid;place-items:center;flex:none;color:#fff}
+.cmd-row small{margin-left:auto;color:#5E6B80;font-size:12.5px}
+.cmd-foot{display:flex;gap:16px;align-items:center;justify-content:flex-end;padding:10px 16px;border-top:1px solid var(--line);font-size:12px;color:#5E6B80;background:rgba(0,0,0,.15)}
+
+/* bento */
+.bento{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:14px}
+.tile{grid-column:span 4;min-height:220px;overflow:hidden}
+.tile.big{grid-column:span 7;grid-row:span 2;min-height:460px}
+.tile.tall{grid-column:span 5;grid-row:span 2}
+.tile.wide{grid-column:span 8}
+.tile h3{font-size:19px}
+.tile .go{display:inline-flex;align-items:center;gap:6px}
+@media (max-width:960px){.tile,.tile.big,.tile.tall,.tile.wide{grid-column:span 6;grid-row:auto;min-height:200px}}
+@media (max-width:620px){.tile,.tile.big,.tile.tall,.tile.wide{grid-column:span 12}}
+
+/* Videoteca: mosaico de miniaturas reais */
+.mosaic{position:absolute;right:-110px;bottom:-40px;display:grid;grid-template-columns:repeat(4,96px);gap:10px;transform:rotate(-8deg);opacity:.95;
+  -webkit-mask-image:linear-gradient(90deg,transparent 0%,#000 38%);mask-image:linear-gradient(90deg,transparent 0%,#000 38%)}
+@media (max-width:960px){.mosaic{opacity:.25;right:-160px}}
+.mosaic span{width:96px;height:170px;border-radius:12px;background-repeat:no-repeat;border:1px solid rgba(255,255,255,.12);box-shadow:0 10px 30px rgba(0,0,0,.5)}
+.mosaic span:nth-child(4n+2){transform:translateY(-34px)}
+.mosaic span:nth-child(4n+4){transform:translateY(-20px)}
+.tile.big .txt{position:relative;z-index:1;max-width:330px;display:flex;flex-direction:column;gap:10px}
+.stat{display:flex;gap:22px;margin-top:6px}
+.stat b{display:block;font-size:30px;font-weight:700;letter-spacing:-.03em;color:#fff}
+.stat span{font-size:12.5px;color:var(--muted)}
+
+/* professores */
+.faces{display:flex;margin-top:4px}
+.faces img{width:44px;height:44px;border-radius:50%;object-fit:cover;border:2px solid var(--panel);margin-left:-10px;box-shadow:0 4px 14px rgba(0,0,0,.5)}
+.faces img:first-child{margin-left:0}
+
+/* setores */
+.pills{display:flex;flex-wrap:wrap;gap:8px;margin-top:auto}
+.pills a{text-decoration:none;color:var(--ink);font-size:13.5px;font-weight:500;border:1px solid var(--line-2);background:var(--bg-2);border-radius:999px;padding:7px 14px}
+.pills a:hover{border-color:var(--accent)}
+
+/* mural */
+.tile .mural{border-left-color:var(--line);margin-top:6px}
+.tile .post{padding-bottom:14px}
+.tile .post h3{font-size:14.5px}
+
+.sec-title{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:14px}
+.sec-title h2{margin:0}
+.sec-title span{color:#5E6B80;font-size:13.5px}
+.mini-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px}
+.mini-grid .card{flex-direction:row;align-items:flex-start;gap:14px;padding:16px}
+.mini-grid .card .ico{width:36px;height:36px;border-radius:10px}
+.mini-grid .card h3{font-size:15px}
+.mini-grid .card p{font-size:13.5px;margin-top:3px}
 </style>
 </head>
 <body data-root="./" data-page="inicio">
 
-<div class="hero"><div class="wrap">
-  <div class="eyebrow" data-es="Portal del marketing · UniCPO">Portal do marketing · UniCPO</div>
-  <h1 data-es="Todo lo que el marketing ya hizo, en un solo lugar">Tudo que o marketing já fez, num lugar só</h1>
-  <p class="lead" data-es="Videos, guías, marca y materiales para el marketing y para los sectores Comercial, CS, Académico y Recepción.">Vídeos, guias, marca e materiais para o marketing e para os setores Comercial, CS, Acadêmico e Recepção.</p>
-  <div class="quick">
-    <a class="pri" href="videoteca/index.html" data-es="Abrir la Videoteca">Abrir a Videoteca</a>
-    <a href="busca/index.html" data-es="Buscar en el portal">Buscar no portal</a>
-    <a href="setores/index.html" data-es="Para tu sector">Para o seu setor</a>
+<section class="wrap hero">
+  <span class="eyebrow"><i></i><span data-es="Portal interno del marketing · UniCPO">Portal interno do marketing · UniCPO</span></span>
+  <h1 data-es="Todo lo que el marketing ya hizo.">Tudo que o marketing já fez.</h1>
+  <p class="lead" data-es="Videos, guías, marca y materiales para el marketing y para Comercial, CS, Académico y Recepción. En un solo lugar.">Vídeos, guias, marca e materiais para o marketing e para Comercial, CS, Acadêmico e Recepção. Num lugar só.</p>
+
+  <div class="cmd">
+    <div class="cmd-in">
+      <form id="cmdForm" role="search">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        <input id="cmdQ" type="search" autocomplete="off" aria-label="Buscar" placeholder="Buscar vídeos, cursos, professores, dúvidas…" data-es-ph="Buscar videos, cursos, profesores, dudas…">
+        <kbd>/</kbd>
+      </form>
+      <div class="cmd-list" id="cmdList"></div>
+      <div class="cmd-foot"><span><kbd>↵</kbd> <span data-es="buscar">buscar</span></span><span><kbd>/</kbd> <span data-es="enfocar">focar</span></span></div>
+    </div>
   </div>
-</div></div>
+</section>
 
 <main class="wrap">
-  <div class="home-cols">
-    <div id="areas"></div>
-    <aside class="novas">
-      <h2 data-es="Novedades">Novidades</h2>
-      <div id="novas"></div>
-      <a class="lbtn" href="area/index.html?id=mural" data-es="Ver el mural completo →">Ver o mural completo →</a>
-    </aside>
-  </div>
+  <section>
+    <div class="bento" id="bento"></div>
+  </section>
+  <section>
+    <div class="sec-title"><h2 data-es="Todas las áreas">Todas as áreas</h2><span id="nAreas"></span></div>
+    <div class="mini-grid" id="todas"></div>
+  </section>
 </main>
 
 <script src="dados/areas.js"></script>
@@ -59,31 +114,112 @@ main{padding-top:36px}
 <script>
 (function(){
   var el = MM.el, L = MM.L;
-  function areas(){
-    var box = document.getElementById('areas'); box.textContent = '';
-    MM.GRUPOS.forEach(function(g){
-      var rs = MM.REGISTRO.filter(function(r){ return r.grupo === g.id; });
-      if (!rs.length) return;
-      box.appendChild(el('section', {class:'grupo'}, [
-        el('h2', {text:L(g)}),
-        el('div', {class:'grid'}, rs.map(function(r){
-          return el('a', {class:'card', href:MM.hrefArea(r, '')}, [el('h3', {text:L(r.titulo)}), el('p', {text:L(r.descricao)}), el('span', {class:'go', text:(MM_LANG === 'es' ? 'Abrir' : 'Abrir') + ' →'})]);
-        }))
-      ]));
+  var ES = function(){ return window.MM_LANG === 'es'; };
+  var T = function(pt, es){ return ES() ? es : pt; };
+
+  // ícones (traço simples) e cor de cada área
+  var P = {
+    videoteca:'<rect x="3" y="5" width="18" height="14" rx="3"/><path d="m10 9 5 3-5 3z"/>',
+    manual:'<path d="M5 4h10a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3z"/><path d="M9 9h5M9 13h5"/>',
+    kit:'<circle cx="8" cy="9" r="3"/><circle cx="16" cy="9" r="3"/><circle cx="12" cy="16" r="3"/>',
+    tutoriais:'<path d="M4 6h16M4 12h10M4 18h7"/><path d="m16 15 4 3-4 3z"/>',
+    fotos:'<rect x="3" y="5" width="18" height="14" rx="3"/><circle cx="9" cy="10" r="2"/><path d="m21 16-5-5-8 8"/>',
+    mural:'<path d="M5 5h14v10H9l-4 4z"/>',
+    glossario:'<path d="M5 19 9.5 5h1L15 19M6.5 14h7"/><path d="M17 9h3M18.5 7.5v3"/>',
+    cursos:'<path d="m3 9 9-5 9 5-9 5z"/><path d="M7 11v5c0 1 2.5 3 5 3s5-2 5-3v-5"/>',
+    provas:'<path d="M12 3l2.6 5.6 6 .7-4.5 4.1 1.2 6-5.3-3-5.3 3 1.2-6L3.4 9.3l6-.7z"/>',
+    duvidas:'<circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.7.3-1 .9-1 1.7M12 17h.01"/>',
+    'tutoriais-aluno':'<circle cx="12" cy="8" r="3.5"/><path d="M5 20a7 7 0 0 1 14 0"/>',
+    professores:'<circle cx="9" cy="8" r="3"/><path d="M3 20a6 6 0 0 1 12 0"/><circle cx="17" cy="9" r="2.5"/><path d="M15.5 14.5A5 5 0 0 1 21 19"/>',
+    gravacao:'<rect x="3" y="7" width="12" height="10" rx="2"/><path d="m15 11 6-3v8l-6-3z"/>',
+    visitante:'<path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/>'
+  };
+  var COR = {videoteca:'#3D8BFF',manual:'#8B7CFF',kit:'#FF7AB6',tutoriais:'#36C2B4',fotos:'#F59E5B',mural:'#5BC0FF',glossario:'#A78BFA',cursos:'#3D8BFF',provas:'#F4BE4F',duvidas:'#4FD1A5','tutoriais-aluno':'#36C2B4',professores:'#7CC4FF',gravacao:'#FF6B6B',visitante:'#F59E5B'};
+  function ico(id, size){
+    var s = el('span', {class:'ico', style:'background:radial-gradient(circle at 30% 20%,rgba(255,255,255,.35),transparent 50%),linear-gradient(160deg,' + (COR[id]||'#3D8BFF') + ',rgba(10,16,28,.9) 140%);box-shadow:0 8px 24px -10px ' + (COR[id]||'#3D8BFF') + ',inset 0 1px 0 rgba(255,255,255,.3)' + (size ? ';width:' + size + 'px;height:' + size + 'px' : '')});
+    s.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' + (P[id] || P.kit) + '</svg>';
+    return s;
+  }
+  var R = {}; MM.REGISTRO.forEach(function(r){ R[r.id] = r; });
+  var href = function(id){ return MM.hrefArea(R[id], ''); };
+
+  // ---------- paleta de comando ----------
+  var form = document.getElementById('cmdForm'), q = document.getElementById('cmdQ'), list = document.getElementById('cmdList');
+  form.addEventListener('submit', function(e){ e.preventDefault(); var v = q.value.trim(); location.href = 'busca/index.html' + (v ? '?q=' + encodeURIComponent(v) : ''); });
+  document.addEventListener('keydown', function(e){
+    if ((e.key === '/' || (e.key.toLowerCase() === 'k' && (e.metaKey || e.ctrlKey))) && document.activeElement !== q){ e.preventDefault(); q.focus(); }
+  });
+  function cmdList(){
+    list.textContent = '';
+    list.appendChild(el('div', {class:'lbl', text:T('Atalhos', 'Atajos')}));
+    [['videoteca', T('Abrir a Videoteca','Abrir la Videoteca'), '905 ' + T('vídeos','videos')],
+     ['cursos', L(R.cursos.titulo), T('próximas turmas','próximos grupos')],
+     ['duvidas', L(R.duvidas.titulo), T('para o aluno','para el alumno')],
+     ['manual', L(R.manual.titulo), T('checklist','checklist')]].forEach(function(x){
+      var a = el('a', {class:'cmd-row', href:href(x[0])}, [ico(x[0], 28), el('span', {text:x[1]}), el('small', {text:x[2]})]);
+      a.querySelector('.ico').className = 'ri';
+      list.appendChild(a);
     });
   }
+
+  // ---------- bento ----------
   var MURAL = null;
-  function novas(){
-    var box = document.getElementById('novas'); box.textContent = '';
-    if (!MURAL) return;
-    var ult = MURAL.itens.slice().sort(function(a,b){ return String(b.data).localeCompare(String(a.data)); }).slice(0, 4);
-    box.appendChild(el('div', {class:'mural'}, ult.map(function(it){
-      return el('article', {class:'post'}, [el('time', {text:MM.fmtData(it.data)}), el('h3', {}, [el('a', {href:'area/index.html?id=mural#' + it.id, text:L(it.titulo)})])]);
-    })));
+  function card(cls, id, kids){ return el('a', {class:'card tile ' + cls, href:href(id)}, kids); }
+  function bento(){
+    var b = document.getElementById('bento'); b.textContent = '';
+
+    // Videoteca com miniaturas reais (folhas de quadros da própria Videoteca)
+    var mos = el('div', {class:'mosaic', 'aria-hidden':'true'});
+    [[0,0],[0,3],[1,5],[2,2],[3,7],[4,1],[5,4],[6,9],[7,6],[8,2],[9,8],[10,3]].forEach(function(p){
+      var sh = ('0' + p[0]).slice(-2);
+      mos.appendChild(el('span', {style:'background-image:url(videoteca/thumbs/sheet_' + sh + '.jpg);background-size:480px 5112px;background-position:-96px -' + (p[1] * 170.4) + 'px'}));
+    });
+    b.appendChild(card('big', 'videoteca', [mos, el('div', {class:'txt'}, [
+      ico('videoteca'), el('h3', {text:'Videoteca', style:'font-size:26px;letter-spacing:-.02em'}),
+      el('p', {text:T('Depoimentos, aulas, criativos e institucionais, com filtros por curso, país e professor. Baixe na versão de 16 MB e mande no WhatsApp.','Testimonios, clases, creativos e institucionales, con filtros por curso, país y profesor. Descarga la versión de 16 MB y envíala por WhatsApp.')}),
+      el('div', {class:'stat'}, [el('div', null, [el('b', {text:'905'}), el('span', {text:T('vídeos','videos')})]), el('div', null, [el('b', {text:'294'}), el('span', {text:T('depoimentos','testimonios')})]), el('div', null, [el('b', {text:'17'}), el('span', {text:T('países','países')})])]),
+      el('span', {class:'go', text:T('Abrir a Videoteca →','Abrir la Videoteca →')})
+    ])]));
+
+    // Mural (últimas novidades)
+    var mural = el('div', {class:'mural'});
+    if (MURAL) MURAL.itens.slice().sort(function(a,b){ return String(b.data).localeCompare(String(a.data)); }).slice(0,4).forEach(function(it){
+      mural.appendChild(el('article', {class:'post'}, [el('time', {text:MM.fmtData(it.data)}), el('h3', {text:L(it.titulo)})]));
+    });
+    b.appendChild(card('tall', 'mural', [ico('mural'), el('h3', {text:L(R.mural.titulo)}), mural, el('span', {class:'go', text:T('Ver tudo →','Ver todo →')})]));
+
+    // Professores com fotos
+    var faces = el('div', {class:'faces'});
+    ['augusto','eric','claudia','fabricio','vanessa','john','suedam'].forEach(function(f){ faces.appendChild(el('img', {src:'assets/fotos/professores/' + f + '.jpg', alt:'', loading:'lazy'})); });
+    b.appendChild(card('', 'professores', [faces, el('h3', {text:L(R.professores.titulo)}), el('p', {text:L(R.professores.descricao)})]));
+
+    // Cursos
+    b.appendChild(card('', 'cursos', [ico('cursos'), el('h3', {text:L(R.cursos.titulo)}), el('p', {text:T('28 cursos com próximas turmas, coordenador e vídeos.','28 cursos con próximos grupos, coordinador y videos.')})]));
+
+    // Manual
+    b.appendChild(card('', 'manual', [ico('manual'), el('h3', {text:L(R.manual.titulo)}), el('p', {text:L(R.manual.descricao)})]));
+
+    // Setores (bloco largo, não é link único)
+    var pills = el('div', {class:'pills'}, MM.SETORES.map(function(s){ return el('a', {href:'setores/index.html#' + s.id, text:L(s)}); }));
+    b.appendChild(el('div', {class:'card tile wide'}, [el('h3', {text:T('Para o seu setor','Para tu sector')}), el('p', {text:T('Cada setor encontra só o que o marketing preparou para ele.','Cada sector encuentra solo lo que el marketing preparó para él.')}), pills]));
+
+    // Central de dúvidas
+    b.appendChild(card('', 'duvidas', [ico('duvidas'), el('h3', {text:L(R.duvidas.titulo)}), el('p', {text:T('18 perguntas com vídeos de apoio.','18 preguntas con videos de apoyo.')})]));
   }
-  areas();
-  MM.carregar(['dados/mural.js'], function(){ MURAL = MM._area; novas(); });
-  document.addEventListener('mm:lang', function(){ areas(); novas(); });
+
+  // ---------- todas as áreas ----------
+  function todas(){
+    var g = document.getElementById('todas'); g.textContent = '';
+    MM.REGISTRO.forEach(function(r){
+      g.appendChild(el('a', {class:'card', href:MM.hrefArea(r, '')}, [ico(r.id), el('div', null, [el('h3', {text:L(r.titulo)}), el('p', {text:L(r.descricao)})])]));
+    });
+    document.getElementById('nAreas').textContent = MM.REGISTRO.length + ' ' + T('áreas','áreas');
+  }
+
+  function tudo(){ cmdList(); bento(); todas(); }
+  tudo();
+  MM.carregar(['dados/mural.js'], function(){ MURAL = MM._area; bento(); });
+  document.addEventListener('mm:lang', tudo);
 })();
 </script>
 </body>
