@@ -8,6 +8,7 @@
        layout: 'cards' | 'faq' | 'glossario' | 'mural' | 'galeria' | 'perfis' | 'kit',
        titulo, descricao,                 // { pt, es } ou texto
        aviso,                             // texto opcional mostrado no topo
+       botoes: [{rotulo, url, baixar:true}], // botões no topo da área (ex.: "Baixar kit completo")
        filtros: [{campo:'categoria', rotulo:{pt,es}}],
        destaques: [{valor:'294', rotulo:{pt,es}}],   // números no topo (opcional)
        itens: [ ... ],                    // lista fixa
@@ -16,7 +17,7 @@
 
    Campos de um item (todos opcionais, menos titulo):
      id, titulo, resumo, texto (parágrafos separados por linha em branco; linhas com "- " viram lista),
-     categoria, tags[], passos[], campos:[{rotulo, valor}], links:[{rotulo, url}],
+     categoria, tags[], passos[], campos:[{rotulo, valor}], links:[{rotulo, url, baixar}] (baixar:true = botão de download),
      videos:{q:'busca na videoteca', rotulo}, data:'AAAA-MM-DD', imagem, cor:'#hex',
      status: 'exemplo' | 'preencher' | 'confirmar'
    Qualquer texto pode ser { pt:'...', es:'...' } ou só uma string.
@@ -74,8 +75,9 @@
   function linkBtns(links){
     return (links||[]).map(function(l, i){
       var u = safeUrl(l.url); if (!u) return null;
-      var ext = /^https:/.test(u);
-      return el('a', {class:'lbtn' + (i === 0 ? ' pri' : ''), href:u, target:ext ? '_blank' : null, rel:ext ? 'noopener' : null, text:L(l.rotulo) + (ext ? ' ↗' : '')});
+      var ext = /^https:/.test(u), dl = !!l.baixar;
+      return el('a', {class:'lbtn' + (i === 0 ? ' pri' : ''), href:u, download:dl ? (u.split('/').pop() || true) : null,
+        target:ext ? '_blank' : null, rel:ext ? 'noopener' : null, text:(dl ? '↓ ' : '') + L(l.rotulo) + (ext ? ' ↗' : '')});
     });
   }
   function copyBtn(txt){
@@ -208,6 +210,7 @@
         el('h1', {text:L(def.titulo || reg.titulo)}),
         el('p', {class:'lead', text:L(def.descricao || reg.descricao)})
       ]);
+      if (def.botoes && def.botoes.length) h.appendChild(el('div', {class:'acts', style:'margin-top:22px'}, linkBtns(def.botoes)));
       if (def.destaques && def.destaques.length) h.appendChild(el('div', {class:'destaques'}, def.destaques.map(function(d){
         return el('div', {class:'destaque'}, [el('b', {text:L(d.valor)}), el('span', {text:L(d.rotulo)}), d.status ? el('div', null, [statusBadge(d.status)]) : null]);
       })));

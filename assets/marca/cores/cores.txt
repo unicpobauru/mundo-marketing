@@ -1,0 +1,11 @@
+CORES OFICIAIS · UniCPO e FAINTER
+
+UniCPO
+  Verde-água   HEX #8ACBBD · RGB 138 203 190 · CMYK 50 0 32 0 · Pantone P 130-4 C
+  Azul-claro   HEX #34AED6 · RGB 52 174 214 · CMYK 70 10 10 0 · Pantone P 116-5 C
+  Azul-escuro  HEX #057AB4 · RGB 5 122 180 · CMYK 85 43 10 0 · Pantone P 113-8 C
+
+FAINTER
+  Azul-escuro  HEX #002E9C · RGB 0 45 156 · CMYK 100 92 10 3
+  Azul-claro   HEX #66D3FF · RGB 102 211 255 · CMYK 51 1 0 0
+

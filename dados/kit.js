@@ -1,41 +1,63 @@
-/* Kit de marca — cores, fontes, logos e modelos.
-   As cores abaixo foram tiradas dos materiais recentes do marketing (Videoteca, Mapa UniCPO, apresentação para alunos).
-   Estão como "a confirmar" até o marketing validar com o manual oficial da marca.
-   Para colocar um arquivo (logo, template): salve em assets/marca/ e use links:[{rotulo, url:'../assets/marca/arquivo.png'}]. */
+/* Kit de marca — cores oficiais, fontes, logos e a base de PowerPoint, com download.
+   Cores: anotadas pelo marketing em 25/11/2026. Os arquivos para download (paletas, .ase, zips)
+   são gerados por ferramentas/marca/gerar_kit.py — se mudar uma cor, mude lá também e rode o script.
+   Logos: salve em assets/marca/logos/ e troque o status do item por links de download.
+   PowerPoint: salve em assets/marca/apresentacao/ e faça o mesmo. */
+var M = '../assets/marca/';
+var UNI = {pt:'Cores UniCPO', es:'Colores UniCPO'}, FAI = {pt:'Cores FAINTER', es:'Colores FAINTER'};
+var FON = {pt:'Fontes', es:'Tipografías'}, LOG = 'Logos', MOD = {pt:'Modelos', es:'Plantillas'};
+function cor(id, cat, titulo, hex, rgb, cmyk, pantone, uso, paleta, extra){
+  return Object.assign({id:id, categoria:cat, titulo:titulo, cor:hex, resumo:uso,
+    campos:[{rotulo:'HEX', valor:hex}, {rotulo:'RGB', valor:rgb}, {rotulo:'CMYK', valor:cmyk}, {rotulo:'Pantone', valor:pantone}],
+    links:[{rotulo:{pt:'Paleta da marca (PNG)', es:'Paleta de la marca (PNG)'}, url:M + 'cores/' + paleta, baixar:true},
+           {rotulo:{pt:'Todas as cores (.zip)', es:'Todos los colores (.zip)'}, url:M + 'downloads/cores-oficiais.zip', baixar:true}]}, extra || {});
+}
+var CONFERIR = function(txt){ return {status:'confirmar', texto:txt}; };
 MM.area({
   id:'kit', layout:'kit',
-  aviso:{pt:'As cores e fontes abaixo são as usadas nos materiais recentes. Confirmar com o manual oficial da marca antes de usar em peças novas.', es:'Los colores y tipografías de abajo son los usados en los materiales recientes. Confirmar con el manual oficial de la marca antes de usarlos en piezas nuevas.'},
+  botoes:[
+    {rotulo:{pt:'Baixar kit completo', es:'Descargar kit completo'}, url:M + 'downloads/kit-de-marca-completo.zip', baixar:true},
+    {rotulo:{pt:'Cores (.ase, PNG, TXT)', es:'Colores (.ase, PNG, TXT)'}, url:M + 'downloads/cores-oficiais.zip', baixar:true},
+    {rotulo:{pt:'Fonte Montserrat', es:'Tipografía Montserrat'}, url:M + 'downloads/fonte-montserrat.zip', baixar:true},
+    {rotulo:{pt:'Fonte Inter', es:'Tipografía Inter'}, url:M + 'downloads/fonte-inter.zip', baixar:true}
+  ],
   filtros:[{campo:'categoria', rotulo:{pt:'Tipo', es:'Tipo'}}],
   itens:[
-    {id:'azul-marinho', categoria:{pt:'Cores',es:'Colores'}, titulo:{pt:'Azul-marinho UniCPO',es:'Azul marino UniCPO'}, cor:'#0B2A4A', status:'confirmar',
-     resumo:{pt:'Fundo principal de capas, cabeçalhos e telas escuras.',es:'Fondo principal de portadas, encabezados y pantallas oscuras.'}},
-    {id:'azul-medio', categoria:{pt:'Cores',es:'Colores'}, titulo:{pt:'Azul de apoio',es:'Azul de apoyo'}, cor:'#12406E', status:'confirmar',
-     resumo:{pt:'Caixas e destaques sobre o azul-marinho.',es:'Cajas y destacados sobre el azul marino.'}},
-    {id:'azul-destaque', categoria:{pt:'Cores',es:'Colores'}, titulo:{pt:'Azul de destaque',es:'Azul de destaque'}, cor:'#1D6FD6', status:'confirmar',
-     resumo:{pt:'Títulos pequenos, links e detalhes em fundo claro.',es:'Títulos pequeños, enlaces y detalles sobre fondo claro.'}},
-    {id:'azul-claro', categoria:{pt:'Cores',es:'Colores'}, titulo:{pt:'Azul-claro',es:'Azul claro'}, cor:'#7CC4FF', status:'confirmar',
-     resumo:{pt:'Destaques sobre fundo escuro.',es:'Destacados sobre fondo oscuro.'}},
-    {id:'branco-gelo', categoria:{pt:'Cores',es:'Colores'}, titulo:{pt:'Branco-gelo',es:'Blanco hielo'}, cor:'#F4F7FA', status:'confirmar',
-     resumo:{pt:'Fundo claro de páginas e slides.',es:'Fondo claro de páginas y diapositivas.'}},
-    {id:'fonte-jakarta', categoria:{pt:'Fontes',es:'Tipografías'}, titulo:'Plus Jakarta Sans', status:'confirmar',
-     resumo:{pt:'Fonte dos textos nos materiais recentes. Gratuita no Google Fonts.',es:'Tipografía de los textos en los materiales recientes. Gratuita en Google Fonts.'},
-     links:[{rotulo:{pt:'Ver no Google Fonts',es:'Ver en Google Fonts'}, url:'https://fonts.google.com/specimen/Plus+Jakarta+Sans'}]},
-    {id:'fonte-sora', categoria:{pt:'Fontes',es:'Tipografías'}, titulo:'Sora', status:'confirmar',
-     resumo:{pt:'Fonte dos títulos da Videoteca e deste portal. Gratuita no Google Fonts.',es:'Tipografía de los títulos de la Videoteca y de este portal. Gratuita en Google Fonts.'},
-     links:[{rotulo:{pt:'Ver no Google Fonts',es:'Ver en Google Fonts'}, url:'https://fonts.google.com/specimen/Sora'}]},
-    {id:'logo-unicpo', categoria:'Logos', titulo:{pt:'Logo UniCPO',es:'Logo UniCPO'}, status:'preencher',
-     resumo:{pt:'Versões colorida, branca e preta, em PNG e SVG.',es:'Versiones a color, blanca y negra, en PNG y SVG.'}},
-    {id:'logo-clinica', categoria:'Logos', titulo:{pt:'Logo Clínica UniCPO',es:'Logo Clínica UniCPO'}, status:'preencher',
-     resumo:{pt:'Versões colorida, branca e preta, em PNG e SVG.',es:'Versiones a color, blanca y negra, en PNG y SVG.'}},
-    {id:'logo-fainter', categoria:'Logos', titulo:{pt:'Logo FAINTER',es:'Logo FAINTER'}, status:'preencher',
-     resumo:{pt:'Versões colorida, branca e preta, em PNG e SVG.',es:'Versiones a color, blanca y negra, en PNG y SVG.'}},
-    {id:'canva-posts', categoria:{pt:'Modelos',es:'Plantillas'}, titulo:{pt:'Templates do Canva: posts e stories',es:'Plantillas de Canva: posts e historias'}, status:'preencher',
-     resumo:{pt:'Link para a pasta de templates editáveis.',es:'Enlace a la carpeta de plantillas editables.'}},
-    {id:'canva-comunicados', categoria:{pt:'Modelos',es:'Plantillas'}, titulo:{pt:'Modelos de comunicado',es:'Modelos de comunicado'}, status:'preencher',
-     resumo:{pt:'Aviso de aula, mudança de data, lembrete de pagamento.',es:'Aviso de clase, cambio de fecha, recordatorio de pago.'}},
-    {id:'assinatura-email', categoria:{pt:'Modelos',es:'Plantillas'}, titulo:{pt:'Assinatura de e-mail',es:'Firma de e-mail'}, status:'preencher',
-     resumo:{pt:'Modelo único para todos os setores.',es:'Modelo único para todos los sectores.'}},
-    {id:'fundo-reuniao', categoria:{pt:'Modelos',es:'Plantillas'}, titulo:{pt:'Fundo para Zoom e Meet',es:'Fondo para Zoom y Meet'}, status:'preencher',
-     resumo:{pt:'Imagem 1920×1080 com a marca.',es:'Imagen 1920×1080 con la marca.'}}
+    cor('unicpo-verde-agua', UNI, {pt:'Verde-água', es:'Verde agua'}, '#8ACBBD', '138 203 190', '50 0 32 0', 'P 130-4 C',
+        {pt:'Cor de apoio da UniCPO.', es:'Color de apoyo de UniCPO.'}, 'paleta-unicpo.png',
+        CONFERIR({pt:'Conferir: o RGB anotado (138 203 190) dá #8ACBBE, e o HEX anotado é #8ACBBD. A diferença é invisível, mas vale confirmar qual está no manual.', es:'Verificar: el RGB anotado (138 203 190) da #8ACBBE, y el HEX anotado es #8ACBBD. La diferencia es invisible, pero conviene confirmar cuál está en el manual.'})),
+    cor('unicpo-azul-claro', UNI, {pt:'Azul-claro', es:'Azul claro'}, '#34AED6', '52 174 214', '70 10 10 0', 'P 116-5 C',
+        {pt:'Azul-claro da UniCPO.', es:'Azul claro de UniCPO.'}, 'paleta-unicpo.png'),
+    cor('unicpo-azul-escuro', UNI, {pt:'Azul-escuro', es:'Azul oscuro'}, '#057AB4', '5 122 180', '85 43 10 0', 'P 113-8 C',
+        {pt:'Azul principal da UniCPO.', es:'Azul principal de UniCPO.'}, 'paleta-unicpo.png'),
+    cor('fainter-azul-escuro', FAI, {pt:'Azul-escuro', es:'Azul oscuro'}, '#002E9C', '0 45 156', '100 92 10 3', '',
+        {pt:'Azul principal da FAINTER.', es:'Azul principal de FAINTER.'}, 'paleta-fainter.png',
+        CONFERIR({pt:'Conferir: o RGB anotado (0 45 156) dá #002D9C, e o HEX anotado é #002E9C. A diferença é invisível, mas vale confirmar qual está no manual.', es:'Verificar: el RGB anotado (0 45 156) da #002D9C, y el HEX anotado es #002E9C. La diferencia es invisible, pero conviene confirmar cuál está en el manual.'})),
+    cor('fainter-azul-claro', FAI, {pt:'Azul-claro', es:'Azul claro'}, '#66D3FF', '102 211 255', '51 1 0 0', '',
+        {pt:'Azul-claro da FAINTER.', es:'Azul claro de FAINTER.'}, 'paleta-fainter.png'),
+
+    {id:'fonte-montserrat', categoria:FON, titulo:'Montserrat', status:'confirmar',
+     resumo:{pt:'Fonte da UniCPO. Pesos do manual: Black, Bold, Regular e Light.', es:'Tipografía de UniCPO. Pesos del manual: Black, Bold, Regular y Light.'},
+     texto:{pt:'Gratuita (licença SIL Open Font). Baixe, abra cada arquivo .ttf e clique em Instalar.\n\nConfirmar: a página do manual com a Montserrat é da UniCPO.', es:'Gratuita (licencia SIL Open Font). Descarga, abre cada archivo .ttf y haz clic en Instalar.\n\nConfirmar: la página del manual con la Montserrat es de UniCPO.'},
+     links:[{rotulo:{pt:'Baixar Montserrat (.zip)', es:'Descargar Montserrat (.zip)'}, url:M + 'downloads/fonte-montserrat.zip', baixar:true},
+            {rotulo:{pt:'Ver no Google Fonts', es:'Ver en Google Fonts'}, url:'https://fonts.google.com/specimen/Montserrat'}]},
+    {id:'fonte-inter', categoria:FON, titulo:'Inter', status:'confirmar',
+     resumo:{pt:'Fonte da FAINTER. Títulos e destaques em Extra Bold; demais textos em Regular.', es:'Tipografía de FAINTER. Títulos y destacados en Extra Bold; demás textos en Regular.'},
+     texto:{pt:'Gratuita (licença SIL Open Font). O pacote traz Regular, Medium, Semi Bold, Bold, Extra Bold e Black. Também é a fonte deste portal.\n\nConfirmar: a página do manual com a Inter é da FAINTER.', es:'Gratuita (licencia SIL Open Font). El paquete trae Regular, Medium, Semi Bold, Bold, Extra Bold y Black. También es la tipografía de este portal.\n\nConfirmar: la página del manual con la Inter es de FAINTER.'},
+     links:[{rotulo:{pt:'Baixar Inter (.zip)', es:'Descargar Inter (.zip)'}, url:M + 'downloads/fonte-inter.zip', baixar:true},
+            {rotulo:{pt:'Ver no Google Fonts', es:'Ver en Google Fonts'}, url:'https://fonts.google.com/specimen/Inter'}]},
+    {id:'fonte-logo-fainter', categoria:FON, titulo:{pt:'Letreiro FAINTER (personalizado)', es:'Logotipo FAINTER (personalizado)'},
+     resumo:{pt:'Letras ajustadas à mão, só para o logo. Não é uma fonte para baixar nem para escrever textos.', es:'Letras ajustadas a mano, solo para el logo. No es una tipografía para descargar ni para escribir textos.'},
+     texto:{pt:'No manual, o letreiro FAINTER parte de uma fonte sem serifa em caixa alta, com espaçamento e espessura personalizados e a circunferência completando o A e o E. Use sempre o arquivo do logo.', es:'En el manual, el logotipo FAINTER parte de una tipografía sin serifa en mayúsculas, con espaciado y grosor personalizados y la circunferencia completando la A y la E. Usa siempre el archivo del logo.'}},
+
+    {id:'logo-unicpo', categoria:LOG, titulo:{pt:'Logo UniCPO', es:'Logo UniCPO'}, status:'preencher',
+     resumo:{pt:'Versões colorida, branca e preta, em PNG e SVG.', es:'Versiones a color, blanca y negra, en PNG y SVG.'}},
+    {id:'logo-clinica', categoria:LOG, titulo:{pt:'Logo Clínica UniCPO', es:'Logo Clínica UniCPO'}, status:'preencher',
+     resumo:{pt:'Versões colorida, branca e preta, em PNG e SVG.', es:'Versiones a color, blanca y negra, en PNG y SVG.'}},
+    {id:'logo-fainter', categoria:LOG, titulo:{pt:'Logo FAINTER', es:'Logo FAINTER'}, status:'preencher',
+     resumo:{pt:'Versões colorida, branca e preta, em PNG e SVG.', es:'Versiones a color, blanca y negra, en PNG y SVG.'}},
+
+    {id:'base-powerpoint', categoria:MOD, titulo:{pt:'Base de PowerPoint', es:'Base de PowerPoint'}, status:'preencher',
+     resumo:{pt:'Modelo de apresentação oficial. Aguardando o arquivo do marketing.', es:'Plantilla de presentación oficial. Esperando el archivo del marketing.'}}
   ]
 });

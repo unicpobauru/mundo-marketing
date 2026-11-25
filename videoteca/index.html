@@ -193,34 +193,34 @@ h3.sec{font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:var(--
 /* Mundo Marketing: visual do portal (inspirado no Raycast) aplicado à Videoteca */
 :root:not(#mm){
   --bg:#05080F; --panel:#0D1422; --ink:#F1F4F9; --muted:#8C99AE; --line:#1C2638; --soft:#121B2C;
-  --accent:#3D8BFF; --accent-ink:#ffffff; --accent-soft:rgba(61,139,255,.16); --navy:#05080F;
-  --ok:#4FD1A5; --warn:#F4BE4F; --bad:#FF8A5B; --hq:#7CC4FF; --mq:#A3ADB8; --lq:#F4BE4F;
+  --accent:#057AB4; --accent-ink:#ffffff; --accent-soft:rgba(52,174,214,.16); --navy:#05080F;
+  --ok:#8ACBBD; --warn:#F4BE4F; --bad:#FF8A5B; --hq:#66D3FF; --mq:#A3ADB8; --lq:#F4BE4F;
   --shadow:inset 0 1px 0 rgba(255,255,255,.04),0 20px 50px -24px rgba(0,0,0,.8);
   --f-display:"Inter",system-ui,sans-serif; --f-body:"Inter",system-ui,sans-serif; --f-mono:"JetBrains Mono",ui-monospace,monospace;
   color-scheme:dark;
 }
-body{background:radial-gradient(60% 420px at 50% -60px,rgba(61,139,255,.22),transparent 70%) no-repeat,var(--bg);-webkit-font-smoothing:antialiased}
+body{background:radial-gradient(60% 420px at 50% -60px,rgba(52,174,214,.22),transparent 70%) no-repeat,var(--bg);-webkit-font-smoothing:antialiased}
 body::before{background:var(--bg)}
 .top{background:rgba(5,8,15,.75);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border-bottom:1px solid rgba(255,255,255,.06)}
 .brand{font-weight:700;letter-spacing:-.02em}
 .brand small{color:var(--muted)}
 .search{background:var(--panel);border-color:var(--line)}
-.search:focus-within{border-color:rgba(61,139,255,.6);box-shadow:0 0 0 4px rgba(61,139,255,.15)}
+.search:focus-within{border-color:rgba(52,174,214,.6);box-shadow:0 0 0 4px rgba(52,174,214,.15)}
 .search input::placeholder{color:#5E6B80}
-.tbtn{background:linear-gradient(180deg,#5a9dff,#3D8BFF);color:#fff;box-shadow:0 8px 24px -10px rgba(61,139,255,.6),inset 0 1px 0 rgba(255,255,255,.25)}
+.tbtn{background:linear-gradient(180deg,#34AED6,#34AED6);color:#fff;box-shadow:0 8px 24px -10px rgba(52,174,214,.6),inset 0 1px 0 rgba(255,255,255,.25)}
 .tbtn.ghost{background:var(--panel);border-color:var(--line);box-shadow:none}
 .card,aside.filters,.drawer,.tray{background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(255,255,255,0)) ,var(--panel)}
 .card:hover{border-color:#2A3850}
 .tag.tipo{background:#1C2638;color:var(--ink)}
 .chip{background:var(--soft);border-color:var(--line);color:var(--muted)}
-.chip[aria-pressed="true"]{color:#fff;box-shadow:0 0 18px -4px rgba(61,139,255,.6)}
+.chip[aria-pressed="true"]{color:#fff;box-shadow:0 0 18px -4px rgba(52,174,214,.6)}
 .btn{background:var(--soft);border-color:#2A3850;color:var(--ink)}
-.btn.pri{background:linear-gradient(180deg,#5a9dff,#3D8BFF);border-color:transparent;color:#fff}
+.btn.pri{background:linear-gradient(180deg,#34AED6,#34AED6);border-color:transparent;color:#fff}
 .player{background:#03060B;border:1px solid var(--line)}
 .vlang button[aria-pressed="true"]{background:var(--soft);color:var(--ink)}
 /* busca por print */
 .pdrop{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;text-align:center;border:1.5px dashed #2A3850;border-radius:14px;padding:22px 16px;cursor:pointer;background:rgba(255,255,255,.02);transition:border-color .15s,background .15s}
-.pdrop:hover,.pdrop.sobre{border-color:var(--accent);background:rgba(61,139,255,.08)}
+.pdrop:hover,.pdrop.sobre{border-color:var(--accent);background:rgba(52,174,214,.08)}
 .pdrop b{font-size:14px}
 .pdrop small{color:var(--muted);font-size:12.5px;max-width:42ch}
 .pdrop img{max-height:150px;border-radius:10px;border:1px solid var(--line)}
@@ -230,8 +230,8 @@ body::before{background:var(--bg)}
 .titem.pres:hover{border-color:var(--accent)}
 .titem .tn,.titem .tf{display:block}
 .sim{display:inline-block;margin-top:5px;font-size:11px;font-weight:600;border-radius:999px;padding:1px 8px}
-.sim.muito{background:rgba(79,209,165,.15);color:#4FD1A5}
-.sim.parecido{background:rgba(61,139,255,.16);color:#7CC4FF}
+.sim.muito{background:rgba(79,209,165,.15);color:#8ACBBD}
+.sim.parecido{background:rgba(52,174,214,.16);color:#66D3FF}
 .sim.pouco{background:rgba(255,255,255,.06);color:var(--muted)}
 </style>
 <header class="top">

@@ -40,7 +40,7 @@ MM.REGISTRO = [
    descricao:{pt:'Princípios, tipos de criativo, temas, CTAs e checklist antes de gravar.', es:'Principios, tipos de creativo, temas, CTAs y checklist antes de grabar.'}},
   {id:'kit', grupo:'base', setores:['marketing','comercial','cs','academico','recepcao'],
    titulo:{pt:'Kit de marca', es:'Kit de marca'},
-   descricao:{pt:'Cores, fontes, logos e templates para usar a marca do jeito certo.', es:'Colores, tipografías, logos y plantillas para usar la marca correctamente.'}},
+   descricao:{pt:'Cores oficiais, fontes, logos e a base de PowerPoint da UniCPO e da FAINTER, com download.', es:'Colores oficiales, tipografías, logos y la base de PowerPoint de UniCPO y FAINTER, con descarga.'}},
   {id:'tutoriais', grupo:'base', setores:['marketing','comercial','cs','academico','recepcao'],
    titulo:{pt:'Tutoriais', es:'Tutoriales'},
    descricao:{pt:'Passo a passo das ferramentas do marketing.', es:'Paso a paso de las herramientas del marketing.'}},
