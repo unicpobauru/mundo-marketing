@@ -67,6 +67,9 @@ select.fsel{width:100%;border:1px solid var(--line);background:var(--soft);borde
 .qbtn[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft)}
 .resetall{border:1px dashed var(--line);background:transparent;border-radius:10px;padding:9px;font-weight:600;color:var(--muted)}
 .mobile-filters{display:none}
+.vlang{display:inline-flex;border:1px solid rgba(255,255,255,.25);border-radius:10px;overflow:hidden}
+.vlang button{border:0;background:transparent;color:#fff;font-size:12.5px;font-weight:700;padding:9px 10px;letter-spacing:.04em}
+.vlang button[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink)}
 main{min-width:0;display:flex;flex-direction:column;gap:12px}
 .bar{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
 .bar h1{font-family:var(--f-display);font-size:20px;margin:0;letter-spacing:-.01em;text-wrap:balance}
@@ -190,12 +193,13 @@ h3.sec{font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:var(--
     <a class="brand" href="../" style="color:inherit;text-decoration:none" title="Voltar ao Mundo Marketing">Videoteca UniCPO<small>← Mundo Marketing</small></a>
     <label class="search" for="q">
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
-      <input id="q" type="search" placeholder="Buscar por aluno, professor, país, tema… ex.: medo Equador implantes" autocomplete="off">
+      <input id="q" type="search" placeholder="Buscar por aluno, professor, país, tema… ex.: medo Equador implantes" data-es-ph="Buscar por alumno, profesor, país, tema… ej.: miedo Ecuador implantes" autocomplete="off">
     </label>
-    <button class="tbtn ghost mobile-filters" id="openFilters" type="button">Filtros <span class="count" id="nFilters">0</span></button>
+    <button class="tbtn ghost mobile-filters" id="openFilters" type="button"><span data-es="Filtros">Filtros</span> <span class="count" id="nFilters">0</span></button>
     <button class="tbtn ghost" id="openSug" type="button">Sugestões</button>
-    <button class="tbtn ghost" id="openTools" type="button">+ Ferramentas do marketing</button>
-    <button class="tbtn" id="openTray" type="button">Carrinho de vídeos <span class="count" id="nTray">0</span></button>
+    <button class="tbtn ghost" id="openTools" type="button" data-es="+ Herramientas del marketing">+ Ferramentas do marketing</button>
+    <div class="vlang" role="group" aria-label="Idioma"><button type="button" data-lang="pt">PT</button><button type="button" data-lang="es">ES</button></div>
+    <button class="tbtn" id="openTray" type="button"><span data-es="Carrito de videos">Carrinho de vídeos</span> <span class="count" id="nTray">0</span></button>
   </div>
 </header>
 
@@ -206,20 +210,20 @@ h3.sec{font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:var(--
       <h1 id="resTitle">Vídeos</h1>
       <span class="meta" id="resMeta"></span>
       <span class="sp"></span>
-      <label for="sort" class="meta">Ordenar</label>
+      <label for="sort" class="meta" data-es="Ordenar">Ordenar</label>
       <select id="sort" class="fsel" style="width:auto">
-        <option value="rel">Mais relevantes</option>
-        <option value="baixados">Mais baixados</option>
-        <option value="novo">Mais recentes</option>
-        <option value="velho">Mais antigos</option>
-        <option value="curto">Mais curtos</option>
-        <option value="longo">Mais longos</option>
-        <option value="nome">Nome (A–Z)</option>
+        <option value="rel" data-es="Más relevantes">Mais relevantes</option>
+        <option value="baixados" data-es="Más descargados">Mais baixados</option>
+        <option value="novo" data-es="Más recientes">Mais recentes</option>
+        <option value="velho" data-es="Más antiguos">Mais antigos</option>
+        <option value="curto" data-es="Más cortos">Mais curtos</option>
+        <option value="longo" data-es="Más largos">Mais longos</option>
+        <option value="nome" data-es="Nombre (A–Z)">Nome (A–Z)</option>
       </select>
     </div>
     <div class="active" id="active"></div>
     <div class="list" id="list"></div>
-    <div class="more"><button class="btn" id="more" type="button" hidden>Mostrar mais</button></div>
+    <div class="more"><button class="btn" id="more" type="button" hidden data-es="Mostrar más">Mostrar mais</button></div>
   </main>
 </div>
 
@@ -248,19 +252,19 @@ h3.sec{font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:var(--
   <div class="tlist" id="sugList"><div class="empty">Carregando sugestões…</div></div>
 </section>
 <section class="tray" id="tools" hidden aria-modal="true" role="dialog" aria-labelledby="toTitle">
-  <div class="dhead"><h2 id="toTitle">Ferramentas do marketing</h2><button class="x" data-close aria-label="Fechar">×</button></div>
-  <p class="note" style="margin:0">Links úteis para mandar aos alunos e interessados. Cada um abre em outra aba.</p>
+  <div class="dhead"><h2 id="toTitle" data-es="Herramientas del marketing">Ferramentas do marketing</h2><button class="x" data-close aria-label="Fechar">×</button></div>
+  <p class="note" style="margin:0" data-es="Enlaces útiles para enviar a alumnos e interesados. Cada uno se abre en otra pestaña.">Links úteis para mandar aos alunos e interessados. Cada um abre em outra aba.</p>
   <div class="links">
     <a class="lcard" href="https://unicpobauru.github.io/mapa-unicpo/" target="_blank" rel="noopener">
       <span class="lico" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg></span>
-      <span class="ltx"><b>Mapa UniCPO</b><small>Tudo perto da UniCPO em Bauru: onde comer, ficar e como chegar</small><code>unicpobauru.github.io/mapa-unicpo</code></span>
+      <span class="ltx"><b>Mapa UniCPO</b><small data-es="Todo cerca de UniCPO en Bauru: dónde comer, alojarse y cómo llegar">Tudo perto da UniCPO em Bauru: onde comer, ficar e como chegar</small><code>unicpobauru.github.io/mapa-unicpo</code></span>
       <span class="lgo" aria-hidden="true">↗</span></a>
     <a class="lcard" href="https://tour.panoee.net/tourclinicaunicpo" target="_blank" rel="noopener">
       <span class="lico" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3 3 8l9 5 9-5-9-5z"/><path d="M3 8v8l9 5 9-5V8"/><path d="M12 13v8"/></svg></span>
-      <span class="ltx"><b>Tour 3D da clínica</b><small>Passeio virtual em 360° pelas clínicas da UniCPO</small><code>tour.panoee.net/tourclinicaunicpo</code></span>
+      <span class="ltx"><b data-es="Tour 3D de la clínica">Tour 3D da clínica</b><small data-es="Recorrido virtual en 360° por las clínicas de UniCPO">Passeio virtual em 360° pelas clínicas da UniCPO</small><code>tour.panoee.net/tourclinicaunicpo</code></span>
       <span class="lgo" aria-hidden="true">↗</span></a>
   </div>
-  <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn" data-copylink="https://unicpobauru.github.io/mapa-unicpo/">Copiar link do mapa</button><button class="btn" data-copylink="https://tour.panoee.net/tourclinicaunicpo">Copiar link do tour 3D</button></div>
+  <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn" data-copylink="https://unicpobauru.github.io/mapa-unicpo/" data-es="Copiar enlace del mapa">Copiar link do mapa</button><button class="btn" data-copylink="https://tour.panoee.net/tourclinicaunicpo" data-es="Copiar enlace del tour 3D">Copiar link do tour 3D</button></div>
 </section>
 <div class="toast" id="toast" hidden></div>
 
@@ -268,19 +272,153 @@ h3.sec{font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:var(--
 <script>
 (function(){
 const D = window.CATALOGO || {meta:{cats:[]},items:[]};
+// ---------- Idioma (Mundo Marketing): mesmo botão PT/ES do portal ----------
+const LANG = (()=>{ try{ return localStorage.getItem('mm_lang')==='es' ? 'es' : 'pt'; }catch(e){ return 'pt'; } })();
+const ES = {
+"Tipo": "Tipo",
+"Categoria do depoimento": "Categoría del testimonio",
+"Criativos dos cursos": "Creativos de los cursos",
+"Institucional": "Institucional",
+"Transferências": "Transferencias",
+"Duração": "Duración",
+"Origem": "Origen",
+"mostra vídeos com qualquer categoria marcada": "muestra videos con cualquiera de las categorías marcadas",
+"Depoimento": "Testimonio",
+"Técnica": "Técnica",
+"Interno": "Interno",
+"Evento": "Evento",
+"Aula gravada": "Clase grabada",
+"Criativo": "Creativo",
+"Acadêmico": "Académico",
+"Manual de Sobrevivência": "Manual de Supervivencia",
+"Criativo de coordenador": "Creativo de coordinador",
+"Prédio & Infraestrutura": "Edificio e infraestructura",
+"Vieram de Sorocaba": "Vinieron de Sorocaba",
+"Bombou no Instagram": "Éxito en Instagram",
+"Já postado no Instagram": "Ya publicado en Instagram",
+"Até 30 s": "Hasta 30 s",
+"Aula longa (15 min+)": "Clase larga (15 min+)",
+"Não informado (aluno)": "No informado (alumno)",
+"Pós-graduação (cursos)": "Posgrado (cursos)",
+"Fainter (graduação)": "Fainter (grado)",
+"Corpo docente e nível de ensino": "Cuerpo docente y nivel de enseñanza",
+"Infraestrutura e Tecnologia": "Infraestructura y tecnología",
+"Título validado": "Título convalidado",
+"Técnica e Segurança": "Técnica y seguridad",
+"Superação de Medo": "Superación del miedo",
+"Língua": "Idioma",
+"Família e distância da própria": "Familia y distancia",
+"Clínica e empreendedorismo": "Clínica y emprendimiento",
+"Flexibilidade de regresso ao país e aprendizado modular": "Flexibilidad para volver al país y aprendizaje modular",
+"Ascensão profissional": "Crecimiento profesional",
+"Investimento compensado": "Inversión que vale la pena",
+"Troca de faculdade": "Cambio de facultad",
+"Comparação de País": "Comparación entre países",
+"Visto e documentação": "Visa y documentación",
+"Acolhimento e suporte da equipe": "Acogida y apoyo del equipo",
+"Equador": "Ecuador",
+"Peru": "Perú",
+"Colômbia": "Colombia",
+"Bolívia": "Bolivia",
+"Uruguai": "Uruguay",
+"Haiti": "Haití",
+"limpar": "limpiar",
+"Todos": "Todos",
+"opções": "opciones",
+"Limpar todos os filtros": "Limpiar todos los filtros",
+"Qualidade": "Calidad",
+"Criativo do curso": "Creativo del curso",
+"🔥 Bombou no Instagram": "🔥 Éxito en Instagram",
+"Postado no Instagram": "Publicado en Instagram",
+"revisar": "revisar",
+"✓ No carrinho": "✓ En el carrito",
+"+ Carrinho": "+ Carrito",
+"+ Adicionar ao carrinho": "+ Agregar al carrito",
+"Assistir": "Ver video",
+"Baixar": "Descargar",
+"Ver": "Ver",
+"versões": "versiones",
+"Baixar 16 MB": "Descargar 16 MB",
+"Versão de no máximo 16 MB, pronta para WhatsApp": "Versión de hasta 16 MB, lista para WhatsApp",
+"versão de 16 MB em preparo": "versión de 16 MB en preparación",
+"indisponível": "no disponible",
+"em preparo": "en preparación",
+"Leve": "Ligera",
+"4K (2160p) — máxima qualidade, arquivo pesado": "4K (2160p): máxima calidad, archivo pesado",
+"1080p com boa taxa de bits — ideal para anúncios e redes": "1080p con buena tasa de bits: ideal para anuncios y redes",
+"arquivo comprimido ou abaixo de 1080p — bom para WhatsApp": "archivo comprimido o por debajo de 1080p: bueno para WhatsApp",
+"Nenhum vídeo com esses filtros. Tente remover um filtro ou usar menos palavras na busca.": "Ningún video con estos filtros. Prueba quitar un filtro o usar menos palabras en la búsqueda.",
+"Curso": "Curso",
+"Subtipo": "Subtipo",
+"Professor": "Profesor",
+"Quem aparece": "Quién aparece",
+"País": "País",
+"Data": "Fecha",
+"Idioma": "Idioma",
+"Legenda": "Subtítulos",
+"Formato": "Formato",
+"Observação": "Observación",
+"Vertical": "Vertical",
+"Horizontal": "Horizontal",
+"espanhol": "español",
+"português": "portugués",
+"sem fala": "sin habla",
+"sim": "sí",
+"não": "no",
+"❚❚ Pausar prévia": "❚❚ Pausar vista previa",
+"▶ Retomar prévia": "▶ Reanudar vista previa",
+"▶ Assistir com som no Drive": "▶ Ver con sonido en Drive",
+"A prévia mostra 5 quadros do vídeo. O vídeo completo abre no Google Drive em outra aba (é preciso estar logado na conta com acesso).": "La vista previa muestra 5 cuadros del video. El video completo se abre en Google Drive en otra pestaña (hay que iniciar sesión con la cuenta que tiene acceso).",
+"Arquivos e qualidade": "Archivos y calidad",
+"Abrir pasta no Drive": "Abrir carpeta en Drive",
+"melhor versão": "mejor versión",
+"mais leve": "más ligera",
+"Usar": "Usar",
+"Usar esta versão no carrinho": "Usar esta versión en el carrito",
+"Carrinho de vídeos": "Carrito de videos",
+"Versão para baixar": "Versión para descargar",
+"Melhor qualidade": "Mejor calidad",
+"Mais leve": "Más ligera",
+"Vale para os vídeos em que você não escolheu uma versão específica no detalhe.": "Vale para los videos en los que no elegiste una versión específica en el detalle.",
+"Detalhe": "Detalle",
+"Seu carrinho está vazio. Use “+ Carrinho” nos vídeos para montar a lista que você vai baixar.": "Tu carrito está vacío. Usa “+ Carrito” en los videos para armar la lista que vas a descargar.",
+"Copiar links de download": "Copiar enlaces de descarga",
+"Copiar lista para o cliente": "Copiar lista para el cliente",
+"Esvaziar": "Vaciar",
+"Com “16 MB (WhatsApp)” cada vídeo baixa na versão de no máximo 16 MB. Vídeos ainda sem essa versão usam o arquivo mais leve disponível.": "Con “16 MB (WhatsApp)” cada video se descarga en la versión de hasta 16 MB. Los videos que todavía no tienen esa versión usan el archivo más ligero disponible.",
+"Cada “Baixar” abre o arquivo do Google Drive em outra aba e o download começa por lá. Os links de download servem para colar no navegador ou num gerenciador de downloads.": "Cada “Descargar” abre el archivo de Google Drive en otra pestaña y la descarga empieza allí. Los enlaces de descarga sirven para pegar en el navegador o en un gestor de descargas.",
+"Copiado": "Copiado",
+"Selecionado: use Ctrl+C": "Seleccionado: usa Ctrl+C",
+"Adicionado ao carrinho": "Agregado al carrito",
+"Removido do carrinho": "Quitado del carrito",
+"Versão escolhida para o carrinho": "Versión elegida para el carrito",
+"Link copiado": "Enlace copiado"
+};
+const T = s => (LANG==='es' && ES[s]) || s;
+const trPa = s => LANG==='es' ? String(s||'').split(/\s*\/\s*/).map(T).join(' / ') : s;
+document.documentElement.lang = LANG==='es' ? 'es' : 'pt-BR';
+if(LANG==='es'){
+  document.querySelectorAll('[data-es]').forEach(e=>{ e.textContent=e.dataset.es; });
+  document.querySelectorAll('[data-es-ph]').forEach(e=>{ e.placeholder=e.dataset.esPh; });
+}
+document.querySelectorAll('.vlang [data-lang]').forEach(b=>{
+  b.setAttribute('aria-pressed', b.dataset.lang===LANG);
+  b.addEventListener('click',()=>{ try{ localStorage.setItem('mm_lang', b.dataset.lang); }catch(e){} location.reload(); });
+});
+
 const M = D.meta, ITEMS = D.items;
 const $ = s => document.querySelector(s);
 const esc = s => String(s??'').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const norm = s => String(s||'').normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase();
 const fmtDur = s => s>=3600 ? `${Math.floor(s/3600)}h${String(Math.floor(s%3600/60)).padStart(2,'0')}` : `${Math.floor(s/60)}:${String(s%60).padStart(2,'0')}`;
-const QL = {max:'4K', alta:'Full HD', leve:'Leve', desconhecida:'?'};
+const QL = {max:'4K', alta:'Full HD', leve:T('Leve'), desconhecida:'?'};
 const QS = {max:'4K', alta:'HD', leve:'LQ', desconhecida:'?'};
-const QD = {max:'4K (2160p) — máxima qualidade, arquivo pesado', alta:'1080p com boa taxa de bits — ideal para anúncios e redes', leve:'arquivo comprimido ou abaixo de 1080p — bom para WhatsApp'};
+const QD = {max:T('4K (2160p) — máxima qualidade, arquivo pesado'), alta:T('1080p com boa taxa de bits — ideal para anúncios e redes'), leve:T('arquivo comprimido ou abaixo de 1080p — bom para WhatsApp')};
 function btn16(it){
   const m=it.m16||{};
-  if(m.id) return `<a class="btn" href="https://drive.google.com/uc?export=download&id=${m.id}" target="_blank" rel="noopener" title="Versão de no máximo 16 MB, pronta para WhatsApp">Baixar 16 MB <small>${m.mb} MB</small></a>`;
-  const why = m.x || m.pend || 'versão de 16 MB em preparo';
-  return `<button class="btn dev" type="button" disabled aria-disabled="true" title="${why}">16 MB <small>${m.x?'indisponível':'em preparo'}</small></button>`;
+  if(m.id) return `<a class="btn" href="https://drive.google.com/uc?export=download&id=${m.id}" target="_blank" rel="noopener" title="${T('Versão de no máximo 16 MB, pronta para WhatsApp')}">${T('Baixar 16 MB')} <small>${m.mb} MB</small></a>`;
+  const why = m.x || m.pend || T('versão de 16 MB em preparo');
+  return `<button class="btn dev" type="button" disabled aria-disabled="true" title="${why}">16 MB <small>${m.x?T('indisponível'):T('em preparo')}</small></button>`;
 }
 const dlUrl = id => `https://drive.google.com/uc?export=download&id=${id}`;
 const viewUrl = id => `https://drive.google.com/file/d/${id}/view`;
@@ -366,28 +504,28 @@ function renderFilters(){
     if(f.k==='ca') keys = M.cats.filter(c=>counts.has(c)).sort((a,b)=>counts.get(b)-counts.get(a));
     if(f.last && keys.includes(f.last)) keys=[...keys.filter(x=>x!==f.last), f.last];
     if(!keys.length) continue;
-    const clr = S.sel[f.k].size?`<button data-clear="${f.k}">limpar</button>`:'';
-    h+=`<div class="fgroup"><div class="flabel">${f.label}${clr}</div>`;
+    const clr = S.sel[f.k].size?`<button data-clear="${f.k}">${T('limpar')}</button>`:'';
+    h+=`<div class="fgroup"><div class="flabel">${T(f.label)}${clr}</div>`;
     if(f.kind==='select'){
-      h+=`<select class="fsel" id="sel_${f.k}" data-sel="${f.k}"><option value="">Todos (${keys.length})</option>`+
+      h+=`<select class="fsel" id="sel_${f.k}" data-sel="${f.k}"><option value="">${T('Todos')} (${keys.length})</option>`+
         keys.map(x=>`<option value="${esc(x)}" ${S.sel[f.k].has(x)?'selected':''}>${esc(x)} · ${counts.get(x)}</option>`).join('')+`</select>`;
       if(S.sel[f.k].size>1) h+=`<div class="chips">${[...S.sel[f.k]].map(x=>`<button class="chip" aria-pressed="true" data-f="${f.k}" data-v="${esc(x)}">${esc(x)}</button>`).join('')}</div>`;
     } else {
       const lim = f.top && !S['open_'+f.k] ? f.top : 999;
-      h+=`<div class="chips">`+keys.slice(0,lim).map(x=>`<button class="chip" data-f="${f.k}" data-v="${esc(x)}" aria-pressed="${S.sel[f.k].has(x)}" ${counts.get(x)||S.sel[f.k].has(x)?'':'disabled'}>${esc(x)} <span class="n">${counts.get(x)}</span></button>`).join('')+`</div>`;
-      if(keys.length>lim) h+=`<button class="btn" data-open="${f.k}" style="align-self:flex-start">+ ${keys.length-lim} opções</button>`;
+      h+=`<div class="chips">`+keys.slice(0,lim).map(x=>`<button class="chip" data-f="${f.k}" data-v="${esc(x)}" aria-pressed="${S.sel[f.k].has(x)}" ${counts.get(x)||S.sel[f.k].has(x)?'':'disabled'}>${esc(T(x))} <span class="n">${counts.get(x)}</span></button>`).join('')+`</div>`;
+      if(keys.length>lim) h+=`<button class="btn" data-open="${f.k}" style="align-self:flex-start">+ ${keys.length-lim} ${T('opções')}</button>`;
     }
-    if(f.hint && S.sel[f.k].size>1) h+=`<span style="font-size:11px;color:var(--muted)">${f.hint}</span>`;
+    if(f.hint && S.sel[f.k].size>1) h+=`<span style="font-size:11px;color:var(--muted)">${T(f.hint)}</span>`;
     h+=`</div>`;
   }
-  h+=`<button class="resetall" data-reset>Limpar todos os filtros</button>`;
+  h+=`<button class="resetall" data-reset>${T('Limpar todos os filtros')}</button>`;
   el.innerHTML=h;
 }
 function nActive(){ let n=S.qual.size; for(const k in S.sel) n+=S.sel[k].size; return n; }
 function renderActive(){
   const a=[]; if(S.q) a.push(`<span class="chip">“${esc(S.q)}” <button data-clearsearch aria-label="Remover busca">×</button></span>`);
-  for(const q of S.qual) a.push(`<span class="chip">Qualidade: ${QL[q]} <button data-q="${q}" aria-label="Remover">×</button></span>`);
-  for(const f of FACETS) for(const v of S.sel[f.k]) a.push(`<span class="chip">${esc(v)} <button data-f="${f.k}" data-v="${esc(v)}" aria-label="Remover">×</button></span>`);
+  for(const q of S.qual) a.push(`<span class="chip">${T('Qualidade')}: ${QL[q]} <button data-q="${q}" aria-label="Remover">×</button></span>`);
+  for(const f of FACETS) for(const v of S.sel[f.k]) a.push(`<span class="chip">${esc(T(v))} <button data-f="${f.k}" data-v="${esc(v)}" aria-label="Remover">×</button></span>`);
   $('#active').innerHTML=a.join(''); $('#nFilters').textContent=nActive();
 }
 
@@ -398,15 +536,15 @@ function card(it){
   return `<article class="card ${inTray(it.v)?'sel':''}" data-v="${it.v}">
     <button class="thumb" data-open-v="${it.v}" data-hover="${it.v}" style="${thumbStyle(it,84,149,1)}" aria-label="Ver detalhes de ${esc(it.no)}"><span class="dur">${fmtDur(it.du)}</span></button>
     <div class="cbody">
-      <div class="ctop"><span class="tag tipo">${esc(it.t||'—')}</span>${it.cr?'<span class="tag cr">Criativo do curso</span>':''}${it.es?'<span class="tag es">Prédio & Infraestrutura</span>':''}${it.so?'<span class="tag so">Vieram de Sorocaba</span>':''}${it.ig?`<span class="tag ${it.ig.b?'ig':'ig2'}" title="${esc(it.ig.p)} · ${it.ig.m} · ${it.ig.dash?it.ig.vw.toLocaleString('pt-BR')+' visualizações · nota '+String(it.ig.s).replace('.',',')+'/100':it.ig.l+' curtidas · '+it.ig.c+' comentários (ainda fora do dash)'}">${it.ig.b?'🔥 Bombou no Instagram':'Postado no Instagram'}</span>`:''}${it.s&&it.s!==it.t?`<span class="tag">${esc(it.s)}</span>`:''}${it.st==='revisar'?'<span class="tag rev">revisar</span>':''}</div>
+      <div class="ctop"><span class="tag tipo">${esc(T(it.t||'—'))}</span>${it.cr?`<span class="tag cr">${T('Criativo do curso')}</span>`:''}${it.es?`<span class="tag es">${T('Prédio & Infraestrutura')}</span>`:''}${it.so?`<span class="tag so">${T('Vieram de Sorocaba')}</span>`:''}${it.ig?`<span class="tag ${it.ig.b?'ig':'ig2'}" title="${esc(it.ig.p)} · ${it.ig.m} · ${it.ig.dash?it.ig.vw.toLocaleString('pt-BR')+' visualizações · nota '+String(it.ig.s).replace('.',',')+'/100':it.ig.l+' curtidas · '+it.ig.c+' comentários (ainda fora do dash)'}">${it.ig.b?T('🔥 Bombou no Instagram'):T('Postado no Instagram')}</span>`:''}${it.s&&it.s!==it.t?`<span class="tag">${esc(T(it.s))}</span>`:''}${it.st==='revisar'?`<span class="tag rev">${T('revisar')}</span>`:''}</div>
       <h3 class="ctitle" data-open-v="${it.v}">${esc(it.no)}</h3>
       <p class="cdesc">${esc(it.de)}</p>
-      <div class="cmeta">${it.c?`<span><b>${esc(it.c)}</b></span>`:''}${it.pa?`<span>${esc(it.pa)}</span>`:''}${it.d?`<span>${esc(it.d)}</span>`:''}${it.p?`<span>Prof.: ${esc(it.p)}</span>`:''}</div>
-      ${it.ca.length?`<div class="cats">${it.ca.map(c=>`<span>${esc(c)}</span>`).join('')}</div>`:''}
+      <div class="cmeta">${it.c?`<span><b>${esc(it.c)}</b></span>`:''}${it.pa?`<span>${esc(trPa(it.pa))}</span>`:''}${it.d?`<span>${esc(it.d)}</span>`:''}${it.p?`<span>Prof.: ${esc(it.p)}</span>`:''}</div>
+      ${it.ca.length?`<div class="cats">${it.ca.map(c=>`<span>${esc(T(c))}</span>`).join('')}</div>`:''}
       <div class="cact">
-        <button class="btn ${inTray(it.v)?'on':''}" data-toggle="${it.v}">${inTray(it.v)?'✓ No carrinho':'+ Carrinho'}</button>
-        ${best.id?`<a class="btn" href="${viewUrl(best.id)}" target="_blank" rel="noopener">Assistir</a><a class="btn pri" href="${dlUrl(best.id)}" target="_blank" rel="noopener">Baixar</a>`:''}${btn16(it)}
-        <span style="display:flex;gap:4px;align-items:center;margin-left:auto">${qs.map(q=>`<span class="q ${q}" title="${QD[q]||''}">${QS[q]}</span>`).join('')}${it.f.length>1?`<span style="font-size:11px;color:var(--muted)">${it.f.length} versões</span>`:''}${DL[it.v]?`<span class="dlc" title="Downloads pela equipe">⬇ ${DL[it.v]}</span>`:''}</span>
+        <button class="btn ${inTray(it.v)?'on':''}" data-toggle="${it.v}">${inTray(it.v)?T('✓ No carrinho'):T('+ Carrinho')}</button>
+        ${best.id?`<a class="btn" href="${viewUrl(best.id)}" target="_blank" rel="noopener">${T('Assistir')}</a><a class="btn pri" href="${dlUrl(best.id)}" target="_blank" rel="noopener">${T('Baixar')}</a>`:''}${btn16(it)}
+        <span style="display:flex;gap:4px;align-items:center;margin-left:auto">${qs.map(q=>`<span class="q ${q}" title="${QD[q]||''}">${QS[q]}</span>`).join('')}${it.f.length>1?`<span style="font-size:11px;color:var(--muted)">${it.f.length} ${T('versões')}</span>`:''}${DL[it.v]?`<span class="dlc" title="Downloads pela equipe">⬇ ${DL[it.v]}</span>`:''}</span>
       </div>
     </div></article>`;
 }
@@ -414,11 +552,11 @@ let CUR=[];
 function render(){
   CUR = sorted(filtered());
   const totalDur = CUR.reduce((s,it)=>s+it.du,0);
-  $('#resTitle').textContent = `${CUR.length} vídeo${CUR.length===1?'':'s'}`;
-  $('#resMeta').textContent = `de ${ITEMS.length} · ${Math.round(totalDur/60)} min no total`;
+  $('#resTitle').textContent = `${CUR.length} ${LANG==='es'?'video':'vídeo'}${CUR.length===1?'':'s'}`;
+  $('#resMeta').textContent = `de ${ITEMS.length} · ${Math.round(totalDur/60)} min ${LANG==='es'?'en total':'no total'}`;
   $('#list').innerHTML = CUR.length ? CUR.slice(0,S.shown).map(card).join('') :
-    `<div class="empty">Nenhum vídeo com esses filtros. Tente remover um filtro ou usar menos palavras na busca.</div>`;
-  $('#more').hidden = CUR.length<=S.shown; $('#more').textContent=`Mostrar mais (${CUR.length-S.shown} restantes)`;
+    `<div class="empty">${T('Nenhum vídeo com esses filtros. Tente remover um filtro ou usar menos palavras na busca.')}</div>`;
+  $('#more').hidden = CUR.length<=S.shown; $('#more').textContent= LANG==='es' ? `Mostrar más (quedan ${CUR.length-S.shown})` : `Mostrar mais (${CUR.length-S.shown} restantes)`;
   renderFilters(); renderActive(); $('#nTray').textContent=TRAY.length;
   store.set('filters',{q:S.q,sel:Object.fromEntries(Object.entries(S.sel).map(([k,v])=>[k,[...v]])),qual:[...S.qual],sort:S.sort});
 }
@@ -438,14 +576,14 @@ function openDrawer(v){
   dr.innerHTML = `<div class="dhead"><h2 id="dTitle">${esc(it.no)} <small style="font-family:var(--f-mono);font-size:11px;color:var(--muted);font-weight:500">#${it.v}</small></h2><button class="x" data-close aria-label="Fechar">×</button></div>
     <div class="player"><div class="stage" id="stage" style="${thumbStyle(it,180,320,0)}"></div>
       <div class="strip">${[0,1,2,3,4].map(i=>`<button data-frame="${i}" aria-current="${i===0}" style="${thumbStyle(it,30,53,i)}" aria-label="Quadro ${i+1}"></button>`).join('')}</div>
-      <div class="pctl"><button id="playBtn" type="button">❚❚ Pausar prévia</button>${it.f[0]?.id?`<a class="btn pri" href="${viewUrl(it.f[0].id)}" target="_blank" rel="noopener">▶ Assistir com som no Drive</a>`:''}</div></div>
-    <p class="note">A prévia mostra 5 quadros do vídeo. O vídeo completo abre no Google Drive em outra aba (é preciso estar logado na conta com acesso).</p>
-    ${it.ca.length?`<div class="cats">${it.ca.map(c=>`<span>${esc(c)}</span>`).join('')}</div>`:''}
+      <div class="pctl"><button id="playBtn" type="button">${T('❚❚ Pausar prévia')}</button>${it.f[0]?.id?`<a class="btn pri" href="${viewUrl(it.f[0].id)}" target="_blank" rel="noopener">${T('▶ Assistir com som no Drive')}</a>`:''}</div></div>
+    <p class="note">${T('A prévia mostra 5 quadros do vídeo. O vídeo completo abre no Google Drive em outra aba (é preciso estar logado na conta com acesso).')}</p>
+    ${it.ca.length?`<div class="cats">${it.ca.map(c=>`<span>${esc(T(c))}</span>`).join('')}</div>`:''}
     <p style="margin:0">${esc(it.de)}</p>
-    <dl class="kv">${kv.map(([k,v])=>`<dt>${k}</dt><dd>${esc(v)}</dd>`).join('')}</dl>
-    <h3 class="sec">Arquivos e qualidade (${it.f.length})</h3>
+    <dl class="kv">${kv.map(([k,v])=>`<dt>${T(k)}</dt><dd>${esc(k==='País'?trPa(v):T(v))}</dd>`).join('')}</dl>
+    <h3 class="sec">${T('Arquivos e qualidade')} (${it.f.length})</h3>
     <div class="files">${it.f.map((f,i)=>fileRow(it,f,i)).join('')}</div>
-    <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn ${inTray(it.v)?'on':''}" data-toggle="${it.v}">${inTray(it.v)?'✓ No carrinho':'+ Adicionar ao carrinho'}</button>${btn16(it)}${it.lp?`<a class="btn" href="${it.lp}" target="_blank" rel="noopener">Abrir pasta no Drive</a>`:''}</div>`;
+    <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn ${inTray(it.v)?'on':''}" data-toggle="${it.v}">${inTray(it.v)?T('✓ No carrinho'):T('+ Adicionar ao carrinho')}</button>${btn16(it)}${it.lp?`<a class="btn" href="${it.lp}" target="_blank" rel="noopener">${T('Abrir pasta no Drive')}</a>`:''}</div>`;
   $('#scrim').hidden=false; dr.hidden=false; dr.querySelector('[data-close]').focus();
   let i=0; clearInterval(playT); playT=setInterval(()=>{i=(i+1)%5; setFrame(it,i);},900);
 }
@@ -453,9 +591,9 @@ function setFrame(it,i){ const s=$('#stage'); if(!s) return; s.style.cssText=thu
 function fileRow(it,f,i){
   const t=TRAY.find(x=>x.v===it.v);
   return `<div class="file"><div class="fn">${esc(f.n)}</div>
-    <div class="fs"><span class="q ${f.q}">${QL[f.q]}</span>${f.w?`<span>${f.w}×${f.h}</span>`:''}<span>${f.mb} MB</span>${f.kbps?`<span>${f.kbps} kb/s</span>`:''}${i===0?'<span>melhor versão</span>':''}${i===it.f.length-1&&it.f.length>1?'<span>mais leve</span>':''}</div>
-    <div class="fa">${f.id?`<a class="btn" href="${viewUrl(f.id)}" target="_blank" rel="noopener">Ver</a><a class="btn pri" href="${dlUrl(f.id)}" target="_blank" rel="noopener">Baixar</a>`:''}
-    ${it.f.length>1?`<button class="btn ${t&&t.fid===f.id?'on':''}" data-pick="${it.v}" data-fid="${f.id}" title="Usar esta versão no carrinho">${t&&t.fid===f.id?'✓':'Usar'}</button>`:''}</div></div>`;
+    <div class="fs"><span class="q ${f.q}">${QL[f.q]}</span>${f.w?`<span>${f.w}×${f.h}</span>`:''}<span>${f.mb} MB</span>${f.kbps?`<span>${f.kbps} kb/s</span>`:''}${i===0?`<span>${T('melhor versão')}</span>`:''}${i===it.f.length-1&&it.f.length>1?`<span>${T('mais leve')}</span>`:''}</div>
+    <div class="fa">${f.id?`<a class="btn" href="${viewUrl(f.id)}" target="_blank" rel="noopener">${T('Ver')}</a><a class="btn pri" href="${dlUrl(f.id)}" target="_blank" rel="noopener">${T('Baixar')}</a>`:''}
+    ${it.f.length>1?`<button class="btn ${t&&t.fid===f.id?'on':''}" data-pick="${it.v}" data-fid="${f.id}" title="${T('Usar esta versão no carrinho')}">${t&&t.fid===f.id?'✓':T('Usar')}</button>`:''}</div></div>`;
 }
 function closeAll(){ $('#drawer').hidden=true; $('#tray').hidden=true; $('#sug').hidden=true; $('#tools').hidden=true; $('#scrim').hidden=true; clearInterval(playT); $('#filters').classList.remove('open'); }
 
@@ -467,33 +605,33 @@ function pickFile(it, fid){
   if(PREF==='hd'){ const c=it.f.filter(f=>f.q==='alta'); if(c.length) return c[0]; }
   return it.f[0]||{};
 }
-function toggle(v){ if(inTray(v)) TRAY=TRAY.filter(t=>t.v!==v); else TRAY.push({v,fid:null}); store.set('tray',TRAY); toast(inTray(v)?'Adicionado ao carrinho':'Removido do carrinho'); refreshCards(v); }
-function refreshCards(v){ $('#nTray').textContent=TRAY.length; document.querySelectorAll(`[data-toggle="${v}"]`).forEach(b=>{const on=inTray(v); b.classList.toggle('on',on); b.textContent=on?(b.closest('.drawer')?'✓ No carrinho':'✓ No carrinho'):(b.closest('.drawer')?'+ Adicionar ao carrinho':'+ Carrinho');});
+function toggle(v){ if(inTray(v)) TRAY=TRAY.filter(t=>t.v!==v); else TRAY.push({v,fid:null}); store.set('tray',TRAY); toast(inTray(v)?T('Adicionado ao carrinho'):T('Removido do carrinho')); refreshCards(v); }
+function refreshCards(v){ $('#nTray').textContent=TRAY.length; document.querySelectorAll(`[data-toggle="${v}"]`).forEach(b=>{const on=inTray(v); b.classList.toggle('on',on); b.textContent=on?T('✓ No carrinho'):(b.closest('.drawer')?T('+ Adicionar ao carrinho'):T('+ Carrinho'));});
   document.querySelectorAll(`.card[data-v="${v}"]`).forEach(c=>c.classList.toggle('sel',inTray(v))); if(!$('#tray').hidden) renderTray(); }
 function renderTray(){
   const tr=$('#tray'); const rows=TRAY.map(t=>({t,it:byV(t.v)})).filter(x=>x.it);
   const files=rows.map(({t,it})=>({it,f:pickFile(it,t.fid)}));
   const mb=files.reduce((s,x)=>s+(+x.f.mb||0),0), dur=rows.reduce((s,x)=>s+x.it.du,0);
-  tr.innerHTML=`<div class="dhead"><h2 id="tTitle">Carrinho de vídeos</h2><button class="x" data-close aria-label="Fechar">×</button></div>
-   <div class="opts"><div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap"><span style="font-weight:600;font-size:13px">Versão para baixar</span>
-     <div class="seg"><button data-pref="alta" aria-pressed="${PREF==='alta'}">Melhor qualidade</button><button data-pref="hd" aria-pressed="${PREF==='hd'}">Full HD</button><button data-pref="leve" aria-pressed="${PREF==='leve'}">Mais leve</button><button data-pref="m16" aria-pressed="${PREF==='m16'}">16 MB (WhatsApp)</button></div></div>
-     <span style="font-size:12px;color:var(--muted)">Vale para os vídeos em que você não escolheu uma versão específica no detalhe.</span></div>
+  tr.innerHTML=`<div class="dhead"><h2 id="tTitle">${T('Carrinho de vídeos')}</h2><button class="x" data-close aria-label="Fechar">×</button></div>
+   <div class="opts"><div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap"><span style="font-weight:600;font-size:13px">${T('Versão para baixar')}</span>
+     <div class="seg"><button data-pref="alta" aria-pressed="${PREF==='alta'}">${T('Melhor qualidade')}</button><button data-pref="hd" aria-pressed="${PREF==='hd'}">Full HD</button><button data-pref="leve" aria-pressed="${PREF==='leve'}">${T('Mais leve')}</button><button data-pref="m16" aria-pressed="${PREF==='m16'}">16 MB (WhatsApp)</button></div></div>
+     <span style="font-size:12px;color:var(--muted)">${T('Vale para os vídeos em que você não escolheu uma versão específica no detalhe.')}</span></div>
    <div class="tlist">${rows.length? files.map(({it,f},i)=>`<div class="titem"><span class="ord">${i+1}</span><div class="tt" style="${thumbStyle(it,40,71,1)}"></div>
      <div style="min-width:0"><div class="tn">${esc(it.no)}</div><div class="tf"><span class="q ${f.q}">${QL[f.q]}</span> ${f.w?f.w+'×'+f.h+' · ':''}${f.mb} MB · ${fmtDur(it.du)}</div>
-     <div style="display:flex;gap:6px;margin-top:5px;flex-wrap:wrap">${f.id?`<a class="btn pri" href="${dlUrl(f.id)}" target="_blank" rel="noopener">Baixar</a><a class="btn" href="${viewUrl(f.id)}" target="_blank" rel="noopener">Ver</a>`:''}<button class="btn" data-open-v="${it.v}">Detalhe</button></div></div>
+     <div style="display:flex;gap:6px;margin-top:5px;flex-wrap:wrap">${f.id?`<a class="btn pri" href="${dlUrl(f.id)}" target="_blank" rel="noopener">${T('Baixar')}</a><a class="btn" href="${viewUrl(f.id)}" target="_blank" rel="noopener">${T('Ver')}</a>`:''}<button class="btn" data-open-v="${it.v}">${T('Detalhe')}</button></div></div>
      <div class="ta"><button data-up="${i}" aria-label="Subir">↑</button><button data-down="${i}" aria-label="Descer">↓</button><button data-rm="${it.v}" aria-label="Remover">×</button></div></div>`).join('')
-     : `<div class="empty">Seu carrinho está vazio. Use “+ Carrinho” nos vídeos para montar a lista que você vai baixar.</div>`}</div>
-   <div class="tfoot"><div class="tsum"><span>${rows.length} vídeos · ${fmtDur(dur)}</span><span>≈ <b>${mb.toFixed(0)} MB</b></span></div>
-     <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn pri" data-copy="links" ${rows.length?'':'disabled'}>Copiar links de download</button><button class="btn" data-copy="lista" ${rows.length?'':'disabled'}>Copiar lista para o cliente</button><button class="btn" data-clearTray ${rows.length?'':'disabled'}>Esvaziar</button></div>
-     ${PREF==='m16'?`<span style="font-size:11.5px;color:var(--muted)">Com “16 MB (WhatsApp)” cada vídeo baixa na versão de no máximo 16 MB. Vídeos ainda sem essa versão usam o arquivo mais leve disponível.</span>`:''}
+     : `<div class="empty">${T('Seu carrinho está vazio. Use “+ Carrinho” nos vídeos para montar a lista que você vai baixar.')}</div>`}</div>
+   <div class="tfoot"><div class="tsum"><span>${rows.length} ${LANG==='es'?'videos':'vídeos'} · ${fmtDur(dur)}</span><span>≈ <b>${mb.toFixed(0)} MB</b></span></div>
+     <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn pri" data-copy="links" ${rows.length?'':'disabled'}>${T('Copiar links de download')}</button><button class="btn" data-copy="lista" ${rows.length?'':'disabled'}>${T('Copiar lista para o cliente')}</button><button class="btn" data-clearTray ${rows.length?'':'disabled'}>${T('Esvaziar')}</button></div>
+     ${PREF==='m16'?`<span style="font-size:11.5px;color:var(--muted)">${T('Com “16 MB (WhatsApp)” cada vídeo baixa na versão de no máximo 16 MB. Vídeos ainda sem essa versão usam o arquivo mais leve disponível.')}</span>`:''}
      <textarea id="copyBox" readonly hidden style="width:100%;height:90px;font-size:11px;font-family:var(--f-mono)"></textarea>
-     <span style="font-size:11.5px;color:var(--muted)">Cada “Baixar” abre o arquivo do Google Drive em outra aba e o download começa por lá. Os links de download servem para colar no navegador ou num gerenciador de downloads.</span></div>`;
+     <span style="font-size:11.5px;color:var(--muted)">${T('Cada “Baixar” abre o arquivo do Google Drive em outra aba e o download começa por lá. Os links de download servem para colar no navegador ou num gerenciador de downloads.')}</span></div>`;
 }
 async function copy(kind){
   const rows=TRAY.map(t=>({t,it:byV(t.v)})).filter(x=>x.it).map(({t,it})=>({it,f:pickFile(it,t.fid)}));
   const txt = kind==='links' ? rows.map(({f})=>dlUrl(f.id)).join('\n') : rows.map(({it,f},i)=>`${i+1}. ${it.no} (${fmtDur(it.du)})\n${viewUrl(f.id)}`).join('\n\n');
-  try{ await navigator.clipboard.writeText(txt); toast('Copiado'); }
-  catch(e){ const b=$('#copyBox'); b.hidden=false; b.value=txt; b.select(); toast('Selecionado: use Ctrl+C'); }
+  try{ await navigator.clipboard.writeText(txt); toast(T('Copiado')); }
+  catch(e){ const b=$('#copyBox'); b.hidden=false; b.value=txt; b.select(); toast(T('Selecionado: use Ctrl+C')); }
 }
 let tT=null; function toast(m){ const t=$('#toast'); t.textContent=m; t.hidden=false; clearTimeout(tT); tT=setTimeout(()=>t.hidden=true,1600); }
 
@@ -519,9 +657,9 @@ document.addEventListener('click',e=>{
   if(d.openV){ $('#tray').hidden=true; openDrawer(+d.openV); return; }
   if(d.toggle){ toggle(+d.toggle); return; }
   if(d.close!==undefined){ closeAll(); return; }
-  if(d.frame){ clearInterval(playT); const it=byV(+$('#drawer [data-toggle]').dataset.toggle); setFrame(it,+d.frame); $('#playBtn').textContent='▶ Retomar prévia'; return; }
-  if(t.id==='playBtn'){ const it=byV(+$('#drawer [data-toggle]').dataset.toggle); if(t.textContent.includes('Pausar')){clearInterval(playT); t.textContent='▶ Retomar prévia';} else {let i=0; playT=setInterval(()=>{i=(i+1)%5; setFrame(it,i);},900); t.textContent='❚❚ Pausar prévia';} return; }
-  if(d.pick){ const v=+d.pick; let x=TRAY.find(t=>t.v===v); if(!x){x={v,fid:null}; TRAY.push(x);} x.fid=d.fid; store.set('tray',TRAY); openDrawer(v); refreshCards(v); toast('Versão escolhida para o carrinho'); return; }
+  if(d.frame){ clearInterval(playT); const it=byV(+$('#drawer [data-toggle]').dataset.toggle); setFrame(it,+d.frame); $('#playBtn').textContent=T('▶ Retomar prévia'); return; }
+  if(t.id==='playBtn'){ const it=byV(+$('#drawer [data-toggle]').dataset.toggle); if(t.textContent.includes('Pausar')){clearInterval(playT); t.textContent=T('▶ Retomar prévia');} else {let i=0; playT=setInterval(()=>{i=(i+1)%5; setFrame(it,i);},900); t.textContent=T('❚❚ Pausar prévia');} return; }
+  if(d.pick){ const v=+d.pick; let x=TRAY.find(t=>t.v===v); if(!x){x={v,fid:null}; TRAY.push(x);} x.fid=d.fid; store.set('tray',TRAY); openDrawer(v); refreshCards(v); toast(T('Versão escolhida para o carrinho')); return; }
   if(d.pref){ PREF=d.pref; store.set('pref',PREF); renderTray(); return; }
   if(d.up!==undefined){ const i=+d.up; if(i>0){[TRAY[i-1],TRAY[i]]=[TRAY[i],TRAY[i-1]]; store.set('tray',TRAY); renderTray();} return; }
   if(d.down!==undefined){ const i=+d.down; if(i<TRAY.length-1){[TRAY[i+1],TRAY[i]]=[TRAY[i],TRAY[i+1]]; store.set('tray',TRAY); renderTray();} return; }
@@ -544,7 +682,7 @@ render();
 // ---------- Ferramentas do marketing ----------
 $('#openTools').addEventListener('click',()=>{closeAll(); $('#scrim').hidden=false; $('#tools').hidden=false;});
 document.addEventListener('click',async e=>{ const b=e.target.closest('[data-copylink]'); if(!b) return;
-  try{ await navigator.clipboard.writeText(b.dataset.copylink); toast('Link copiado'); }catch(err){ toast(b.dataset.copylink); } });
+  try{ await navigator.clipboard.writeText(b.dataset.copylink); toast(T('Link copiado')); }catch(err){ toast(b.dataset.copylink); } });
 
 // ---------- Sugestões (mural compartilhado) ----------
 // Banco: sugestoes/<id da pessoa> = { itens: [ {id, tipo:'falta'|'ideia', texto, quando, feito} ] }
