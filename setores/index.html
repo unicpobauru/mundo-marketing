@@ -15,58 +15,47 @@
   <div class="eyebrow" data-es="Lo que el marketing entrega a cada sector">O que o marketing entrega a cada setor</div>
   <h1 data-es="Para tu sector">Para o seu setor</h1>
   <p class="lead" data-es="Elige tu sector y encuentra solo los materiales que el marketing preparó para ti.">Escolha o seu setor e encontre só os materiais que o marketing preparou para você.</p>
-  <nav class="toc" aria-label="Setores">
-    <a href="#comercial">Comercial</a>
-    <a href="#cs">CS</a>
-    <a href="#academico" data-es="Académico">Acadêmico</a>
-    <a href="#recepcao" data-es="Recepción">Recepção</a>
-  </nav>
+  <nav class="toc" id="toc" aria-label="Setores"></nav>
 </div>
+<main class="wrap" id="setores"></main>
 
-<main class="wrap">
-
-  <section class="sector" id="comercial">
-    <h2>Comercial</h2>
-    <p class="sub" data-es="Materiales para enviar al lead y cerrar la venta.">Materiais para enviar ao lead e fechar a venda.</p>
-    <div class="row">
-      <a class="mini" href="../videoteca/"><b>Videoteca</b><span data-es="Testimonios por curso y país, listos para descargar en versión WhatsApp.">Depoimentos por curso e país, prontos para baixar na versão WhatsApp.</span></a>
-      <div class="mini soon"><b data-es="Materiales por curso">Materiais por curso</b><span data-es="PDF de cada curso con programa, fechas y valores. Fase 2.">PDF de cada curso com programa, datas e valores. Fase 2.</span></div>
-      <div class="mini soon"><b data-es="Pruebas sociales listas">Provas sociais prontas</b><span data-es="Capturas de testimonios, números de UniCPO y fotos de grupos. Fase 2.">Prints de depoimentos, números da UniCPO e fotos de turmas. Fase 2.</span></div>
-      <a class="mini" href="https://unicpobauru.github.io/mapa-unicpo/" target="_blank" rel="noopener"><b data-es="Mapa UniCPO ↗">Mapa UniCPO ↗</b><span data-es="Dónde comer, alojarse y cómo llegar a UniCPO en Bauru. Para enviar al lead.">Onde comer, ficar e como chegar à UniCPO em Bauru. Para mandar ao lead.</span></a>
-      <a class="mini" href="https://tour.panoee.net/tourclinicaunicpo" target="_blank" rel="noopener"><b data-es="Tour 3D de la clínica ↗">Tour 3D da clínica ↗</b><span data-es="Recorrido virtual en 360° por las clínicas.">Passeio virtual em 360° pelas clínicas.</span></a>
-    </div>
-  </section>
-
-  <section class="sector" id="cs">
-    <h2>CS</h2>
-    <p class="sub" data-es="Comunicación con quien ya es alumno.">Comunicação com quem já é aluno.</p>
-    <div class="row">
-      <a class="mini" href="https://claude.ai/artifact/648ewoCD7FaZyCHrjrSJo2" target="_blank" rel="noopener"><b data-es="Central de dudas del alumno ↗">Central de dúvidas do aluno ↗</b><span data-es="«Todo cerca de UniCPO». Se abre en Claude y necesita acceso.">“Todo cerca de UniCPO”. Abre no Claude e precisa de acesso.</span></a>
-      <div class="mini soon"><b data-es="Tutoriales en video para el alumno">Tutoriais em vídeo para o aluno</b><span data-es="Acceder a la plataforma, descargar el certificado, entrar a la clase en vivo. Fase 2.">Acessar a plataforma, baixar certificado, entrar na aula ao vivo. Fase 2.</span></div>
-    </div>
-  </section>
-
-  <section class="sector" id="academico">
-    <h2 data-es="Académico">Acadêmico</h2>
-    <p class="sub" data-es="Apoyo a profesores y grabaciones.">Apoio a professores e gravações.</p>
-    <div class="row">
-      <a class="mini" href="https://claude.ai/artifact/T2zdts5yp8QScVqTSh9qNi" target="_blank" rel="noopener"><b data-es="Guía y agenda de grabación ↗">Guia e agenda de gravação ↗</b><span data-es="«Grabaciones técnicas». Se abre en Claude y necesita acceso.">“Gravações Técnicas”. Abre no Claude e precisa de acesso.</span></a>
-      <a class="mini" href="../manual/"><b data-es="Manual del Creativo">Manual do Criativo</b><span data-es="Para que el profesor sepa cómo se graban los creativos.">Para o professor saber como os criativos são gravados.</span></a>
-      <div class="mini soon"><b data-es="Perfil de los profesores">Perfil dos professores</b><span data-es="Biografía, especialidad y videos de cada profesor. Fase 2.">Bio, especialidade e vídeos de cada professor. Fase 2.</span></div>
-    </div>
-  </section>
-
-  <section class="sector" id="recepcao">
-    <h2 data-es="Recepción">Recepção</h2>
-    <p class="sub" data-es="Para recibir a alumnos y visitantes.">Para receber alunos e visitantes.</p>
-    <div class="row">
-      <div class="mini soon"><b data-es="Guía del visitante">Guia do visitante</b><span data-es="PDF con cómo llegar, hoteles, restaurantes y estructura. Fase 2.">PDF com como chegar, hotéis, restaurantes e estrutura. Fase 2.</span></div>
-      <a class="mini" href="https://unicpobauru.github.io/mapa-unicpo/" target="_blank" rel="noopener"><b data-es="Mapa UniCPO ↗">Mapa UniCPO ↗</b><span data-es="Lo que hay cerca de UniCPO en Bauru.">O que tem perto da UniCPO em Bauru.</span></a>
-      <a class="mini" href="https://tour.panoee.net/tourclinicaunicpo" target="_blank" rel="noopener"><b data-es="Tour 3D de la clínica ↗">Tour 3D da clínica ↗</b><span data-es="Para mostrar la estructura antes de la visita.">Para mostrar a estrutura antes da visita.</span></a>
-    </div>
-  </section>
-
-</main>
+<script src="../dados/areas.js"></script>
 <script src="../assets/portal.js"></script>
+<script src="../assets/colecao.js"></script>
+<script>
+(function(){
+  var el = MM.el, L = MM.L;
+  // Links externos úteis por setor (além das áreas do registro)
+  var EXTRA = {
+    comercial:[{t:{pt:'Mapa UniCPO ↗',es:'Mapa UniCPO ↗'}, d:{pt:'Onde comer, ficar e como chegar à UniCPO em Bauru.',es:'Dónde comer, alojarse y cómo llegar a UniCPO en Bauru.'}, u:'https://unicpobauru.github.io/mapa-unicpo/'},
+               {t:{pt:'Tour 3D da clínica ↗',es:'Tour 3D de la clínica ↗'}, d:{pt:'Passeio virtual em 360° pelas clínicas.',es:'Recorrido virtual en 360° por las clínicas.'}, u:'https://tour.panoee.net/tourclinicaunicpo'}],
+    recepcao:[{t:{pt:'Mapa UniCPO ↗',es:'Mapa UniCPO ↗'}, d:{pt:'O que tem perto da UniCPO em Bauru.',es:'Lo que hay cerca de UniCPO en Bauru.'}, u:'https://unicpobauru.github.io/mapa-unicpo/'}],
+    academico:[{t:{pt:'Agenda de gravações ↗',es:'Agenda de grabaciones ↗'}, d:{pt:'Gravações Técnicas no Claude. Precisa de acesso.',es:'Grabaciones Técnicas en Claude. Necesita acceso.'}, u:'https://claude.ai/artifact/T2zdts5yp8QScVqTSh9qNi'}]
+  };
+  var SUB = {
+    marketing:{pt:'Tudo que a equipe usa no dia a dia.',es:'Todo lo que el equipo usa en el día a día.'},
+    comercial:{pt:'Materiais para enviar ao lead e fechar a venda.',es:'Materiales para enviar al lead y cerrar la venta.'},
+    cs:{pt:'Comunicação com quem já é aluno.',es:'Comunicación con quien ya es alumno.'},
+    academico:{pt:'Apoio a professores e gravações.',es:'Apoyo a profesores y grabaciones.'},
+    recepcao:{pt:'Para receber alunos e visitantes.',es:'Para recibir a alumnos y visitantes.'}
+  };
+  function draw(){
+    var toc = document.getElementById('toc'), box = document.getElementById('setores');
+    toc.textContent = ''; box.textContent = '';
+    MM.SETORES.forEach(function(s){
+      toc.appendChild(el('a', {href:'#' + s.id, text:L(s)}));
+      var mini = MM.REGISTRO.filter(function(r){ return r.setores.indexOf(s.id) >= 0; }).map(function(r){
+        return el('a', {class:'mini', href:MM.hrefArea(r, '../')}, [el('b', {text:L(r.titulo)}), el('span', {text:L(r.descricao)})]);
+      }).concat((EXTRA[s.id] || []).map(function(x){
+        return el('a', {class:'mini', href:x.u, target:'_blank', rel:'noopener'}, [el('b', {text:L(x.t)}), el('span', {text:L(x.d)})]);
+      }));
+      box.appendChild(el('section', {class:'sector', id:s.id}, [el('h2', {text:L(s)}), el('p', {class:'sub', text:L(SUB[s.id])}), el('div', {class:'row'}, mini)]));
+    });
+    if (location.hash){ var t = document.getElementById(location.hash.slice(1)); if (t) t.scrollIntoView(); }
+  }
+  draw();
+  document.addEventListener('mm:lang', draw);
+})();
+</script>
 </body>
 </html>

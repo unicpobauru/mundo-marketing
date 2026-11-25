@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Mundo Marketing</title>
+<meta name="robots" content="noindex,nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap">
+<link rel="stylesheet" href="../assets/portal.css">
+</head>
+<body data-root="../" data-page="areas">
+<!-- Página única de todas as áreas: area/index.html?id=<id> carrega dados/<id>.js e desenha com o motor de coleções. -->
+<div id="area"></div>
+<script src="../dados/areas.js"></script>
+<script src="../assets/portal.js"></script>
+<script src="../assets/colecao.js"></script>
+<script>
+(function(){
+  var id = (new URLSearchParams(location.search).get('id') || '').replace(/[^a-z0-9-]/g, '');
+  var reg = MM.REGISTRO.filter(function(r){ return r.id === id && !r.href; })[0];
+  var mount = document.getElementById('area');
+  if (!reg){
+    mount.appendChild(MM.el('div', {class:'wrap phead'}, [MM.el('h1', {text: window.MM_LANG === 'es' ? 'Área no encontrada' : 'Área não encontrada'}),
+      MM.el('p', {class:'lead'}, [MM.el('a', {href:'../index.html', text: window.MM_LANG === 'es' ? 'Volver al inicio' : 'Voltar ao início'})])]));
+    return;
+  }
+  var srcs = (reg.catalogo ? ['../videoteca/data.js'] : []).concat(['../dados/' + id + '.js']);
+  MM.carregar(srcs, function(){ if (MM._area) MM.renderArea(MM._area, mount, '../'); });
+})();
+</script>
+</body>
+</html>

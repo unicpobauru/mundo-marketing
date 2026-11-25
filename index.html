@@ -6,7 +6,7 @@
 <title>Mundo Marketing · UniCPO</title>
 <meta name="robots" content="noindex,nofollow">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap">
 <link rel="stylesheet" href="assets/portal.css">
 <style>
 .hero{background:var(--navy);color:var(--navy-ink)}
@@ -17,14 +17,16 @@
 .quick{display:flex;gap:8px;flex-wrap:wrap;margin-top:20px}
 .quick a{display:inline-flex;align-items:center;gap:8px;text-decoration:none;font-weight:700;font-size:14px;border-radius:10px;padding:10px 14px;background:rgba(255,255,255,.1);color:var(--navy-ink);border:1px solid rgba(255,255,255,.2)}
 .quick a.pri{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
-.roadmap{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
-.phase{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px 18px}
-.phase h3{display:flex;align-items:baseline;gap:8px;margin-bottom:8px}
-.phase h3 small{font-family:var(--f-body);font-size:12px;font-weight:600;color:var(--muted)}
-.phase ul{margin:0;padding-left:18px;color:var(--muted);font-size:14px}
-.phase li{margin:3px 0}
-.phase.now{border-color:var(--accent)}
 main{padding-top:36px}
+.home-cols{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:32px;align-items:start}
+@media (max-width:960px){.home-cols{grid-template-columns:minmax(0,1fr)}}
+.grupo + .grupo{margin-top:30px}
+.grupo h2{font-size:18px;margin-bottom:12px}
+.novas{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:18px}
+.novas h2{font-size:18px;margin-bottom:12px}
+.novas .mural{margin-left:4px}
+.novas .post{padding-bottom:16px}
+.novas .post h3{font-size:15px}
 </style>
 </head>
 <body data-root="./" data-page="inicio">
@@ -34,81 +36,55 @@ main{padding-top:36px}
   <h1 data-es="Todo lo que el marketing ya hizo, en un solo lugar">Tudo que o marketing já fez, num lugar só</h1>
   <p class="lead" data-es="Videos, guías, marca y materiales para el marketing y para los sectores Comercial, CS, Académico y Recepción.">Vídeos, guias, marca e materiais para o marketing e para os setores Comercial, CS, Acadêmico e Recepção.</p>
   <div class="quick">
-    <a class="pri" href="videoteca/" data-es="Abrir la Videoteca">Abrir a Videoteca</a>
-    <a href="busca/" data-es="Buscar en el portal">Buscar no portal</a>
-    <a href="setores/" data-es="Para tu sector">Para o seu setor</a>
+    <a class="pri" href="videoteca/index.html" data-es="Abrir la Videoteca">Abrir a Videoteca</a>
+    <a href="busca/index.html" data-es="Buscar en el portal">Buscar no portal</a>
+    <a href="setores/index.html" data-es="Para tu sector">Para o seu setor</a>
   </div>
 </div></div>
 
 <main class="wrap">
-
-  <section>
-    <h2 data-es="Áreas del portal">Áreas do portal</h2>
-    <p class="sub" data-es="Lo que ya se puede usar hoy.">O que já dá para usar hoje.</p>
-    <div class="grid">
-      <a class="card" href="videoteca/">
-        <span class="ico" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m10 9 5 3-5 3z"/></svg></span>
-        <h3>Videoteca</h3>
-        <p data-es="Más de 1.000 archivos de video con filtros por curso, país, profesor y tipo de testimonio.">Mais de 1.000 arquivos de vídeo com filtros por curso, país, professor e tipo de depoimento.</p>
-        <span class="go" data-es="Abrir →">Abrir →</span>
-      </a>
-      <a class="card" href="manual/">
-        <span class="ico" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h11a3 3 0 0 1 3 3v13H7a3 3 0 0 1-3-3z"/><path d="M8 8h6M8 12h6"/></svg></span>
-        <h3 data-es="Manual del Creativo">Manual do Criativo</h3>
-        <p data-es="Principios, tipos de creativo, temas, CTAs y checklist antes de grabar.">Princípios, tipos de criativo, temas, CTAs e checklist antes de gravar.</p>
-        <span class="go" data-es="Abrir →">Abrir →</span>
-      </a>
-      <a class="card" href="kit-de-marca/">
-        <span class="ico" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="8" cy="8" r="3"/><circle cx="16" cy="8" r="3"/><circle cx="12" cy="15" r="3"/></svg></span>
-        <h3>Kit de marca</h3>
-        <p data-es="Logos, colores, tipografías y plantillas para todos los sectores.">Logos, cores, fontes e templates para todos os setores.</p>
-        <span class="badge soon" data-es="En armado">Em montagem</span>
-      </a>
-      <a class="card" href="setores/">
-        <span class="ico" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="8" r="3"/><path d="M3 20a6 6 0 0 1 12 0"/><circle cx="17" cy="9" r="2.5"/><path d="M15.5 14.5A5 5 0 0 1 21 19"/></svg></span>
-        <h3 data-es="Para tu sector">Para o seu setor</h3>
-        <p data-es="Comercial, CS, Académico y Recepción: solo lo que sirve a cada uno.">Comercial, CS, Acadêmico e Recepção: só o que serve a cada um.</p>
-        <span class="go" data-es="Abrir →">Abrir →</span>
-      </a>
-    </div>
-  </section>
-
-  <section>
-    <h2 data-es="Lo que viene">O que vem por aí</h2>
-    <p class="sub" data-es="Las ideas elegidas por el equipo, en el orden en que se van a producir.">As ideias escolhidas pela equipe, na ordem em que vão ser produzidas.</p>
-    <div class="roadmap">
-      <div class="phase now">
-        <h3><span>Fase 1</span> <small data-es="en curso">em andamento</small></h3>
-        <ul>
-          <li data-es="Estructura del portal, en portugués y español">Estrutura do portal, em português e espanhol</li>
-          <li data-es="Videoteca y Manual del Creativo dentro del portal">Videoteca e Manual do Criativo dentro do portal</li>
-          <li>Kit de marca</li>
-          <li data-es="Búsqueda general">Busca geral</li>
-          <li data-es="Acceso privado por e-mail">Acesso privado por e-mail</li>
-        </ul>
-      </div>
-      <div class="phase">
-        <h3>Fase 2</h3>
-        <ul>
-          <li data-es="Materiales por curso y pruebas sociales (Comercial)">Materiais por curso e provas sociais (Comercial)</li>
-          <li data-es="Central de dudas y tutoriales en video para el alumno (CS)">Central de dúvidas e tutoriais em vídeo para o aluno (CS)</li>
-          <li data-es="Guía y agenda de grabación, perfil de los profesores (Académico)">Guia e agenda de gravação, perfil dos professores (Acadêmico)</li>
-          <li data-es="Guía del visitante (Recepción)">Guia do visitante (Recepção)</li>
-        </ul>
-      </div>
-      <div class="phase">
-        <h3>Fase 3</h3>
-        <ul>
-          <li data-es="Banco de fotos con autorización de imagen">Banco de fotos com autorização de imagem</li>
-          <li data-es="Tutoriales internos">Tutoriais internos</li>
-          <li data-es="Mural de novedades">Mural de novidades</li>
-          <li data-es="Glosario">Glossário</li>
-        </ul>
-      </div>
-    </div>
-  </section>
-
+  <div class="home-cols">
+    <div id="areas"></div>
+    <aside class="novas">
+      <h2 data-es="Novedades">Novidades</h2>
+      <div id="novas"></div>
+      <a class="lbtn" href="area/index.html?id=mural" data-es="Ver el mural completo →">Ver o mural completo →</a>
+    </aside>
+  </div>
 </main>
+
+<script src="dados/areas.js"></script>
 <script src="assets/portal.js"></script>
+<script src="assets/colecao.js"></script>
+<script>
+(function(){
+  var el = MM.el, L = MM.L;
+  function areas(){
+    var box = document.getElementById('areas'); box.textContent = '';
+    MM.GRUPOS.forEach(function(g){
+      var rs = MM.REGISTRO.filter(function(r){ return r.grupo === g.id; });
+      if (!rs.length) return;
+      box.appendChild(el('section', {class:'grupo'}, [
+        el('h2', {text:L(g)}),
+        el('div', {class:'grid'}, rs.map(function(r){
+          return el('a', {class:'card', href:MM.hrefArea(r, '')}, [el('h3', {text:L(r.titulo)}), el('p', {text:L(r.descricao)}), el('span', {class:'go', text:(MM_LANG === 'es' ? 'Abrir' : 'Abrir') + ' →'})]);
+        }))
+      ]));
+    });
+  }
+  var MURAL = null;
+  function novas(){
+    var box = document.getElementById('novas'); box.textContent = '';
+    if (!MURAL) return;
+    var ult = MURAL.itens.slice().sort(function(a,b){ return String(b.data).localeCompare(String(a.data)); }).slice(0, 4);
+    box.appendChild(el('div', {class:'mural'}, ult.map(function(it){
+      return el('article', {class:'post'}, [el('time', {text:MM.fmtData(it.data)}), el('h3', {}, [el('a', {href:'area/index.html?id=mural#' + it.id, text:L(it.titulo)})])]);
+    })));
+  }
+  areas();
+  MM.carregar(['dados/mural.js'], function(){ MURAL = MM._area; novas(); });
+  document.addEventListener('mm:lang', function(){ areas(); novas(); });
+})();
+</script>
 </body>
 </html>

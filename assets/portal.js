@@ -10,13 +10,13 @@
   var ROOT = body.getAttribute('data-root') || './';
   var PAGE = body.getAttribute('data-page') || '';
 
+  // links com index.html para funcionar também abrindo os arquivos direto no computador
   var NAV = [
-    {id:'inicio',    href:'',              pt:'Início',             es:'Inicio'},
-    {id:'videoteca', href:'videoteca/',    pt:'Videoteca',          es:'Videoteca'},
-    {id:'manual',    href:'manual/',       pt:'Manual do Criativo', es:'Manual del Creativo'},
-    {id:'kit',       href:'kit-de-marca/', pt:'Kit de marca',       es:'Kit de marca'},
-    {id:'setores',   href:'setores/',      pt:'Para o seu setor',   es:'Para tu sector'},
-    {id:'busca',     href:'busca/',        pt:'Busca',              es:'Búsqueda'}
+    {id:'inicio',    href:'index.html',           pt:'Início',             es:'Inicio'},
+    {id:'videoteca', href:'videoteca/index.html', pt:'Videoteca',          es:'Videoteca'},
+    {id:'manual',    href:'manual/index.html',    pt:'Manual do Criativo', es:'Manual del Creativo'},
+    {id:'setores',   href:'setores/index.html',   pt:'Para o seu setor',   es:'Para tu sector'},
+    {id:'busca',     href:'busca/index.html',     pt:'Busca',              es:'Búsqueda'}
   ];
 
   function getLang(){
@@ -33,7 +33,7 @@
   }).join('');
   bar.innerHTML =
     '<div class="wrap">'+
-      '<a class="plogo" href="'+ROOT+'">Mundo Marketing<small>UniCPO</small></a>'+
+      '<a class="plogo" href="'+ROOT+'index.html">Mundo Marketing<small>UniCPO</small></a>'+
       '<button class="menu-btn" type="button" aria-expanded="false" data-es="Menú">Menu</button>'+
       '<nav class="pnav" aria-label="Portal">'+nav+'</nav>'+
       '<div class="lang" role="group" aria-label="Idioma"><button type="button" data-l="pt">PT</button><button type="button" data-l="es">ES</button></div>'+

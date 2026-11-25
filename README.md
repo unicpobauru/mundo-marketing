@@ -4,25 +4,55 @@ Portal interno do marketing da UniCPO: Videoteca, Manual do Criativo, Kit de mar
 
 É um site estático, só HTML, CSS e JavaScript, sem etapa de build.
 
-## Estrutura
+## Como o portal é construído
+
+O portal tem três peças:
+
+1. **Registro de áreas** (`dados/areas.js`): lista todas as áreas, em quais setores aparecem e em que grupo da página inicial ficam. A página inicial, "Para o seu setor" e a Busca são montadas a partir dele.
+2. **Dados de cada área** (`dados/<área>.js`): os itens daquela área (textos em PT e ES, categorias, links, vídeos). Algumas áreas geram itens sozinhas a partir do catálogo da Videoteca.
+3. **Motor de coleções** (`assets/colecao.js`): desenha qualquer área com busca, filtros, cartões e janela de detalhe. Formatos disponíveis: cartões, perguntas frequentes, glossário A–Z, mural por data, galeria de fotos, perfis e kit de marca.
+
+Todas as áreas abrem em `area/index.html?id=<área>`. A Videoteca e o Manual do Criativo têm páginas próprias.
 
 | Pasta | Conteúdo |
 | --- | --- |
-| `index.html` | Página inicial |
+| `index.html` | Página inicial (áreas + últimas novidades) |
+| `dados/areas.js` | Registro de áreas |
+| `dados/*.js` | Dados de cada área |
+| `area/` | Página única que mostra qualquer área |
 | `videoteca/` | Videoteca (`data.js` é o catálogo; `thumbs/` são as miniaturas) |
 | `manual/` | Manual do Criativo em PT e ES |
-| `kit-de-marca/` | Kit de marca (em montagem) |
-| `setores/` | Comercial, CS, Acadêmico e Recepção |
-| `busca/` | Busca no portal e nos vídeos |
-| `assets/portal.css` | Visual compartilhado |
-| `assets/portal.js` | Barra do portal, rodapé e troca de idioma |
+| `setores/` | O que cada setor encontra no portal |
+| `busca/` | Busca em todas as áreas, no Manual e nos vídeos |
+| `assets/portal.css`, `assets/portal.js` | Visual, barra do portal e troca de idioma |
+| `assets/colecao.js` | Motor de coleções |
+| `assets/fotos/` | Fotos (professores vieram do Gravações Técnicas) |
 
-### Como traduzir um texto
-- Texto curto: escreva em português e coloque o espanhol em `data-es`: `<h2 data-es="Para tu sector">Para o seu setor</h2>`
-- Bloco grande: dois blocos, um com `data-lang="pt"` e outro com `data-lang="es" hidden`.
+### Áreas e de onde vem o conteúdo
 
-### Como adicionar uma área na busca
-Acrescente uma linha na lista `PAGES` dentro de `busca/index.html`.
+| Área | Fonte |
+| --- | --- |
+| Videoteca | Catálogo da Videoteca (905 vídeos) |
+| Manual do Criativo | Documento do claude.ai, cópia de 28/09/2026 |
+| Kit de marca | Cores e fontes dos materiais recentes (a confirmar); logos e modelos a preencher |
+| Tutoriais | Escritos a partir do funcionamento da Videoteca, do portal e do Gravações Técnicas |
+| Banco de fotos | Fotos dos coordenadores (autorização a confirmar) + exemplos |
+| Mural de novidades | Páginas que o marketing criou no claude.ai, por data |
+| Glossário | Termos de marketing |
+| Materiais por curso | Cursos e turmas do Gravações Técnicas (25/11/2026) + contagem de vídeos; programa e valores a preencher |
+| Provas sociais | Calculadas da Videoteca; números institucionais a preencher |
+| Central de dúvidas | Manual do Criativo + apresentação do Mapa UniCPO; várias respostas a preencher pelo CS |
+| Tutoriais para o aluno | Vídeos da Videoteca (matrícula, documentos, chegada, Manual de Sobrevivência) |
+| Perfil dos professores | Coordenadores do Gravações Técnicas + professores frequentes na Videoteca; bio a preencher |
+| Guia e agenda de gravação | Manual do Criativo + funcionamento do Gravações Técnicas |
+| Guia do visitante | Mapa UniCPO, Tour 3D e vídeos da Videoteca |
+
+Itens com a etiqueta **A preencher**, **A confirmar** ou **Exemplo** ainda precisam de conteúdo ou validação.
+
+### Como mudar conteúdo
+- **Item novo numa área:** abra `dados/<área>.js`, copie um item e troque os textos.
+- **Área nova:** crie `dados/<nova>.js` (copie um existente) e acrescente uma linha em `dados/areas.js`.
+- **Traduzir:** todo texto pode ser `{pt:'...', es:'...'}`. Nas páginas fixas, use `data-es="..."`.
 
 ## Ver no computador
 Na pasta do projeto:
@@ -33,7 +63,7 @@ python3 -m http.server 8000
 
 Depois abra http://localhost:8000.
 
-## Publicar com acesso privado (Cloudflare Pages + Cloudflare Access)
+## Publicar com acesso privado (opção em análise: Cloudflare Pages + Cloudflare Access)
 
 O Cloudflare Access é grátis até 50 pessoas. Cada pessoa entra com o próprio e-mail e recebe um código; quem não está na lista não abre o site.
 
