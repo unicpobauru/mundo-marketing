@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Busca · Mundo Marketing</title>
+<meta name="robots" content="noindex,nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="../assets/portal.css">
+</head>
+<body data-root="../" data-page="busca">
+
+<div class="wrap phead">
+  <div class="eyebrow" data-es="Todo el portal">Portal inteiro</div>
+  <h1 data-es="Búsqueda">Busca</h1>
+  <p class="lead" data-es="Busca en las páginas del portal y en los videos de la Videoteca.">Procura nas páginas do portal e nos vídeos da Videoteca.</p>
+</div>
+
+<main class="wrap">
+  <section style="display:flex;flex-direction:column;gap:14px">
+    <label class="searchbox" for="q">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <input id="q" type="search" autocomplete="off" placeholder="Ex.: implantes Equador, CTA, mapa, depoimento medo" data-es-ph="Ej.: implantes Ecuador, CTA, mapa, testimonio miedo">
+    </label>
+    <div id="meta" class="sub" style="color:var(--muted);font-size:13.5px"></div>
+    <div class="results" id="results"></div>
+  </section>
+</main>
+
+<script src="../assets/portal.js"></script>
+<script>
+(function(){
+  // Páginas e materiais do portal. Ao criar uma área nova, acrescente uma linha aqui.
+  var PAGES = [
+    {k:'Área', ke:'Área', t:'Videoteca', te:'Videoteca', d:'Vídeos com filtros por curso, país, professor e tipo de depoimento.', de:'Videos con filtros por curso, país, profesor y tipo de testimonio.', u:'../videoteca/', x:'video depoimento testimonio download whatsapp 16mb'},
+    {k:'Área', ke:'Área', t:'Manual do Criativo', te:'Manual del Creativo', d:'Princípios, tipos de criativo, temas, CTAs e checklist antes de gravar.', de:'Principios, tipos de creativo, temas, CTAs y checklist antes de grabar.', u:'../manual/', x:'roteiro guion gancho anuncio criativo creativo'},
+    {k:'Manual', ke:'Manual', t:'Princípios gerais', te:'Principios generales', d:'Idioma, formato, carisma, duração, estrutura, fatos, plataformas e regulamentação.', de:'Idioma, formato, carisma, duración, estructura, hechos, plataformas y regulación.', u:'../manual/#principios', x:'espanhol neutro tu duracao 30 45 segundos palavras incisao sangue antes depois'},
+    {k:'Manual', ke:'Manual', t:'Tipos de criativo', te:'Tipos de creativo', d:'Remarketing, tradicional, emocional, landing page, YouTube e específico de país.', de:'Remarketing, tradicional, emocional, landing page, YouTube y específico por país.', u:'../manual/#tipos', x:'remarketing emocional youtube pais equador ecuador landing'},
+    {k:'Manual', ke:'Manual', t:'Temas para criativos tradicionais', te:'Temas para creativos tradicionales', d:'Família, dinheiro, trabalho, corpo docente, estrutura, título convalidado e outros.', de:'Familia, dinero, trabajo, cuerpo docente, estructura, título convalidado y otros.', u:'../manual/#temas', x:'familia dinheiro dinero trabalho trabajo mec convalidado distancia modular pacientes'},
+    {k:'Manual', ke:'Manual', t:'CTAs', te:'CTAs', d:'Formulário, WhatsApp, redes sociais e mini chat: quando usar cada uma.', de:'Formulario, WhatsApp, redes sociales y mini chat: cuándo usar cada una.', u:'../manual/#ctas', x:'cta formulario whatsapp mensagem mensaje chat'},
+    {k:'Manual', ke:'Manual', t:'Checklist antes de gravar', te:'Checklist antes de grabar', d:'Nove pontos para conferir antes de gravar um criativo.', de:'Nueve puntos para revisar antes de grabar un creativo.', u:'../manual/#checklist', x:'checklist gravar grabar teste ab'},
+    {k:'Área', ke:'Área', t:'Kit de marca', te:'Kit de marca', d:'Logos, cores, fontes, templates do Canva e assinatura de e-mail. Em montagem.', de:'Logos, colores, tipografías, plantillas de Canva y firma de e-mail. En armado.', u:'../kit-de-marca/', x:'logo cores colores fonte canva assinatura firma zoom meet'},
+    {k:'Setor', ke:'Sector', t:'Comercial', te:'Comercial', d:'Videoteca, materiais por curso, provas sociais, Mapa UniCPO e tour 3D.', de:'Videoteca, materiales por curso, pruebas sociales, Mapa UniCPO y tour 3D.', u:'../setores/#comercial', x:'vendas ventas lead'},
+    {k:'Setor', ke:'Sector', t:'CS', te:'CS', d:'Central de dúvidas do aluno e tutoriais em vídeo.', de:'Central de dudas del alumno y tutoriales en video.', u:'../setores/#cs', x:'aluno alumno duvidas dudas suporte soporte certificado plataforma'},
+    {k:'Setor', ke:'Sector', t:'Acadêmico', te:'Académico', d:'Guia e agenda de gravação, perfil dos professores.', de:'Guía y agenda de grabación, perfil de los profesores.', u:'../setores/#academico', x:'professor profesor gravacao grabacion agenda'},
+    {k:'Setor', ke:'Sector', t:'Recepção', te:'Recepción', d:'Guia do visitante, Mapa UniCPO e tour 3D.', de:'Guía del visitante, Mapa UniCPO y tour 3D.', u:'../setores/#recepcao', x:'visitante hotel restaurante como chegar llegar bauru'},
+    {k:'Link', ke:'Enlace', t:'Mapa UniCPO', te:'Mapa UniCPO', d:'Onde comer, ficar e como chegar à UniCPO em Bauru.', de:'Dónde comer, alojarse y cómo llegar a UniCPO en Bauru.', u:'https://unicpobauru.github.io/mapa-unicpo/', x:'mapa hotel restaurante bauru chegar llegar', ext:true},
+    {k:'Link', ke:'Enlace', t:'Tour 3D da clínica', te:'Tour 3D de la clínica', d:'Passeio virtual em 360° pelas clínicas da UniCPO.', de:'Recorrido virtual en 360° por las clínicas de UniCPO.', u:'https://tour.panoee.net/tourclinicaunicpo', x:'tour 3d 360 clinica estrutura', ext:true}
+  ];
+  var norm = function(s){ return String(s||'').normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase(); };
+  PAGES.forEach(function(p){ p._t = norm([p.t,p.te,p.d,p.de,p.x].join(' ')); });
+
+  var VIDEOS = null, loading = false;
+  function loadVideos(cb){
+    if (VIDEOS) return cb();
+    if (loading) return;
+    loading = true;
+    var s = document.createElement('script');
+    s.src = '../videoteca/data.js';
+    s.onload = function(){
+      var items = (window.CATALOGO && window.CATALOGO.items) || [];
+      VIDEOS = items.map(function(it){
+        return {v:it.v, no:it.no, de:it.de, c:it.c, pa:it.pa, t:it.t,
+          _t: norm([it.no,it.de,it.c,it.pa,it.p,it.qa,it.t,it.s,(it.ca||[]).join(' ')].join(' '))};
+      });
+      cb();
+    };
+    s.onerror = function(){ VIDEOS = []; cb(); };
+    document.head.appendChild(s);
+  }
+
+  var q = document.getElementById('q'), out = document.getElementById('results'), meta = document.getElementById('meta');
+  function el(tag, cls, text){ var e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
+
+  function run(){
+    var es = window.MM_LANG === 'es';
+    var toks = norm(q.value).split(/\s+/).filter(function(t){ return t.length > 1; });
+    out.textContent = '';
+    if (!toks.length){ meta.textContent = es ? 'Escribe al menos una palabra.' : 'Digite pelo menos uma palavra.'; return; }
+    var hit = function(txt){ return toks.every(function(t){ return txt.indexOf(t) >= 0; }); };
+    var pages = PAGES.filter(function(p){ return hit(p._t); });
+    var vids = (VIDEOS || []).filter(function(v){ return hit(v._t); });
+
+    pages.forEach(function(p){
+      var a = el('a', 'res'); a.href = p.u; if (p.ext){ a.target = '_blank'; a.rel = 'noopener'; }
+      a.appendChild(el('span', 'k', es ? p.ke : p.k));
+      var d = el('div'); d.appendChild(el('b', null, (es ? p.te : p.t) + (p.ext ? ' ↗' : ''))); d.appendChild(el('span', null, es ? p.de : p.d));
+      a.appendChild(d); out.appendChild(a);
+    });
+    vids.slice(0, 30).forEach(function(v){
+      var a = el('a', 'res'); a.href = '../videoteca/?q=' + encodeURIComponent('"' + v.v + '"');
+      a.appendChild(el('span', 'k', es ? 'Video' : 'Vídeo'));
+      var d = el('div'); d.appendChild(el('b', null, v.no));
+      d.appendChild(el('span', null, [v.t, v.c, v.pa].filter(Boolean).join(' · ')));
+      a.appendChild(d); out.appendChild(a);
+    });
+    if (vids.length > 30){
+      var more = el('a', 'res'); more.href = '../videoteca/?q=' + encodeURIComponent(q.value.trim());
+      more.appendChild(el('span', 'k', '+' + (vids.length - 30)));
+      var d2 = el('div'); d2.appendChild(el('b', null, es ? 'Ver todos los videos en la Videoteca' : 'Ver todos os vídeos na Videoteca')); more.appendChild(d2);
+      out.appendChild(more);
+    }
+    var total = pages.length + vids.length;
+    meta.textContent = VIDEOS === null ? (es ? 'Cargando videos…' : 'Carregando vídeos…')
+      : es ? (total + ' resultado' + (total === 1 ? '' : 's') + ': ' + pages.length + ' en el portal, ' + vids.length + ' videos')
+           : (total + ' resultado' + (total === 1 ? '' : 's') + ': ' + pages.length + ' no portal, ' + vids.length + ' vídeos');
+    if (!total && VIDEOS !== null){ var e = el('div', 'empty', es ? 'Nada encontrado. Prueba con menos palabras.' : 'Nada encontrado. Tente usar menos palavras.'); out.appendChild(e); }
+  }
+
+  var t = null;
+  q.addEventListener('input', function(){ clearTimeout(t); t = setTimeout(function(){ run(); loadVideos(run); }, 150); });
+  document.addEventListener('mm:lang', run);
+  var init = new URLSearchParams(location.search).get('q');
+  if (init){ q.value = init; }
+  run(); loadVideos(run);
+  q.focus();
+})();
+</script>
+</body>
+</html>
