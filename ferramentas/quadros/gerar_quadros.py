@@ -3,7 +3,8 @@
 Videoteca · 15 QUADROS POR VÍDEO + LEITURA DE LEGENDAS
 ======================================================
 Para cada vídeo da Videoteca:
-  1. tira 15 quadros espalhados pelo vídeo e salva a faixa em videoteca/quadros/<número>.jpg
+  1. tira quadros espalhados pelo vídeo (15 em vídeos de até 1 min; 1 a cada 4 s nos maiores, até 60)
+     e salva a faixa em videoteca/quadros/<número>.jpg
      (é o que a busca por print usa para ficar mais precisa);
   2. lê o texto que aparece na tela (legendas) com OCR;
   3. procura países, cidades e gentílicos no texto e sugere o país de vídeos sem país
@@ -37,30 +38,34 @@ import argparse, csv, json, os, re, shutil, subprocess, sys, tempfile, unicodeda
 RAIZ = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
 VT = os.path.join(RAIZ, 'videoteca')
 SAIDA = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'saida')
-N_QUADROS = 15
+# Quadros por vídeo: 15 para vídeos de até 1 minuto; acima disso, 1 quadro a cada 4 segundos,
+# com teto de 60 (aulas longas) para a base da busca por print não ficar pesada demais.
+MIN_QUADROS, SEG_POR_QUADRO, MAX_QUADROS = 15, 4, 60
+def n_quadros(dur):
+    return max(MIN_QUADROS, min(MAX_QUADROS, int(round(dur / SEG_POR_QUADRO))))
 FW, FH = 120, 213
 
 # ---------- países: nomes, gentílicos e cidades que aparecem nas legendas ----------
-PAISES = {
-    'Argentina': ['argentina', 'argentino', 'buenos aires', 'cordoba', 'rosario', 'mendoza'],
-    'Bolívia': ['bolivia', 'boliviano', 'boliviana', 'la paz', 'santa cruz de la sierra', 'cochabamba', 'sucre'],
+PAISES = {   # só nomes inconfundíveis: palavras comuns (loja, lima, manta, tica...) e sobrenomes ficaram de fora
+    'Argentina': ['argentina', 'argentino', 'buenos aires'],
+    'Bolívia': ['bolivia', 'boliviano', 'boliviana', 'santa cruz de la sierra', 'cochabamba'],
     'Brasil': ['brasil', 'brasileno', 'brasilena', 'brasileiro', 'brasileira', 'sao paulo', 'bauru', 'rio de janeiro'],
-    'Chile': ['chile', 'chileno', 'chilena', 'santiago de chile', 'valparaiso', 'concepcion', 'antofagasta'],
-    'Colômbia': ['colombia', 'colombiano', 'colombiana', 'bogota', 'medellin', 'cali', 'barranquilla', 'cartagena', 'bucaramanga'],
-    'Costa Rica': ['costa rica', 'costarricense', 'tico', 'tica', 'san jose de costa rica'],
-    'Equador': ['ecuador', 'ecuatoriano', 'ecuatoriana', 'quito', 'guayaquil', 'cuenca', 'manta', 'ambato', 'loja', 'machala', 'portoviejo'],
+    'Chile': ['chile', 'chileno', 'chilena', 'santiago de chile', 'valparaiso', 'antofagasta'],
+    'Colômbia': ['colombia', 'colombiano', 'colombiana', 'bogota', 'medellin', 'barranquilla', 'cartagena', 'bucaramanga'],
+    'Costa Rica': ['costa rica', 'costarricense', 'san jose de costa rica'],
+    'Equador': ['ecuador', 'ecuatoriano', 'ecuatoriana', 'quito', 'guayaquil', 'ambato', 'machala', 'portoviejo', 'riobamba'],
     'El Salvador': ['el salvador', 'salvadoreno', 'salvadorena', 'san salvador'],
     'Guatemala': ['guatemala', 'guatemalteco', 'guatemalteca'],
     'Haiti': ['haiti', 'haitiano', 'haitiana', 'puerto principe'],
     'Honduras': ['honduras', 'hondureno', 'hondurena', 'tegucigalpa', 'san pedro sula'],
-    'México': ['mexico', 'mexicano', 'mexicana', 'guadalajara', 'monterrey', 'cdmx', 'puebla', 'tijuana'],
+    'México': ['mexico', 'mexicano', 'mexicana', 'guadalajara', 'monterrey', 'cdmx'],
     'Nicarágua': ['nicaragua', 'nicaraguense', 'managua'],
     'Panamá': ['panama', 'panameno', 'panamena'],
-    'Paraguai': ['paraguay', 'paraguayo', 'paraguaya', 'asuncion'],
-    'Peru': ['peru', 'peruano', 'peruana', 'lima', 'arequipa', 'trujillo', 'cusco', 'piura', 'chiclayo'],
-    'República Dominicana': ['republica dominicana', 'dominicano', 'dominicana', 'santo domingo', 'santiago de los caballeros', 'punta cana'],
+    'Paraguai': ['paraguay', 'paraguayo', 'paraguaya'],
+    'Peru': ['peru', 'peruano', 'peruana', 'arequipa', 'cusco', 'chiclayo'],
+    'República Dominicana': ['republica dominicana', 'dominicano', 'santo domingo', 'santiago de los caballeros', 'punta cana'],
     'Uruguai': ['uruguay', 'uruguayo', 'uruguaya', 'montevideo'],
-    'Venezuela': ['venezuela', 'venezolano', 'venezolana', 'caracas', 'maracaibo', 'valencia venezuela', 'barquisimeto'],
+    'Venezuela': ['venezuela', 'venezolano', 'venezolana', 'caracas', 'maracaibo', 'barquisimeto'],
 }
 # "Brasil/Bauru/São Paulo" aparecem em quase todo vídeo (é onde fica a UniCPO): só contam se nada mais aparecer
 FRACOS = {'Brasil'}
@@ -95,33 +100,59 @@ def duracao(arq):
     except ValueError: return 0.0
 
 def extrair(arq, pasta_tmp):
-    """15 quadros: pequenos (120x213, preenchendo) para a faixa e grandes (720 de altura) para o OCR"""
+    """quadros pequenos (120x213, preenchendo) para a faixa da busca por print"""
     d = duracao(arq)
     if d <= 0: raise RuntimeError('não consegui ler a duração do vídeo')
-    peq, gr = [], []
-    for i in range(N_QUADROS):
-        t = d * (i + .5) / N_QUADROS
-        p = os.path.join(pasta_tmp, 'p%02d.png' % i); g = os.path.join(pasta_tmp, 'g%02d.png' % i)
+    n = n_quadros(d)
+    peq = []
+    for i in range(n):
+        t = d * (i + .5) / n
+        p = os.path.join(pasta_tmp, 'p%02d.png' % i)
         subprocess.run(['ffmpeg', '-v', 'error', '-y', '-ss', '%.2f' % t, '-i', arq, '-frames:v', '1',
                         '-vf', 'scale=%d:%d:force_original_aspect_ratio=increase,crop=%d:%d' % (FW, FH, FW, FH), p], check=True)
-        subprocess.run(['ffmpeg', '-v', 'error', '-y', '-ss', '%.2f' % t, '-i', arq, '-frames:v', '1', '-vf', 'scale=-2:720', g], check=True)
-        peq.append(p); gr.append(g)
-    return peq, gr
+        peq.append(p)
+    return peq, d
 
 def faixa(peq, destino):
     entradas = sum([['-i', p] for p in peq], [])
     subprocess.run(['ffmpeg', '-v', 'error', '-y'] + entradas + ['-filter_complex', 'hstack=inputs=%d' % len(peq), '-q:v', '4', destino], check=True)
 
-def ler_legendas(gr):
-    textos = []
-    for g in gr:
-        out = subprocess.run(['tesseract', g, 'stdout', '-l', 'spa+por', '--psm', '11'], capture_output=True, text=True)
-        linhas = [l.strip() for l in out.stdout.splitlines() if len(re.sub(r'[^A-Za-zÀ-ÿ]', '', l)) >= 3]
-        textos.append(' '.join(linhas))
-    vistos, final = set(), []
-    for t in textos:          # legendas se repetem entre quadros; guarda cada trecho uma vez
-        if t and t not in vistos: vistos.add(t); final.append(t)
-    return final
+# Legendas: os vídeos usam legenda dinâmica (uma palavra por vez, no meio da tela). Por isso a leitura olha
+# a faixa central 2 vezes por segundo, deixa só o texto branco e guarda apenas palavras que existem em
+# português ou espanhol (dicionários do sistema) e nomes de países/cidades.
+OCR_FPS, OCR_MAX_SEG = 2, 120
+DICIONARIOS = ['/usr/share/dict/spanish', '/usr/share/dict/brazilian']   # apt install wspanish wbrazilian
+_PALAVRAS = None
+def palavras_validas():
+    global _PALAVRAS
+    if _PALAVRAS is None:
+        _PALAVRAS = set()
+        for d in DICIONARIOS:
+            if os.path.exists(d):
+                for l in open(d, encoding='utf-8', errors='ignore'):
+                    w = norm(l.strip())
+                    if len(w) >= 3: _PALAVRAS.add(w)
+        for _, k in CHAVES: _PALAVRAS.update(k.split())
+        if len(_PALAVRAS) < 1000: print('Aviso: dicionários não encontrados; as legendas ficam sem filtro (mais ruído).', flush=True)
+    return _PALAVRAS
+
+def ler_legendas(arq, dur, lg, pasta_tmp):
+    if (lg or '').strip().lower() in ('não', 'nao'): return []
+    pasta = os.path.join(pasta_tmp, 'ocr'); os.makedirs(pasta, exist_ok=True)
+    subprocess.run(['ffmpeg', '-v', 'error', '-y', '-t', str(min(dur, OCR_MAX_SEG)), '-i', arq, '-vf',
+                    "fps=%d,scale=720:-2,crop=iw:ih*0.42:0:ih*0.36,format=gray,lutyuv=y='if(gte(val,215),0,255)'" % OCR_FPS,
+                    os.path.join(pasta, '%04d.png')], check=True)
+    imgs = sorted(os.path.join(pasta, f) for f in os.listdir(pasta))
+    if not imgs: return []
+    lista = os.path.join(pasta_tmp, 'lista.txt'); open(lista, 'w').write('\n'.join(imgs))
+    out = subprocess.run(['tesseract', lista, 'stdout', '-l', 'spa+por', '--psm', '6'], capture_output=True, text=True).stdout
+    ok, texto = palavras_validas(), []
+    for w in re.findall(r"[A-Za-zÀ-ÿ]+", out):
+        n = norm(w)
+        if len(n) >= 3 and (n in ok or len(ok) < 1000):
+            if not texto or norm(texto[-1]) != n: texto.append(w.lower())
+    # em trechos de ~25 palavras, para ler e buscar com facilidade
+    return [' '.join(texto[i:i + 25]) for i in range(0, len(texto), 25)]
 
 # ---------- obter o arquivo de vídeo ----------
 def arquivo_local(it, pasta, indice):
@@ -161,11 +192,19 @@ def main():
     if a.video:
         if a.numero is None: sys.exit('Com --video, informe também --numero (o número do vídeo na Videoteca).')
         itens = [it for it in itens if it['v'] == a.numero] or [{'v': a.numero, 'no': os.path.basename(a.video), 'pa': '', 'f': [], 'de': ''}]
-    if a.limite: itens = itens[:a.limite]
+    # prioridade: depoimentos sem país, depois outros depoimentos, depois o resto; dos mais curtos aos mais longos
+    itens = sorted(itens, key=lambda it: (it.get('t') != 'Depoimento', bool((it.get('pa') or '').strip()), it.get('du') or 0))
+    if a.limite:
+        fal = json.load(open(os.path.join(SAIDA, 'falhas.json'), encoding='utf-8')) if os.path.exists(os.path.join(SAIDA, 'falhas.json')) else {}
+        pend = [it for it in itens if a.refazer or (not os.path.exists(os.path.join(VT, 'quadros', '%d.jpg' % it['v'])) and str(it['v']) not in fal)]
+        itens = pend[:a.limite]
 
     os.makedirs(os.path.join(VT, 'quadros'), exist_ok=True); os.makedirs(SAIDA, exist_ok=True)
     arq_leg = os.path.join(SAIDA, 'legendas.json')
     legendas = json.load(open(arq_leg, encoding='utf-8')) if os.path.exists(arq_leg) else {}
+    arq_falhas = os.path.join(SAIDA, 'falhas.json')   # vídeos que falharam: pulados nas próximas rodadas (use --refazer)
+    falhas = json.load(open(arq_falhas, encoding='utf-8')) if os.path.exists(arq_falhas) else {}
+    if not a.refazer and not a.video: itens = [it for it in itens if str(it['v']) not in falhas] if not a.limite else itens
 
     indice = {}
     if a.pasta:
@@ -182,17 +221,20 @@ def main():
             try:
                 arq = a.video if a.video else arquivo_local(it, a.pasta, indice) if a.pasta else baixar(it, tmp)
                 if not arq:
-                    faltando += 1; print('[%d/%d] #%d sem arquivo: %s' % (i, len(itens), v, it.get('no'))); continue
-                peq, gr = extrair(arq, tmp)
+                    faltando += 1; falhas[str(v)] = 'sem arquivo ou sem permissão no Drive'
+                    print('[%d/%d] #%d sem arquivo: %s' % (i, len(itens), v, it.get('no')), flush=True); continue
+                peq, dur = extrair(arq, tmp)
                 faixa(peq, destino)
-                legendas[str(v)] = ler_legendas(gr)
+                legendas[str(v)] = ler_legendas(arq, dur, it.get('lg'), tmp)
                 feitos += 1
-                print('[%d/%d] #%d ok · %d trechos de legenda' % (i, len(itens), v, len(legendas[str(v)])))
+                print('[%d/%d] #%d ok · %d quadros · %d trechos de legenda' % (i, len(itens), v, len(peq), len(legendas[str(v)])), flush=True)
             except Exception as e:
-                faltando += 1; print('[%d/%d] #%d erro: %s' % (i, len(itens), v, e))
+                faltando += 1; falhas[str(v)] = str(e)[:200]
+                print('[%d/%d] #%d erro: %s' % (i, len(itens), v, e), flush=True)
         if feitos % 10 == 0:
             json.dump(legendas, open(arq_leg, 'w', encoding='utf-8'), ensure_ascii=False, indent=0)
     json.dump(legendas, open(arq_leg, 'w', encoding='utf-8'), ensure_ascii=False, indent=0)
+    if falhas: json.dump(falhas, open(arq_falhas, 'w', encoding='utf-8'), ensure_ascii=False, indent=0)
 
     # sugestões de país
     por_v = {it['v']: it for it in cat['items']}
@@ -214,6 +256,7 @@ def main():
         w.writeheader(); w.writerows(linhas)
 
     print('\nProcessados: %d · já feitos antes: %d · sem arquivo ou com erro: %d' % (feitos, pulados, faltando))
+    print('PENDENTES: %d' % sum(1 for it in cat['items'] if not os.path.exists(os.path.join(VT, 'quadros', '%d.jpg' % it['v'])) and str(it['v']) not in falhas))
     print('Sugestões de país: %d (ferramentas/quadros/saida/sugestoes-paises.csv)' % len(linhas))
     print('Próximo passo: node ferramentas/gerar-indice-print.js')
 

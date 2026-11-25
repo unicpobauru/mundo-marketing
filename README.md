@@ -76,7 +76,15 @@ Precisão medida em 400 vídeos (código do site, no navegador):
 
 **Quando o catálogo mudar**, gere a base de novo: `node ferramentas/gerar-indice-print.js` (precisa de Node e Playwright).
 
-### Próximo passo: 15 quadros por vídeo e leitura de legendas
+### Quadros extras e leitura de legendas (em andamento)
+
+Regra de quadros: **15 para vídeos de até 1 minuto**; acima disso, **1 quadro a cada 4 segundos**, com teto de 60.
+As legendas dos vídeos são dinâmicas (uma palavra por vez, no meio da tela). Por isso a leitura olha a faixa central
+2 vezes por segundo nos primeiros 2 minutos, deixa só o texto branco e guarda apenas palavras que existem em português
+ou espanhol. Vídeos marcados como "sem legenda" no catálogo são pulados.
+
+Para rodar tudo em lotes, salvando no GitHub a cada lote: `bash ferramentas/quadros/rodar_tudo.sh`
+(precisa de `apt install ffmpeg tesseract-ocr tesseract-ocr-spa tesseract-ocr-por wspanish wbrazilian`).
 
 Hoje a base usa os 5 quadros das miniaturas. Com 15 quadros, o caso mais difícil (print de outro momento do vídeo) melhora, e as legendas lidas ajudam a descobrir países e a reorganizar vídeos.
 
