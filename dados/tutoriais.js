@@ -28,6 +28,15 @@ MM.area({
        {pt:'Use as setas para ordenar e clique em "Copiar lista para o cliente".',es:'Usa las flechas para ordenar y haz clic en "Copiar lista para el cliente".'},
        {pt:'Cole a lista no WhatsApp ou no e-mail do lead.',es:'Pega la lista en el WhatsApp o en el e-mail del lead.'}
      ]},
+    {id:'videoteca-print', categoria:'Videoteca', titulo:{pt:'Achar um vídeo a partir de um print',es:'Encontrar un video a partir de una captura'},
+     resumo:{pt:'Suba um print e veja os 10 vídeos mais parecidos.',es:'Sube una captura y mira los 10 videos más parecidos.'},
+     passos:[
+       {pt:'Na Videoteca, clique em "Achar por print" ou simplesmente cole o print com Ctrl+V.',es:'En la Videoteca, haz clic en "Buscar por captura" o simplemente pega la captura con Ctrl+V.'},
+       {pt:'Pode ser print do vídeo, do Instagram ou do WhatsApp, mesmo cortado.',es:'Puede ser captura del video, de Instagram o de WhatsApp, aunque esté recortada.'},
+       {pt:'Veja os 10 mais parecidos. "Muito parecido" quase sempre é o vídeo certo.',es:'Mira los 10 más parecidos. "Muy parecido" casi siempre es el video correcto.'},
+       {pt:'Clique em "Abrir" para ver o vídeo, baixar ou pegar a versão de 16 MB.',es:'Haz clic en "Abrir" para ver el video, descargarlo o tomar la versión de 16 MB.'}
+     ], texto:{pt:'O print não sai do seu computador: a comparação acontece no próprio navegador. Funciona melhor quando a cena do print aparece nas miniaturas do vídeo.',es:'La captura no sale de tu computadora: la comparación ocurre en el propio navegador. Funciona mejor cuando la escena de la captura aparece en las miniaturas del video.'},
+     links:[{rotulo:{pt:'Abrir a Videoteca',es:'Abrir la Videoteca'}, url:'../videoteca/index.html'}]},
     {id:'portal-idioma', categoria:'Portal', titulo:{pt:'Trocar o idioma do portal',es:'Cambiar el idioma del portal'},
      resumo:{pt:'PT ou ES no canto superior direito.',es:'PT o ES en la esquina superior derecha.'},
      passos:[

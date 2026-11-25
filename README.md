@@ -54,6 +54,40 @@ Itens com a etiqueta **A preencher**, **A confirmar** ou **Exemplo** ainda preci
 - **Área nova:** crie `dados/<nova>.js` (copie um existente) e acrescente uma linha em `dados/areas.js`.
 - **Traduzir:** todo texto pode ser `{pt:'...', es:'...'}`. Nas páginas fixas, use `data-es="..."`.
 
+## Videoteca: achar vídeo por print
+
+Na Videoteca, o botão **Achar por print** (ou Ctrl+V com um print) mostra os 10 vídeos mais parecidos. Tudo roda no navegador; o print não é enviado a lugar nenhum.
+
+| Arquivo | O que é |
+| --- | --- |
+| `videoteca/print-busca.js` | Motor: calcula a "impressão digital" de uma imagem e compara com a base |
+| `videoteca/print-tela.js` | A tela (arrastar, colar, resultados) |
+| `videoteca/print-indice.js` | A base com as impressões digitais de todos os quadros (gerada, não editar) |
+| `ferramentas/gerar-indice-print.js` | Gera a base usando o mesmo código do site |
+
+Precisão medida em 400 vídeos (código do site, no navegador):
+
+| Tipo de print | 1º lugar | Entre os 10 primeiros |
+| --- | --- | --- |
+| Direto (WhatsApp) | 97,5% | 100% |
+| Instagram (com botões e legenda) | 97% | 99,8% |
+| Cortado / com zoom | 83% | 98% |
+| Momento do vídeo diferente dos quadros guardados | 41% | 64% |
+
+**Quando o catálogo mudar**, gere a base de novo: `node ferramentas/gerar-indice-print.js` (precisa de Node e Playwright).
+
+### Próximo passo: 15 quadros por vídeo e leitura de legendas
+
+Hoje a base usa os 5 quadros das miniaturas. Com 15 quadros, o caso mais difícil (print de outro momento do vídeo) melhora, e as legendas lidas ajudam a descobrir países e a reorganizar vídeos.
+
+1. Instale ffmpeg e tesseract (instruções no topo de `ferramentas/quadros/gerar_quadros.py`).
+2. Teste com poucos vídeos: `python3 ferramentas/quadros/gerar_quadros.py --baixar --limite 5`
+   - ou, com os vídeos numa pasta do computador: `--pasta "caminho/da/pasta"`
+3. Rode para todos (sem `--limite`). Ele continua de onde parou se for interrompido.
+4. Gere a base de novo: `node ferramentas/gerar-indice-print.js` (fica com cerca de 6 MB).
+5. Revise `ferramentas/quadros/saida/sugestoes-paises.csv`: vídeos em que a legenda cita um país, cidade ou gentílico diferente do que está no catálogo. Nada muda no catálogo sem revisão.
+6. O texto de todas as legendas fica em `ferramentas/quadros/saida/legendas.json`, para reorganizar categorias depois.
+
 ## Ver no computador
 Na pasta do projeto:
 

@@ -5,6 +5,13 @@ MM.area({
   id:'mural', layout:'mural',
   filtros:[{campo:'categoria', rotulo:{pt:'Tipo', es:'Tipo'}}],
   itens:[
+    {id:'busca-por-print', data:'2026-11-25', categoria:{pt:'Ferramenta',es:'Herramienta'},
+     titulo:{pt:'Videoteca: achar vídeo por print',es:'Videoteca: encontrar video por captura'},
+     resumo:{pt:'Cole um print e a Videoteca mostra os 10 vídeos mais parecidos. Nos testes, acertou o vídeo em 1º lugar em 97% dos prints diretos e do Instagram.',es:'Pega una captura y la Videoteca muestra los 10 videos más parecidos. En las pruebas, acertó el video en 1.er lugar en el 97% de las capturas directas y de Instagram.'},
+     links:[{rotulo:{pt:'Abrir a Videoteca',es:'Abrir la Videoteca'}, url:'../videoteca/index.html'}]},
+    {id:'novo-visual', data:'2026-11-25', categoria:{pt:'Portal',es:'Portal'},
+     titulo:{pt:'Novo visual do Mundo Marketing',es:'Nuevo diseño de Mundo Marketing'},
+     resumo:{pt:'Fundo azul-noite, busca no centro e áreas em blocos, inspirado no Raycast.',es:'Fondo azul noche, búsqueda en el centro y áreas en bloques, inspirado en Raycast.'}},
     {id:'mundo-marketing', data:'2026-11-25', categoria:{pt:'Portal',es:'Portal'},
      titulo:{pt:'Nasce o Mundo Marketing',es:'Nace Mundo Marketing'},
      resumo:{pt:'Portal com tudo que o marketing já fez, em português e espanhol: Videoteca, Manual do Criativo, áreas por setor e busca geral.',es:'Portal con todo lo que el marketing ya hizo, en portugués y español: Videoteca, Manual del Creativo, áreas por sector y búsqueda general.'},
