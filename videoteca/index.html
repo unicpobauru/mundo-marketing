@@ -288,10 +288,6 @@ body::before{background:var(--bg)}
     <textarea id="sugTxt" rows="4" maxlength="800" placeholder="Ex.: depoimento de aluno da Bolívia falando de Periodontia, em vertical, de até 1 minuto" style="width:100%;border:1px solid var(--line);border-radius:9px;padding:9px 10px;background:var(--panel);color:var(--ink);font:inherit;resize:vertical"></textarea>
     <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"><button class="btn pri" type="submit" id="sugSend">Enviar</button><span id="sugMsg" style="font-size:12px;color:var(--muted)"></span></div>
   </form>
-  <div id="sugCom" class="opts" hidden>
-    <p style="margin:0;font-size:13px">Seu acesso é de <b>comentarista</b>: a sua sugestão vai como <b>comentário</b> direto para o marketing. Clique abaixo, escreva e envie na caixinha de comentário que abrir.</p>
-    <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"><button class="btn pri" type="button" id="sugComBtn">Escrever sugestão</button><span id="sugComMsg" style="font-size:12px;color:var(--muted)"></span></div>
-  </div>
   <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap">
     <h3 class="sec" style="margin:0">Mural da equipe</h3>
     <div class="seg"><button data-sfil="todas" aria-pressed="true">Todas</button><button data-sfil="falta" aria-pressed="false">Faltou</button><button data-sfil="ideia" aria-pressed="false">Ideias</button><button data-sfil="aberta" aria-pressed="false">Em aberto</button></div>
@@ -728,7 +724,7 @@ document.addEventListener('click',e=>{
 const saved=store.get('filters',null);
 // Mundo Marketing: no portal (fora do claude.ai) o mural de sugestões e o contador de downloads não funcionam
 const NO_CLAUDE = !(window.claude && window.claude.use);
-if(NO_CLAUDE){ $('#openSug').hidden=true; const ob=document.querySelector('#sort option[value="baixados"]'); if(ob) ob.remove(); if(saved && saved.sort==='baixados') saved.sort='rel'; }
+if(NO_CLAUDE){ const ob=document.querySelector('#sort option[value="baixados"]'); if(ob) ob.remove(); if(saved && saved.sort==='baixados') saved.sort='rel'; }
 if(saved){ S.q=saved.q||''; $('#q').value=S.q; for(const k in saved.sel||{}) if(S.sel[k]) saved.sel[k].forEach(v=>S.sel[k].add(v)); S.sort=saved.sort||'rel'; $('#sort').value=S.sort; }
 // Mundo Marketing: ?q=... na URL (vindo da busca do portal) substitui a última busca
 const URLQ=new URLSearchParams(location.search).get('q');
@@ -740,85 +736,68 @@ $('#openTools').addEventListener('click',()=>{closeAll(); $('#scrim').hidden=fal
 document.addEventListener('click',async e=>{ const b=e.target.closest('[data-copylink]'); if(!b) return;
   try{ await navigator.clipboard.writeText(b.dataset.copylink); toast(T('Link copiado')); }catch(err){ toast(b.dataset.copylink); } });
 
-// ---------- Sugestões (mural compartilhado) ----------
-// Banco: sugestoes/<id da pessoa> = { itens: [ {id, tipo:'falta'|'ideia', texto, quando, feito} ] }
+// ---------- Sugestões (mural compartilhado, no Supabase) ----------
+// Tabela public.sugestoes (supabase/02-sugestoes.sql): todos os logados veem e enviam; cada um apaga a própria; admin marca como atendida.
 const TIPOS={falta:{tab:'Senti falta de…',lbl:'Que vídeo você procurou e não achou?',ph:'Ex.: depoimento de aluno da Bolívia falando de Periodontia, em vertical, de até 1 minuto',tag:'Senti falta de'},
              ideia:{tab:'Que tal…',lbl:'Que ideia ou melhoria você sugere?',ph:'Ex.: que tal ter um filtro só de vídeos com legenda em português?',tag:'Que tal'}};
-let STIPO='falta', SFIL='todas', DB=null, USR=null, MYID=null, ISOWNER=false, SUGDOCS=[], NAMES={}, sugLoaded=false, sugErr='';
-function sugReady(){
-  if(!window.claude || !window.claude.use){ sugErr='O mural de sugestões funciona quando o portal é aberto pelo link do Claude.'; renderSug(); return; }
-  Promise.all([window.claude.use('db'), window.claude.use('user')]).then(async([db,user])=>{
-    DB=db; USR=user;
-    if(!DB){ sugErr='Entre na sua conta Claude para ver e enviar sugestões.'; renderSug(); return; }
-    try{ MYID = USR ? await USR.id() : null; ISOWNER = USR ? !!(await USR.isOwner()) : false; }catch(e){}
-    try{ if(USR && USR.can && (await USR.can('data.write'))===false) commentMode(); }catch(e){}
-    const timer=setTimeout(()=>{ if(!sugLoaded){ sugErr='Não foi possível carregar o mural agora. Tente de novo em instantes.'; renderSug(); } },10000);
-    DB.collection('sugestoes').onSnapshot(async snap=>{
-      if(!snap.metadata || !snap.metadata.fromCache){ clearTimeout(timer); }
-      sugLoaded=true; sugErr='';
-      SUGDOCS = snap.docs.map(d=>({uid:d.id, itens:((d.data()||{}).itens)||[]}));
-      try{ if(USR && USR.profiles){ const ids=SUGDOCS.map(d=>d.uid); const ps=await USR.profiles(ids); for(const id of ids) NAMES[id]=(ps&&ps[id]&&ps[id].name)||''; } }catch(e){}
-      renderSug();
-    }, err=>{ clearTimeout(timer); sugErr='O mural não pôde ser carregado ('+(err&&err.code||'erro')+').'; renderSug(); });
-  }).catch(()=>{ sugErr='O mural de sugestões não está disponível neste acesso.'; renderSug(); });
+let STIPO='falta', SFIL='todas', SB=null, MYID=null, MYNOME='', ISOWNER=false, SUGS=[], sugLoaded=false, sugErr='';
+function esperaAuth(){ return new Promise(ok=>{ let n=0; (function v(){ if(window.MM && MM.auth && MM.auth.pronto) return ok(MM.auth); if(++n>100) return ok(null); setTimeout(v,50); })(); }); }
+async function sugCarregar(){
+  if(!SB) return;
+  const r = await SB.from('sugestoes').select('id,usuario,nome,tipo,texto,feito,criado_em').order('criado_em',{ascending:false}).limit(500);
+  if(r.error){ sugErr='Não foi possível carregar o mural agora.'; renderSug(); return; }
+  SUGS=r.data||[]; sugLoaded=true; sugErr=''; renderSug();
+}
+async function sugReady(){
+  const auth = await esperaAuth();
+  if(!auth || !auth.ativo){ sugErr='O mural de sugestões funciona no portal com login.'; renderSug(); return; }
+  const sessao = await auth.pronto;
+  if(!sessao){ sugErr='Entre no portal para ver e enviar sugestões.'; renderSug(); return; }
+  SB = await auth.cliente(); MYID = sessao.user.id;
+  const md = sessao.user.user_metadata||{}; MYNOME = md.nome || md.full_name || (sessao.user.email||'').split('@')[0];
+  try{ const p = await SB.from('perfis').select('nome,papel').eq('id',MYID).maybeSingle(); if(p.data){ ISOWNER = p.data.papel==='admin'; if(p.data.nome) MYNOME=p.data.nome; } }catch(e){}
+  await sugCarregar();
 }
 function fmtData(t){ try{ return new Date(t).toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit',year:'2-digit'})+' '+new Date(t).toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'}); }catch(e){ return ''; } }
 function renderSug(){
   const el=$('#sugList'); if(!el) return;
   if(sugErr && !sugLoaded){ el.innerHTML=`<div class="empty">${esc(sugErr)}</div>`; return; }
   if(!sugLoaded){ el.innerHTML=`<div class="empty">Carregando sugestões…</div>`; return; }
-  let all=[]; for(const d of SUGDOCS) for(const it of d.itens) all.push({...it, uid:d.uid});
-  all.sort((a,b)=>(b.quando||0)-(a.quando||0));
+  let all=SUGS.slice();
   if(SFIL==='falta'||SFIL==='ideia') all=all.filter(x=>x.tipo===SFIL);
   if(SFIL==='aberta') all=all.filter(x=>!x.feito);
   el.innerHTML = all.length ? all.map(x=>{
-    const mine = x.uid===MYID, canEdit = mine || ISOWNER;
+    const mine = x.usuario===MYID, canDel = mine || ISOWNER;
     return `<div class="sug ${x.feito?'done':''}"><div class="sh"><span class="tag ${x.tipo==='falta'?'tipo':'cr'}">${TIPOS[x.tipo]?TIPOS[x.tipo].tag:'Sugestão'}</span>
-      <span>${esc(NAMES[x.uid]||(mine?'Você':'Alguém da equipe'))}</span><span>${fmtData(x.quando)}</span>${x.feito?'<span class="tag">✓ atendida</span>':''}</div>
+      <span>${esc(mine?'Você':(x.nome||'Alguém da equipe'))}</span><span>${fmtData(x.criado_em)}</span>${x.feito?'<span class="tag">✓ atendida</span>':''}</div>
       <p>${esc(x.texto)}</p>
-      ${canEdit?`<div class="sa">${ISOWNER?`<button class="btn" data-sdone="${esc(x.uid)}|${esc(x.id)}">${x.feito?'Reabrir':'Marcar como atendida'}</button>`:''}<button class="btn" data-sdel="${esc(x.uid)}|${esc(x.id)}">Apagar</button></div>`:''}</div>`;
+      ${canDel?`<div class="sa">${ISOWNER?`<button class="btn" data-sdone="${x.id}">${x.feito?'Reabrir':'Marcar como atendida'}</button>`:''}<button class="btn" data-sdel="${x.id}">Apagar</button></div>`:''}</div>`;
   }).join('') : `<div class="empty">${SFIL==='todas'?'Ainda não há sugestões. Seja a primeira a pedir um vídeo ou dar uma ideia.':'Nenhuma sugestão neste filtro.'}</div>`;
 }
 function setTipo(t){ STIPO=t; document.querySelectorAll('[data-stipo]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.stipo===t)); $('#sugLbl').textContent=TIPOS[t].lbl; $('#sugTxt').placeholder=TIPOS[t].ph; }
 let sugBusy=false;
-async function writeItens(uid, itens){ const ref=DB.collection('sugestoes').doc(uid); await ref.set({itens}); }
 $('#sugForm').addEventListener('submit',async e=>{
   e.preventDefault(); const txt=$('#sugTxt').value.trim(); const msg=$('#sugMsg');
   if(!txt){ msg.textContent='Escreva sua sugestão antes de enviar.'; return; }
-  if(!DB || !MYID){ msg.textContent= sugErr || 'Entre na sua conta Claude para enviar.'; return; }
+  if(!SB || !MYID){ msg.textContent= sugErr || 'Entre no portal para enviar.'; return; }
   if(sugBusy) return; sugBusy=true; $('#sugSend').disabled=true; msg.textContent='Enviando…';
-  try{
-    const mine=(SUGDOCS.find(d=>d.uid===MYID)||{itens:[]}).itens.slice();
-    mine.push({id:Date.now().toString(36)+Math.random().toString(36).slice(2,6), tipo:STIPO, texto:txt.slice(0,800), quando:Date.now(), feito:false});
-    await writeItens(MYID, mine);
-    $('#sugTxt').value=''; msg.textContent='Enviado. Obrigada!'; toast('Sugestão enviada');
-  }catch(err){
-    if(err && (err.code==='permission_denied'||err.code==='not_granted')){ msg.textContent=''; commentMode(); }
-    else msg.textContent = 'Não deu para enviar agora. Tente de novo em instantes.';
-  }finally{ sugBusy=false; $('#sugSend').disabled=false; }
+  const r = await SB.from('sugestoes').insert({tipo:STIPO, texto:txt.slice(0,800), nome:MYNOME});
+  if(r.error) msg.textContent='Não deu para enviar agora. Tente de novo em instantes.';
+  else { $('#sugTxt').value=''; msg.textContent='Enviado. Obrigada!'; toast('Sugestão enviada'); await sugCarregar(); }
+  sugBusy=false; $('#sugSend').disabled=false;
 });
 document.addEventListener('click',async e=>{
   const st=e.target.closest('[data-stipo]'); if(st){ setTipo(st.dataset.stipo); return; }
   const sf=e.target.closest('[data-sfil]'); if(sf){ SFIL=sf.dataset.sfil; document.querySelectorAll('[data-sfil]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.sfil===SFIL)); renderSug(); return; }
-  const sd=e.target.closest('[data-sdone],[data-sdel]'); if(!sd || !DB || sugBusy) return;
-  const [uid,id]=(sd.dataset.sdone||sd.dataset.sdel).split('|'); const doc=SUGDOCS.find(d=>d.uid===uid); if(!doc) return;
-  let itens=doc.itens.slice();
-  if(sd.dataset.sdone) itens=itens.map(x=>x.id===id?{...x,feito:!x.feito}:x); else itens=itens.filter(x=>x.id!==id);
-  sugBusy=true; try{ await writeItens(uid,itens); toast(sd.dataset.sdel?'Sugestão apagada':'Sugestão atualizada'); }catch(err){ toast('Não foi possível alterar esta sugestão'); } finally{ sugBusy=false; }
+  const sd=e.target.closest('[data-sdone],[data-sdel]'); if(!sd || !SB || sugBusy) return;
+  sugBusy=true;
+  let r;
+  if(sd.dataset.sdone){ const x=SUGS.find(s=>String(s.id)===sd.dataset.sdone); r = await SB.from('sugestoes').update({feito:!(x&&x.feito)}).eq('id',sd.dataset.sdone); }
+  else r = await SB.from('sugestoes').delete().eq('id',sd.dataset.sdel);
+  toast(r.error ? 'Não foi possível alterar esta sugestão' : (sd.dataset.sdel?'Sugestão apagada':'Sugestão atualizada'));
+  sugBusy=false; await sugCarregar();
 });
-// Quem não pode gravar no banco (Comentarista/Leitor) manda a sugestão como comentário do portal.
-let COM=null;
-if(window.claude && window.claude.use) window.claude.use('comments').then(c=>{ COM=c; }).catch(()=>{});
-function commentMode(){
-  $('#sugForm').hidden=true; $('#sugCom').hidden=false;
-}
-$('#sugComBtn').addEventListener('click',async()=>{
-  const m=$('#sugComMsg');
-  if(!COM){ m.textContent='Use o modo de comentários do Claude (ícone de balão no topo) para deixar a sua sugestão.'; return; }
-  try{ const r=await COM.openComposer({element:$('#sugCom')}); m.textContent = r&&r.opened ? 'Escreva na caixinha de comentário e envie.' : ''; }
-  catch(err){ m.textContent = (err&&err.code==='rate_limited') ? 'Aguarde um instante e tente de novo.' : 'Use o modo de comentários do Claude (ícone de balão no topo) para deixar a sua sugestão.'; }
-});
-$('#openSug').addEventListener('click',()=>{closeAll(); $('#scrim').hidden=false; $('#sug').hidden=false; renderSug(); setTimeout(()=>$('#sugTxt').focus(),50);});
+$('#openSug').addEventListener('click',()=>{closeAll(); $('#scrim').hidden=false; $('#sug').hidden=false; sugCarregar(); setTimeout(()=>$('#sugTxt').focus(),50);});
 sugReady();
 
 // ---------- Contagem de downloads (Mais baixados) ----------

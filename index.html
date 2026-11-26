@@ -132,9 +132,10 @@
     'tutoriais-aluno':'<circle cx="12" cy="8" r="3.5"/><path d="M5 20a7 7 0 0 1 14 0"/>',
     professores:'<circle cx="9" cy="8" r="3"/><path d="M3 20a6 6 0 0 1 12 0"/><circle cx="17" cy="9" r="2.5"/><path d="M15.5 14.5A5 5 0 0 1 21 19"/>',
     gravacao:'<rect x="3" y="7" width="12" height="10" rx="2"/><path d="m15 11 6-3v8l-6-3z"/>',
+    redes:'<circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="6" r="2.5"/><circle cx="18" cy="18" r="2.5"/><path d="m8.2 10.8 7.6-3.6M8.2 13.2l7.6 3.6"/>',
     visitante:'<path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/>'
   };
-  var COR = {videoteca:'#34AED6',manual:'#8B7CFF',kit:'#FF7AB6',tutoriais:'#36C2B4',fotos:'#F59E5B',mural:'#5BC0FF',glossario:'#A78BFA',cursos:'#34AED6',provas:'#F4BE4F',duvidas:'#8ACBBD','tutoriais-aluno':'#36C2B4',professores:'#66D3FF',gravacao:'#FF6B6B',visitante:'#F59E5B'};
+  var COR = {videoteca:'#34AED6',manual:'#8B7CFF',kit:'#FF7AB6',tutoriais:'#36C2B4',fotos:'#F59E5B',mural:'#5BC0FF',glossario:'#A78BFA',cursos:'#34AED6',provas:'#F4BE4F',duvidas:'#8ACBBD','tutoriais-aluno':'#36C2B4',professores:'#66D3FF',gravacao:'#FF6B6B',visitante:'#F59E5B',redes:'#FF7AB6'};
   function ico(id, size){
     var s = el('span', {class:'ico', style:'background:radial-gradient(circle at 30% 20%,rgba(255,255,255,.35),transparent 50%),linear-gradient(160deg,' + (COR[id]||'#34AED6') + ',rgba(10,16,28,.9) 140%);box-shadow:0 8px 24px -10px ' + (COR[id]||'#34AED6') + ',inset 0 1px 0 rgba(255,255,255,.3)' + (size ? ';width:' + size + 'px;height:' + size + 'px' : '')});
     s.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' + (P[id] || P.kit) + '</svg>';
@@ -212,10 +213,12 @@
     // Banco de fotos, Glossário e Ferramentas: todas as áreas ficam na home
     var fach = el('div', {class:'fach'}, ['sede-00fachada','homero-00fachada','auxiliar-00fachada','auditorio-00fachada'].map(function(f){ return el('img', {src:'assets/fotos/predio/mini/' + f + '.jpg', alt:'', loading:'lazy'}); }));
     b.appendChild(card('', 'fotos', [fach, el('h3', {text:L(R.fotos.titulo)}), el('p', {text:L(R.fotos.descricao)})]));
-    b.appendChild(card('', 'glossario', [ico('glossario'), el('h3', {text:L(R.glossario.titulo)}), el('p', {text:L(R.glossario.descricao)}),
+    b.appendChild(card('wide', 'glossario', [ico('glossario'), el('h3', {text:L(R.glossario.titulo)}), el('p', {text:L(R.glossario.descricao)}),
       el('div', {class:'pills'}, ['CPL', 'CTR', 'ROAS', 'Lead'].map(function(t){ return el('span', {text:t}); }))]));
     b.appendChild(card('', 'visitante', [ico('visitante'), el('h3', {text:L(R.visitante.titulo)}), el('p', {text:L(R.visitante.descricao)}),
       el('div', {class:'pills'}, [T('Mapa UniCPO','Mapa UniCPO'), 'Tour 3D', T('Vídeos','Videos')].map(function(t){ return el('span', {text:t}); }))]));
+    b.appendChild(card('wide', 'redes', [ico('redes'), el('h3', {text:L(R.redes.titulo)}), el('p', {text:L(R.redes.descricao)}),
+      el('div', {class:'pills'}, ['UniCPO','Clínica','FAINTER','MPA'].map(function(t){ return el('span', {text:t}); }))]));
   }
 
   function tudo(){ cmdList(); bento(); }
