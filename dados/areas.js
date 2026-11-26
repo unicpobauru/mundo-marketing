@@ -37,7 +37,7 @@ MM.REGISTRO = [
    descricao:{pt:'O que o marketing entregou, em ordem de data.', es:'Lo que el marketing entregó, por fecha.'}},
   {id:'redes',
    titulo:{pt:'Redes sociais', es:'Redes sociales'},
-   descricao:{pt:'Instagram, TikTok, Facebook e YouTube da UniCPO, Clínica, FAINTER e MPA.', es:'Instagram, TikTok, Facebook y YouTube de UniCPO, Clínica, FAINTER y MPA.'}},
+   descricao:{pt:'Instagram, TikTok, Facebook e YouTube da UniCPO, Clínica, FAINTER e MPA (Medical Performance Academy).', es:'Instagram, TikTok, Facebook y YouTube de UniCPO, Clínica, FAINTER y MPA.'}},
   {id:'glossario',
    titulo:{pt:'Glossário', es:'Glosario'},
    descricao:{pt:'Termos de marketing explicados para toda a empresa.', es:'Términos de marketing explicados para toda la empresa.'}},

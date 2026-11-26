@@ -4,7 +4,7 @@
    codigo = como o curso aparece na Videoteca, para contar e abrir os vídeos.
    Turmas, valores, cronograma de módulos e PDFs vêm de dados/cursos-material.js (material comercial do Drive),
    gerado por ferramentas/cursos/gerar_cursos.py. Quando há turma nos dois, vale a do material comercial. */
-var CURSOS_COORD = {"c_eric": "Dr. Eric Tinoco", "c_vinicius": "Dr. Vinicius Porto", "c_gustavo": "Dr. Luis Gustavo Tramontin", "c_henrique": "Dr. Henrique Quevedo", "c_john": "Dr. John Alexis", "c_augusto": "Dr. Augusto Rodrigues", "c_juan": "Dr. Juan Carlos Castañeda", "c_fabricio": "Dr. Fabricio Valarelli", "c_andreia": "Dra. Andreia Pavani", "c_vanessa": "Dra. Vanessa Dainezi", "c_patrick": "Dr. Patrick Alves", "c_suedam": "Dr. Valdey Suedam", "c_mariel": "Dra. Mariel Ruivo Biancardi", "c_claudia": "Dra. Claudia Pinheiro"};
+var CURSOS_COORD = {"c_eric": "Dr. Eric Tinoco", "c_vinicius": "Dr. Vinicius Porto", "c_gustavo": "Dr. Luis Gustavo Tramontin", "c_henrique": "Dr. Henrique Quevedo", "c_john": "Dr. John Alexis", "c_augusto": "Dr. Augusto Rodrigues", "c_juan": "Dr. Juan Carlos Castañeda", "c_fabricio": "Dr. Fabricio Valarelli", "c_andreia": "Dra. Andreia Pavani", "c_vanessa": "Dra. Vanessa Dainezi", "c_patrick": "Dr. Patrick Alves", "c_suedam": "Dr. Valdey Suedam", "c_mariel": "Dra. Mariel Ruivo Biancardi", "c_claudia": "Dra. Claudia Pinheiro", "c_glauco": "Dr. Glauco Melo"};
 var CURSOS = [
 {
 "nome": "Dipl. AOF Step One",
@@ -448,6 +448,56 @@ var CURSOS = [
 "inicio": "2027-06-07"
 }
 ]
+},
+{
+"nome": "Pós MPA · Medicina Metabólica e Longevidade",
+"tipo": "pos",
+"coord": [
+"c_glauco"
+],
+"codigo": null,
+"site": "https://unicpobauru.github.io/mpa-medicina/",
+"turmas": [
+{
+"t": "Turma de fundadores",
+"inicio": "2027-02-06",
+"m": {
+"curso": "Pós MPA · Medicina Metabólica e Longevidade",
+"codigo": "MPA-1",
+"tipo": "pos",
+"inicio": "06/02/2027",
+"carga": "400",
+"modalidade": "75% online, no seu ritmo + 25% em encontros presenciais",
+"local": "São Paulo (4 encontros presenciais)",
+"publico": "Exclusivo para médicos formados, de qualquer especialidade",
+"investimento": "Informado pela equipe acadêmica depois da inscrição, com opções de parcelamento",
+"cronograma": [
+[
+"1",
+"08/05/2027",
+"09/05/2027"
+],
+[
+"2",
+"04/09/2027",
+"05/09/2027"
+],
+[
+"3",
+"05/02/2028",
+"06/02/2028"
+],
+[
+"4",
+"01/07/2028",
+"02/07/2028"
+]
+],
+"cronogramaNome": "Encontros presenciais",
+"arquivos": {}
+}
+}
+]
 }
 ];
 MM.area({
@@ -475,7 +525,7 @@ MM.area({
       var mat = MAT.turmas.filter(function(t){ return t.curso === c.nome; });
       var turmas = mat.map(function(t){ return {t:t.codigo.replace('-2', ' (entrada 2)'), inicio:iso(t.inicio), m:t}; });
       c.turmas.forEach(function(t){
-        if (!turmas.some(function(x){ return t.t && x.t.indexOf(t.t.split(' ')[0]) === 0; }) && !(t.t === '' && turmas.length)) turmas.push({t:t.t, inicio:t.inicio});
+        if (!turmas.some(function(x){ return t.t && x.t.indexOf(t.t.split(' ')[0]) === 0; }) && !(t.t === '' && turmas.length)) turmas.push({t:t.t, inicio:t.inicio, m:t.m});
       });
       turmas.sort(function(a,b){ return (a.inicio || '9').localeCompare(b.inicio || '9'); });
       var futuras = turmas.filter(function(t){ return t.inicio && t.inicio >= hoje; });
@@ -520,8 +570,8 @@ MM.area({
         id: c.nome.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,''),
         titulo: c.nome,
         // dados crus para a página própria de cursos (cursos/index.html)
-        tipo: c.tipo, coordIds: c.coord, turmasDet: turmas, geral: ger, nVideos: nv, codigo: c.codigo,
-        categoria: c.tipo === 'esp' ? {pt:'Especialização', es:'Especialización'} : {pt:'Diplomado', es:'Diplomado'},
+        tipo: c.tipo, coordIds: c.coord, turmasDet: turmas, geral: ger, nVideos: nv, codigo: c.codigo, site: c.site,
+        categoria: c.tipo === 'esp' ? {pt:'Especialização', es:'Especialización'} : c.tipo === 'pos' ? {pt:'Pós-graduação', es:'Posgrado'} : {pt:'Diplomado', es:'Diplomado'},
         coordenador: coords,
         situacao: futuras.length ? {pt:'Com turma marcada', es:'Con grupo programado'} : (semData ? {pt:'Sem data', es:'Sin fecha'} : {pt:'Sem turma futura', es:'Sin grupo futuro'}),
         resumo: prox ? {pt:'Próximo início: ' + fmt(prox.inicio) + ' (' + prox.t + ')' + preco.pt, es:'Próximo inicio: ' + fmt(prox.inicio) + ' (' + prox.t + ')' + preco.es}

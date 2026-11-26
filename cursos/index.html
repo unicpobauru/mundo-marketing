@@ -8,7 +8,7 @@
 <style>
 /* cores por especialidade */
 .c-aof{--c:#FF7AB6}.c-dent{--c:#F4BE4F}.c-endo{--c:#FF6B6B}.c-impl{--c:#34AED6}.c-odp{--c:#8ACBBD}
-.c-orto{--c:#A78BFA}.c-perio{--c:#36C2B4}.c-reab{--c:#66D3FF}.c-cir{--c:#F59E5B}
+.c-orto{--c:#A78BFA}.c-perio{--c:#36C2B4}.c-reab{--c:#66D3FF}.c-cir{--c:#F59E5B}.c-med{--c:#E879F9}
 
 .cr-hero{padding:56px 0 18px}
 .cr-hero .eyebrow{color:var(--accent-2);font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase}
@@ -161,14 +161,16 @@ dialog.cd::backdrop{background:rgba(2,4,9,.72);backdrop-filter:blur(6px)}
     {id:'orto',  cls:'c-orto',  pt:'Ortodontia',             es:'Ortodoncia', re:/Ortod|Alineadores|Biomecánica|Mini Implantes/},
     {id:'perio', cls:'c-perio', pt:'Periodontia',            es:'Periodoncia', re:/Periodon|Corona/},
     {id:'reab',  cls:'c-reab',  pt:'Reabilitação Oral',      es:'Rehabilitación Oral', re:/Rehabilitación|Laminados|Metal Free/},
-    {id:'cir',   cls:'c-cir',   pt:'Cirurgia facial',        es:'Cirugía facial', re:/Blefaroplastia/}
+    {id:'cir',   cls:'c-cir',   pt:'Cirurgia facial',        es:'Cirugía facial', re:/Blefaroplastia/},
+    {id:'med',   cls:'c-med',   pt:'Medicina (MPA)',         es:'Medicina (MPA)', re:/MPA|Medicina Metab/}
   ];
   var FOTO = {c_andreia:'andreia', c_augusto:'augusto', c_claudia:'claudia', c_eric:'eric', c_fabricio:'fabricio', c_gustavo:'gustavo',
-              c_henrique:'henrique', c_john:'john', c_juan:'juan', c_patrick:'patrick', c_suedam:'suedam', c_vanessa:'vanessa', c_vinicius:'vinicius'};
+              c_henrique:'henrique', c_john:'john', c_juan:'juan', c_patrick:'patrick', c_suedam:'suedam', c_vanessa:'vanessa', c_vinicius:'vinicius', c_glauco:'mpa-glauco-melo'};
   var MES = {pt:['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'], es:['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic']};
   var hoje = new Date().toISOString().slice(0,10);
   var CURS = [], estado = {q:'', tipo:'', area:''};
 
+  function tipoNome(c){ return c.tipo === 'esp' ? T('Especialização','Especialización') : c.tipo === 'pos' ? T('Pós-graduação','Posgrado') : 'Diplomado'; }
   function areaDe(nome){ for (var i = 0; i < AREAS.length; i++) if (AREAS[i].re.test(nome)) return AREAS[i]; return AREAS[3]; }
   function iso(d){ var m = /^(\d\d)\/(\d\d)\/(\d{4})$/.exec(d || ''); return m ? m[3] + '-' + m[2] + '-' + m[1] : (d || ''); }
   function dParts(isoD){ var p = (isoD || '').split('-'); return p.length === 3 ? {d:p[2], m:MES[window.MM_LANG === 'es' ? 'es' : 'pt'][+p[1] - 1], y:p[0]} : null; }
@@ -184,7 +186,7 @@ dialog.cd::backdrop{background:rgba(2,4,9,.72);backdrop-filter:blur(6px)}
     return el('div', {class:'coord'}, [avatar(c.coordIds[0], nomes[0] || ''), el('span', {text:nomes.join(' · ')})]);
   }
   function proxTurma(c){ return c.turmasDet.filter(function(t){ return t.inicio && t.inicio >= hoje; })[0]; }
-  function precoCurto(t){ if (!t || !t.m) return ''; return t.m.tipo === 'esp' ? T('mensal ', 'cuota ') + usd(t.m.mensalidade) : usd(t.m.valor); }
+  function precoCurto(t){ if (!t || !t.m || !(t.m.mensalidade || t.m.valor)) return ''; return t.m.tipo === 'esp' ? T('mensal ', 'cuota ') + usd(t.m.mensalidade) : usd(t.m.valor); }
 
   function carregar(){
     var def = MM._area; if (!def) return;
@@ -195,7 +197,7 @@ dialog.cd::backdrop{background:rgba(2,4,9,.72);backdrop-filter:blur(6px)}
 
   function montarFiltros(){
     var tipo = document.getElementById('tipo'); tipo.textContent = '';
-    [['', T('Todos','Todos')], ['esp', T('Especializações','Especializaciones')], ['dipl', T('Diplomados','Diplomados')]].forEach(function(o){
+    [['', T('Todos','Todos')], ['esp', T('Especializações','Especializaciones')], ['dipl', T('Diplomados','Diplomados')], ['pos', T('Pós-graduação','Posgrado')]].forEach(function(o){
       tipo.appendChild(el('button', {type:'button', class:estado.tipo === o[0] ? 'on' : '', text:o[1], onclick:function(){ estado.tipo = o[0]; montarFiltros(); render(); }}));
     });
     var ar = document.getElementById('areas'); ar.textContent = '';
@@ -221,7 +223,7 @@ dialog.cd::backdrop{background:rgba(2,4,9,.72);backdrop-filter:blur(6px)}
     var vis = CURS.filter(filtra);
     var turmas = 0, futuras = []; CURS.forEach(function(c){ c.turmasDet.forEach(function(t){ if (t.m) turmas++; if (t.inicio && t.inicio >= hoje) futuras.push({c:c, t:t}); }); });
     var st = document.getElementById('stats'); st.textContent = '';
-    [[CURS.filter(function(c){ return c.tipo === 'esp'; }).length, T('especializações','especializaciones')], [CURS.filter(function(c){ return c.tipo !== 'esp'; }).length, T('diplomados','diplomados')],
+    [[CURS.filter(function(c){ return c.tipo === 'esp'; }).length, T('especializações','especializaciones')], [CURS.filter(function(c){ return c.tipo === 'dipl'; }).length, T('diplomados','diplomados')], [CURS.filter(function(c){ return c.tipo === 'pos'; }).length, T('pós-graduação','posgrado')],
      [turmas, T('turmas com material','grupos con material')], [AREAS.filter(function(a){ return CURS.some(function(c){ return c.area === a; }); }).length, T('especialidades','especialidades')]].forEach(function(x){
       st.appendChild(el('div', null, [el('b', {text:String(x[0])}), el('span', {text:x[1]})]));
     });
@@ -231,7 +233,7 @@ dialog.cd::backdrop{background:rgba(2,4,9,.72);backdrop-filter:blur(6px)}
       var p = dParts(f.t.inicio);
       px.appendChild(el('button', {type:'button', class:'prox-item ' + f.c.area.cls, onclick:function(){ abrir(f.c, f.t); }}, [
         el('div', {class:'d', text:p.d}), el('div', {class:'m', text:p.m + ' ' + p.y}),
-        el('div', {class:'n', text:f.c.titulo}), el('div', {class:'t', text:f.t.t + (f.t.m ? ' · ' + precoCurto(f.t) : '')})]));
+        el('div', {class:'n', text:f.c.titulo}), el('div', {class:'t', text:f.t.t + (precoCurto(f.t) ? ' · ' + precoCurto(f.t) : '')})]));
     });
     document.getElementById('proxSec').hidden = !px.childNodes.length;
     // seções por especialidade
@@ -250,13 +252,13 @@ dialog.cd::backdrop{background:rgba(2,4,9,.72);backdrop-filter:blur(6px)}
   function card(c){
     var p = c.prox, comMat = c.turmasDet.filter(function(t){ return t.m; });
     return el('button', {type:'button', class:'cc ' + c.area.cls + (p ? '' : ' passado'), onclick:function(){ abrir(c); }}, [
-      el('span', {class:'tp', text:c.tipo === 'esp' ? T('Especialização','Especialización') : 'Diplomado'}),
+      el('span', {class:'tp', text:tipoNome(c)}),
       el('h3', {text:c.titulo}),
       coordEl(c),
       c.turmasDet.length ? el('div', {class:'tchips'}, c.turmasDet.map(function(t){ return el('span', {class:t.inicio && t.inicio < hoje ? 'old' : '', text:t.t || T('sem turma','sin grupo')}); })) : null,
       el('div', {class:'next'}, p ? [
         el('div', null, [el('div', {class:'lbl', text:T('Próximo início','Próximo inicio')}), el('div', {class:'dt', text:dTxt(p.inicio)})]),
-        p.m ? el('div', {class:'pr'}, [el('div', {class:'lbl', text:c.tipo === 'esp' ? T('mensalidade','cuota') : T('valor','valor')}), el('b', {text:c.tipo === 'esp' ? usd(p.m.mensalidade) : usd(p.m.valor)})]) : null
+        p.m && (p.m.mensalidade || p.m.valor) ? el('div', {class:'pr'}, [el('div', {class:'lbl', text:c.tipo === 'esp' ? T('mensalidade','cuota') : T('valor','valor')}), el('b', {text:c.tipo === 'esp' ? usd(p.m.mensalidade) : usd(p.m.valor)})]) : null
       ] : [el('div', {class:'none', text:c.turmasDet.some(function(t){ return t.inicio; }) ? T('Turmas já iniciadas · aguardando nova turma','Grupos ya iniciados · esperando nuevo grupo') : T('Sem turma marcada','Sin grupo programado')})])
     ]);
   }
@@ -286,10 +288,11 @@ dialog.cd::backdrop{background:rgba(2,4,9,.72);backdrop-filter:blur(6px)}
     var g = c.geral || {}, fc = [];
     if (g.matriz) fc.push(arq(T('Matriz curricular','Matriz curricular'), 'PDF', '../' + g.matriz));
     if (g.apoio) fc.push(arq(T('Material de apoio','Material de apoyo'), 'PDF', '../' + g.apoio));
+    if (c.site) fc.push(el('a', {class:'file', href:c.site, target:'_blank', rel:'noopener'}, [el('span', {class:'ic', text:'↗'}), el('span', null, [T('Página do curso','Página del curso'), el('small', {text:T('landing page com inscrição','landing page con inscripción')})])]));
     if (c.nVideos) fc.push(el('a', {class:'file', href:'../videoteca/index.html?q=' + encodeURIComponent(c.codigo)}, [el('span', {class:'ic', text:'▶'}), el('span', null, [T('Vídeos na Videoteca','Videos en la Videoteca'), el('small', {text:c.nVideos + ' ' + T('vídeos','videos')})])]));
     if (fc.length){ body.appendChild(el('div', {class:'sub', text:T('Do curso','Del curso')})); body.appendChild(el('div', {class:'files'}, fc)); }
     dlg.appendChild(el('div', {class:'cd-head'}, [
-      el('div', {class:'tp', text:T(c.area.pt, c.area.es) + ' · ' + (c.tipo === 'esp' ? T('Especialização','Especialización') : 'Diplomado')}),
+      el('div', {class:'tp', text:T(c.area.pt, c.area.es) + ' · ' + tipoNome(c)}),
       el('h2', null, [c.titulo, c.prox ? null : el('span', {class:'ja', text:T('Sem turma futura','Sin grupo futuro')})]), coordEl(c),
       el('button', {class:'cd-x', type:'button', 'aria-label':T('Fechar','Cerrar'), text:'×', onclick:function(){ dlg.close(); }})]));
     dlg.appendChild(body);
@@ -318,11 +321,14 @@ dialog.cd::backdrop{background:rgba(2,4,9,.72);backdrop-filter:blur(6px)}
     if (m.mensalidade) pc.push([T('Mensalidade com pontualidade','Cuota con puntualidad'), usd(m.mensalidade), T('cheia ','sin descuento ') + usd(m.mensalidade_cheia)]);
     if (m.total) pc.push([T('Total com desconto','Total con descuento'), usd(m.total), T('cheio ','sin descuento ') + usd(m.total_cheio)]);
     if (m.valor) pc.push([T('Valor do curso','Valor del curso'), usd(m.valor), '']);
+    if (m.modalidade) out.push(el('div', {class:'fact', style:'margin-top:10px'}, [el('span', {text:T('Formato','Formato')}), el('b', {text:m.modalidade, style:'font-size:15px'})]));
+    if (m.publico) out.push(el('div', {class:'fact', style:'margin-top:10px'}, [el('span', {text:T('Público','Público')}), el('b', {text:m.publico, style:'font-size:15px'})]));
     if (m.local) out.push(el('div', {class:'fact', style:'margin-top:10px'}, [el('span', {text:T('Local','Lugar')}), el('b', {text:m.local, style:'font-size:15px'})]));
     if (pc.length) out.push(el('div', {class:'price'}, pc.map(function(p){ return el('div', {class:'pcard'}, [el('span', {text:p[0]}), el('b', {text:p[1]}), p[2] ? el('small', {text:p[2]}) : null]); })));
+    if (m.investimento) out.push(el('div', {class:'fact', style:'margin-top:10px'}, [el('span', {text:T('Investimento','Inversión')}), el('b', {text:m.investimento, style:'font-size:15px'})]));
     if (m.conferir) out.push(el('div', {class:'warn', text:T('Conferir: ','Verificar: ') + m.conferir}));
     if (m.cronograma && m.cronograma.length){
-      out.push(el('div', {class:'sub', text:T('Datas dos módulos','Fechas de los módulos')}));
+      out.push(el('div', {class:'sub', text:m.cronogramaNome || T('Datas dos módulos','Fechas de los módulos')}));
       out.push(el('div', {class:'timeline'}, m.cronograma.map(function(r){
         var fim = iso(r[2]);
         return el('div', {class:'mod' + (fim < hoje ? ' past' : '')}, [el('span', {class:'n', text:r[0]}), el('div', null, [dTxt(iso(r[1])), el('small', {text:T('até ','hasta ') + dTxt(fim)})])]);

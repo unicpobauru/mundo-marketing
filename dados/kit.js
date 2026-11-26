@@ -111,6 +111,13 @@ MM.area({
        {rotulo:{pt:'Avatar azul', es:'Avatar azul'}, url:M + 'logos/fainter/fainter-avatar-azul.png', baixar:true},
        {rotulo:{pt:'Avatar escuro', es:'Avatar oscuro'}, url:M + 'logos/fainter/fainter-avatar-escuro.png', baixar:true}]},
 
+    {id:'logo-mpa', categoria:LOG, titulo:{pt:'Logo MPA · Medical Performance Academy', es:'Logo MPA · Medical Performance Academy'},
+     imagem:M + 'logos/previa-capa-mpa.jpg', detalheImagem:M + 'logos/previa-logos-mpa.jpg',
+     resumo:{pt:'Pós-graduação em Medicina Metabólica e Longevidade da FAINTER. Preto e branco, em PNG.', es:'Posgrado en Medicina Metabólica y Longevidad de FAINTER. Negro y blanco, en PNG.'},
+     texto:{pt:'Fundo claro: preto. Fundo escuro ou foto: branco. Os arquivos vieram da página do MPA (900 px); para gráfica, peça o vetor.', es:'Fondo claro: negro. Fondo oscuro o foto: blanco. Los archivos vinieron de la página del MPA (900 px); para imprenta, pide el vector.'},
+     links:[{rotulo:{pt:'Todos os logos (.zip)', es:'Todos los logos (.zip)'}, url:M + 'downloads/logos-mpa.zip', baixar:true},
+            {rotulo:{pt:'Preto (PNG)', es:'Negro (PNG)'}, url:M + 'logos/mpa/mpa-preto.png', baixar:true},
+            {rotulo:{pt:'Branco (PNG)', es:'Blanco (PNG)'}, url:M + 'logos/mpa/mpa-branco.png', baixar:true}]},
     {id:'logo-mundo-marketing', categoria:LOG, titulo:{pt:'Ícone Mundo Marketing', es:'Ícono Mundo Marketing'},
      imagem:M + 'mundo-marketing/icone-512.png',
      resumo:{pt:'O ícone deste portal: símbolo da UniCPO com o mundo e a órbita.', es:'El ícono de este portal: símbolo de UniCPO con el mundo y la órbita.'},

@@ -7,8 +7,8 @@ var REDES = [
    instagram:'https://www.instagram.com/unicpoclinicabauru/', tiktok:'', facebook:'', youtube:'', site:''},
   {id:'fainter', marca:'FAINTER',         logo:'../assets/marca/logos/previa-capa-fainter.jpg',
    instagram:'https://www.instagram.com/fainter.oficial/', tiktok:'', facebook:'', youtube:'', site:''},
-  {id:'mpa',     marca:'MPA · Medical Academy', logo:'',
-   instagram:'https://www.instagram.com/medicalacademy.oficial/', tiktok:'', facebook:'', youtube:'', site:''}
+  {id:'mpa',     marca:'MPA · Medical Performance Academy', logo:'../assets/marca/logos/previa-capa-mpa.jpg',
+   instagram:'https://www.instagram.com/medicalacademy.oficial/', tiktok:'', facebook:'', youtube:'', site:'https://unicpobauru.github.io/mpa-medicina/'}
 ];
 MM.area({
   id:'redes', layout:'kit',
