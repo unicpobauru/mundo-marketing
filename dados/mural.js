@@ -16,7 +16,7 @@ MM.area({
      testar:{url:'../index.html', dica:{pt:'Veja a página inicial com o novo visual.',es:'Mira la página de inicio con el nuevo diseño.'}}},
     {id:'mundo-marketing', data:'2026-11-25', categoria:{pt:'Portal',es:'Portal'},
      titulo:{pt:'Nasce o Mundo Marketing',es:'Nace Mundo Marketing'},
-     resumo:{pt:'Portal com tudo que o marketing já fez, em português e espanhol: Videoteca, Manual do Criativo, áreas por setor e busca geral.',es:'Portal con todo lo que el marketing ya hizo, en portugués y español: Videoteca, Manual del Creativo, áreas por sector y búsqueda general.'},
+     resumo:{pt:'Portal com tudo que o marketing já fez, em português e espanhol: Videoteca, Manual do Criativo, áreas e busca geral.',es:'Portal con todo lo que el marketing ya hizo, en portugués y español: Videoteca, Manual del Creativo, áreas y búsqueda general.'},
      testar:{url:'../index.html', dica:{pt:'Comece pela página inicial e explore as áreas.',es:'Empieza por la página de inicio y explora las áreas.'}}},
     {id:'videoteca', data:'2026-11-19', categoria:{pt:'Ferramenta',es:'Herramienta'},
      titulo:{pt:'Videoteca UniCPO',es:'Videoteca UniCPO'},

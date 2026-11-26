@@ -60,7 +60,7 @@
 
 /* setores */
 .pills{display:flex;flex-wrap:wrap;gap:8px;margin-top:auto}
-.pills a{text-decoration:none;color:var(--ink);font-size:13.5px;font-weight:500;border:1px solid var(--line-2);background:var(--bg-2);border-radius:999px;padding:7px 14px}
+.pills a,.pills span{text-decoration:none;color:var(--ink);font-size:13.5px;font-weight:500;border:1px solid var(--line-2);background:var(--bg-2);border-radius:999px;padding:7px 14px}
 .pills a:hover{border-color:var(--accent)}
 
 /* mural */
@@ -201,9 +201,10 @@
     // Manual
     b.appendChild(card('', 'manual', [ico('manual'), el('h3', {text:L(R.manual.titulo)}), el('p', {text:L(R.manual.descricao)})]));
 
-    // Setores (bloco largo, não é link único)
-    var pills = el('div', {class:'pills'}, MM.SETORES.map(function(s){ return el('a', {href:'setores/index.html#' + s.id, text:L(s)}); }));
-    b.appendChild(el('div', {class:'card tile wide'}, [el('h3', {text:T('Para o seu setor','Para tu sector')}), el('p', {text:T('Cada setor encontra só o que o marketing preparou para ele.','Cada sector encuentra solo lo que el marketing preparó para él.')}), pills]));
+    // Academy (bloco largo, com os temas)
+    var temas = [['Integração','Integración'],['Mídias','Medios'],['Software','Software'],['Dados','Datos'],['Vendas','Ventas'],['Atendimento','Atención'],['Processos','Procesos'],['Liderança','Liderazgo'],['IA','IA']];
+    b.appendChild(card('wide', 'tutoriais', [ico('tutoriais'), el('h3', {text:L(R.tutoriais.titulo)}), el('p', {text:T('Trilhas de aprendizado do marketing para toda a empresa.','Rutas de aprendizaje del marketing para toda la empresa.')}),
+      el('div', {class:'pills'}, temas.map(function(t){ return el('span', {text:T(t[0], t[1])}); }))]));
 
     // Kit de marca
     b.appendChild(card('', 'kit', [ico('kit'), el('h3', {text:L(R.kit.titulo)}), el('p', {text:T('Cores, fontes, logos e a base de PowerPoint.','Colores, tipografías, logos y la base de PowerPoint.')})]));

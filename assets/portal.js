@@ -1,7 +1,7 @@
 /* Mundo Marketing · UniCPO — barra do portal, rodapé e troca de idioma (PT/ES)
    Como traduzir um texto em qualquer página:
    - Texto curto: escreva em português e coloque a versão em espanhol em data-es.
-       <h2 data-es="Para tu sector">Para o seu setor</h2>
+       <h2 data-es="Todas las áreas">Todas as áreas</h2>
    - Placeholder de campo: data-es-ph="...".
    - Bloco grande (vários parágrafos): dois blocos, um com data-lang="pt" e outro com data-lang="es".
 */
@@ -15,7 +15,6 @@
     {id:'inicio',    href:'index.html',           pt:'Início',             es:'Inicio'},
     {id:'videoteca', href:'videoteca/index.html', pt:'Videoteca',          es:'Videoteca'},
     {id:'manual',    href:'manual/index.html',    pt:'Manual do Criativo', es:'Manual del Creativo'},
-    {id:'setores',   href:'setores/index.html',   pt:'Para o seu setor',   es:'Para tu sector'},
     {id:'busca',     href:'busca/index.html',     pt:'Busca',              es:'Búsqueda'}
   ];
 

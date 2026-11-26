@@ -237,7 +237,7 @@
     function valores(it, campo){ var v = it[campo]; if (v == null) return []; return (Array.isArray(v) ? v : [v]).map(L).filter(Boolean); }
 
     function cabecalho(){
-      var setores = (reg.setores || []).map(function(s){ var x = (MM.SETORES||[]).filter(function(y){ return y.id === s; })[0]; return x ? x[lang()] : s; });
+      var setores = ['Mundo Marketing'];
       var h = el('div', {class:'wrap phead'}, [
         el('div', {class:'eyebrow', text:setores.join(' · ')}),
         el('h1', {text:L(def.titulo || reg.titulo)}),

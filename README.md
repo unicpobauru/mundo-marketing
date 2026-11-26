@@ -1,6 +1,6 @@
 # Mundo Marketing · UniCPO
 
-Portal interno do marketing da UniCPO: Videoteca, Manual do Criativo, Kit de marca, páginas por setor e busca geral. Português por padrão, com botão para trocar para espanhol.
+Portal interno do marketing da UniCPO: Videoteca, Manual do Criativo, Kit de marca, Academy, Materiais por curso e busca geral. Português por padrão, com botão para trocar para espanhol.
 
 É um site estático, só HTML, CSS e JavaScript, sem etapa de build.
 
@@ -8,7 +8,7 @@ Portal interno do marketing da UniCPO: Videoteca, Manual do Criativo, Kit de mar
 
 O portal tem três peças:
 
-1. **Registro de áreas** (`dados/areas.js`): lista todas as áreas, em quais setores aparecem e em que grupo da página inicial ficam. A página inicial, "Para o seu setor" e a Busca são montadas a partir dele.
+1. **Registro de áreas** (`dados/areas.js`): lista todas as áreas. A página inicial e a Busca são montadas a partir dele.
 2. **Dados de cada área** (`dados/<área>.js`): os itens daquela área (textos em PT e ES, categorias, links, vídeos). Algumas áreas geram itens sozinhas a partir do catálogo da Videoteca.
 3. **Motor de coleções** (`assets/colecao.js`): desenha qualquer área com busca, filtros, cartões e janela de detalhe. Formatos disponíveis: cartões, perguntas frequentes, glossário A–Z, mural por data, galeria de fotos, perfis e kit de marca.
 
@@ -22,7 +22,6 @@ Todas as áreas abrem em `area/index.html?id=<área>`. A Videoteca e o Manual do
 | `area/` | Página única que mostra qualquer área |
 | `videoteca/` | Videoteca (`data.js` é o catálogo; `thumbs/` são as miniaturas) |
 | `manual/` | Manual do Criativo em PT e ES |
-| `setores/` | O que cada setor encontra no portal |
 | `busca/` | Busca em todas as áreas, no Manual e nos vídeos |
 | `assets/portal.css`, `assets/portal.js` | Visual, barra do portal e troca de idioma |
 | `assets/colecao.js` | Motor de coleções |

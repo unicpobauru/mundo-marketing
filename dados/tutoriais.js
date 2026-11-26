@@ -89,7 +89,7 @@ MM.area({
      passos:[
        {pt:'Cada área tem um arquivo na pasta dados/ (por exemplo dados/glossario.js).',es:'Cada área tiene un archivo en la carpeta dados/ (por ejemplo dados/glossario.js).'},
        {pt:'Para um item novo, copie um item existente no arquivo e troque os textos.',es:'Para un ítem nuevo, copia un ítem existente en el archivo y cambia los textos.'},
-       {pt:'Para uma área nova, crie o arquivo e acrescente uma linha em dados/areas.js. Ela aparece sozinha no início, nos setores e na busca.',es:'Para un área nueva, crea el archivo y agrega una línea en dados/areas.js. Aparece sola en el inicio, en los sectores y en la búsqueda.'}
+       {pt:'Para uma área nova, crie o arquivo e acrescente uma linha em dados/areas.js. Ela aparece sozinha no início e na busca.',es:'Para un área nueva, crea el archivo y agrega una línea en dados/areas.js. Aparece sola en el inicio y en la búsqueda.'}
      ]},
     EM_BREVE('dados', 'Em breve: como ler os relatórios de campanha e os números de leads.', 'Próximamente: cómo leer los informes de campaña y los números de leads.'),
     EM_BREVE('atendimento', 'Em breve: boas práticas de atendimento ao lead e ao aluno.', 'Próximamente: buenas prácticas de atención al lead y al alumno.'),

@@ -1,59 +1,6 @@
 <!doctype html>
-<html lang="pt-BR">
-<head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Para o seu setor · Mundo Marketing</title>
-<meta name="robots" content="noindex,nofollow">
-<link rel="stylesheet" href="../assets/portal.css">
-</head>
-<body data-root="../" data-page="setores">
-
-<div class="wrap phead">
-  <div class="eyebrow" data-es="Lo que el marketing entrega a cada sector">O que o marketing entrega a cada setor</div>
-  <h1 data-es="Para tu sector">Para o seu setor</h1>
-  <p class="lead" data-es="Elige tu sector y encuentra solo los materiales que el marketing preparó para ti.">Escolha o seu setor e encontre só os materiais que o marketing preparou para você.</p>
-  <nav class="toc" id="toc" aria-label="Setores"></nav>
-</div>
-<main class="wrap" id="setores"></main>
-
-<script src="../dados/areas.js"></script>
-<script src="../assets/portal.js"></script>
-<script src="../assets/colecao.js"></script>
-<script>
-(function(){
-  var el = MM.el, L = MM.L;
-  // Links externos úteis por setor (além das áreas do registro)
-  var EXTRA = {
-    comercial:[{t:{pt:'Mapa UniCPO ↗',es:'Mapa UniCPO ↗'}, d:{pt:'Onde comer, ficar e como chegar à UniCPO em Bauru.',es:'Dónde comer, alojarse y cómo llegar a UniCPO en Bauru.'}, u:'https://unicpobauru.github.io/mapa-unicpo/'},
-               {t:{pt:'Tour 3D da clínica ↗',es:'Tour 3D de la clínica ↗'}, d:{pt:'Passeio virtual em 360° pelas clínicas.',es:'Recorrido virtual en 360° por las clínicas.'}, u:'https://tour.panoee.net/tourclinicaunicpo'}],
-    recepcao:[{t:{pt:'Mapa UniCPO ↗',es:'Mapa UniCPO ↗'}, d:{pt:'O que tem perto da UniCPO em Bauru.',es:'Lo que hay cerca de UniCPO en Bauru.'}, u:'https://unicpobauru.github.io/mapa-unicpo/'}],
-    academico:[{t:{pt:'Agenda de gravações ↗',es:'Agenda de grabaciones ↗'}, d:{pt:'Gravações Técnicas no Claude. Precisa de acesso.',es:'Grabaciones Técnicas en Claude. Necesita acceso.'}, u:'https://claude.ai/artifact/T2zdts5yp8QScVqTSh9qNi'}]
-  };
-  var SUB = {
-    marketing:{pt:'Tudo que a equipe usa no dia a dia.',es:'Todo lo que el equipo usa en el día a día.'},
-    comercial:{pt:'Materiais para enviar ao lead e fechar a venda.',es:'Materiales para enviar al lead y cerrar la venta.'},
-    cs:{pt:'Comunicação com quem já é aluno.',es:'Comunicación con quien ya es alumno.'},
-    academico:{pt:'Apoio a professores e gravações.',es:'Apoyo a profesores y grabaciones.'},
-    recepcao:{pt:'Para receber alunos e visitantes.',es:'Para recibir a alumnos y visitantes.'}
-  };
-  function draw(){
-    var toc = document.getElementById('toc'), box = document.getElementById('setores');
-    toc.textContent = ''; box.textContent = '';
-    MM.SETORES.forEach(function(s){
-      toc.appendChild(el('a', {href:'#' + s.id, text:L(s)}));
-      var mini = MM.REGISTRO.filter(function(r){ return r.setores.indexOf(s.id) >= 0; }).map(function(r){
-        return el('a', {class:'mini', href:MM.hrefArea(r, '../')}, [el('b', {text:L(r.titulo)}), el('span', {text:L(r.descricao)})]);
-      }).concat((EXTRA[s.id] || []).map(function(x){
-        return el('a', {class:'mini', href:x.u, target:'_blank', rel:'noopener'}, [el('b', {text:L(x.t)}), el('span', {text:L(x.d)})]);
-      }));
-      box.appendChild(el('section', {class:'sector', id:s.id}, [el('h2', {text:L(s)}), el('p', {class:'sub', text:L(SUB[s.id])}), el('div', {class:'row'}, mini)]));
-    });
-    if (location.hash){ var t = document.getElementById(location.hash.slice(1)); if (t) t.scrollIntoView(); }
-  }
-  draw();
-  document.addEventListener('mm:lang', draw);
-})();
-</script>
-</body>
-</html>
+<title>Mundo Marketing</title>
+<!-- "Para o seu setor" saiu do portal: este endereço leva ao início. -->
+<meta http-equiv="refresh" content="0; url=../index.html">
+<a href="../index.html">Ir para o início</a>
