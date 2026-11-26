@@ -96,6 +96,11 @@ def main():
     zipar(os.path.join(dl, 'fonte-inter.zip'), inter)
     zipar(os.path.join(dl, 'fonte-montserrat.zip'), mont)
     zipar(os.path.join(dl, 'cores-oficiais.zip'), cores)
+    logos_dir = os.path.join(M, 'logos')
+    if os.path.isdir(logos_dir):
+        for marca in sorted(os.listdir(logos_dir)):
+            if os.path.isdir(os.path.join(logos_dir, marca)):
+                zipar(os.path.join(dl, 'logos-%s.zip' % marca), da_pasta(os.path.join(logos_dir, marca), 'Logos ' + marca))
     extras = da_pasta(os.path.join(M, 'logos'), 'Logos') + da_pasta(os.path.join(M, 'apresentacao'), 'Apresentação')
     zipar(os.path.join(dl, 'kit-de-marca-completo.zip'), [(c, 'Fontes/' + n) for c, n in inter + mont] + cores + extras)
     for a in sorted(os.listdir(dl)):
