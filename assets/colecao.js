@@ -177,14 +177,34 @@
     });
     return wrap;
   }
+  // ---------- mural: selo NEW para o que a pessoa ainda não viu ----------
+  // Guarda neste navegador os ids já vistos. Na primeira visita, só o que é dos últimos 30 dias conta como novo.
+  var CHAVE_VISTO = 'mm_mural_visto';
+  function lerVistos(){ try { return JSON.parse(localStorage.getItem(CHAVE_VISTO)); } catch(e){ return null; } }
+  MM.muralNovos = function(itens){
+    var vistos = lerVistos(), limite = new Date(Date.now() - 30 * 864e5).toISOString().slice(0, 10);
+    return (itens || []).filter(function(it){
+      return vistos ? vistos.indexOf(it.id) < 0 : String(it.data || '') >= limite;
+    }).map(function(it){ return it.id; });
+  };
+  MM.muralMarcarVisto = function(itens){
+    try { localStorage.setItem(CHAVE_VISTO, JSON.stringify((itens || []).map(function(it){ return it.id; }))); } catch(e){}
+  };
   function desenharMural(def, itens, root){
+    var todos = MM.itensDe(def), novos = MM.muralNovos(todos);
+    MM.muralMarcarVisto(todos);   // os selos continuam nesta visita e somem na próxima
     var ord = itens.slice().sort(function(a,b){ return String(b.data||'').localeCompare(String(a.data||'')); });
     return el('div', {class:'mural'}, ord.map(function(it){
-      return el('article', {class:'post', id:it.id || null}, [
+      var novo = novos.indexOf(it.id) >= 0;
+      return el('article', {class:'post' + (novo ? ' novo' : ''), id:it.id || null}, [
         el('time', {datetime:it.data, text:fmtData(it.data) + (it.categoria ? ' · ' + L(it.categoria) : '')}),
-        el('h3', {text:L(it.titulo)}),
+        el('h3', {}, [document.createTextNode(L(it.titulo)), novo ? el('span', {class:'selo-new', text:'NEW'}) : null]),
         it.resumo ? el('p', {text:L(it.resumo)}) : null,
-        el('div', {class:'acts'}, linkBtns(it.links).concat([linkVideos(it.videos, root)]))
+        it.testar ? el('div', {class:'testar'}, [
+          el('a', {class:'lbtn pri', href:safeUrl(it.testar.url), text:L({pt:'Testar agora →', es:'Probar ahora →'})}),
+          it.testar.dica ? el('span', {text:L(it.testar.dica)}) : null
+        ]) : null,
+        it.videos ? el('div', {class:'acts'}, [linkVideos(it.videos, root)]) : null
       ]);
     }));
   }

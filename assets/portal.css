@@ -213,3 +213,10 @@ dialog.det::backdrop{background:rgba(2,5,10,.7);-webkit-backdrop-filter:blur(6px
 .det-img{width:100%;max-height:420px;object-fit:contain;border-radius:14px;background:var(--bg-2)}
 @media (max-width:540px){.kv{grid-template-columns:1fr}.kv dt{margin-top:6px}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+/* mural: selo NEW e "Testar agora" */
+.selo-new{display:inline-block;margin-left:8px;vertical-align:2px;padding:2px 7px;border-radius:6px;font-size:10.5px;font-weight:800;letter-spacing:.08em;color:#fff;background:linear-gradient(180deg,#34AED6,var(--accent));box-shadow:0 0 14px -2px var(--glow)}
+.post.novo::before{background:#34AED6;box-shadow:0 0 0 3px var(--bg),0 0 18px var(--glow)}
+.testar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:12px}
+.testar span{color:var(--muted);font-size:13px}
+.post .acts:empty{display:none}
+.mural-n{display:inline-block;margin-left:8px;padding:2px 8px;border-radius:999px;font-size:11px;font-weight:700;color:#fff;background:var(--accent);vertical-align:3px}

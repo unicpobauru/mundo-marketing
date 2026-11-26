@@ -183,10 +183,12 @@
 
     // Mural (últimas novidades)
     var mural = el('div', {class:'mural'});
+    var novos = MURAL ? MM.muralNovos(MURAL.itens) : [];
     if (MURAL) MURAL.itens.slice().sort(function(a,b){ return String(b.data).localeCompare(String(a.data)); }).slice(0,4).forEach(function(it){
-      mural.appendChild(el('article', {class:'post'}, [el('time', {text:MM.fmtData(it.data)}), el('h3', {text:L(it.titulo)})]));
+      var novo = novos.indexOf(it.id) >= 0;
+      mural.appendChild(el('article', {class:'post' + (novo ? ' novo' : '')}, [el('time', {text:MM.fmtData(it.data)}), el('h3', {}, [L(it.titulo), novo ? el('span', {class:'selo-new', text:'NEW'}) : null])]));
     });
-    b.appendChild(card('tall', 'mural', [ico('mural'), el('h3', {text:L(R.mural.titulo)}), mural, el('span', {class:'go', text:T('Ver tudo →','Ver todo →')})]));
+    b.appendChild(card('tall', 'mural', [ico('mural'), el('h3', {}, [L(R.mural.titulo), novos.length ? el('span', {class:'mural-n', text:novos.length + ' ' + T(novos.length > 1 ? 'novas' : 'nova', novos.length > 1 ? 'nuevas' : 'nueva')}) : null]), mural, el('span', {class:'go', text:T('Ver tudo →','Ver todo →')})]));
 
     // Professores com fotos
     var faces = el('div', {class:'faces'});
