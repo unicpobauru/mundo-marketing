@@ -238,3 +238,9 @@ dialog.det::backdrop{background:rgba(2,5,10,.7);-webkit-backdrop-filter:blur(6px
 .pasta-h{display:flex;align-items:baseline;gap:10px;padding-bottom:10px;margin-bottom:14px;border-bottom:1px solid var(--line)}
 .pasta-h h2{font-size:20px;letter-spacing:-.02em;margin:0}
 .pasta-h small{color:var(--muted);font-size:13px}
+/* usuário logado na barra */
+.usr{display:flex;align-items:center;gap:8px;margin-left:auto;margin-right:10px;font-size:13px}
+.usr-n{color:var(--muted);max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.usr-sair{border:1px solid var(--line-2);background:var(--panel-2);color:var(--ink);font:inherit;font-size:12.5px;font-weight:600;border-radius:9px;padding:5px 10px;cursor:pointer}
+.usr-sair:hover{border-color:var(--accent-2)}
+@media (max-width:760px){.usr-n{display:none}}

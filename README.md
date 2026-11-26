@@ -104,29 +104,22 @@ python3 -m http.server 8000
 
 Depois abra http://localhost:8000.
 
-## Publicar com acesso privado (opção em análise: Cloudflare Pages + Cloudflare Access)
+## Login (Supabase + Cloudflare Pages)
 
-O Cloudflare Access é grátis até 50 pessoas. Cada pessoa entra com o próprio e-mail e recebe um código; quem não está na lista não abre o site.
+- **Contas:** Supabase Auth (e-mail e senha, por convite). Configuração pública em `assets/config.js`.
+- **Tela de entrada:** `login/` (entrar, esqueci a senha, criar senha pelo convite).
+- **Sessão:** `assets/auth.js` mantém o login renovado, grava o token no cookie `mm_at` e mostra "Sair" na barra.
+- **Porteiro:** `functions/_middleware.js` roda no Cloudflare Pages antes de entregar qualquer arquivo. Sem login: página vai para `/login/`, arquivo dá 401. Confere a assinatura do token pelas chaves públicas do Supabase (não precisa de segredo).
+- **Banco:** `supabase/01-tabelas.sql` (perfis, progresso da Academy, Mural visto), com RLS: cada pessoa só vê o que é dela.
+- No GitHub Pages e abrindo os arquivos no computador o login não existe (o porteiro só roda no Cloudflare).
 
-### 1. Colocar o código no GitHub
-1. Na conta GitHub da empresa, crie um repositório **privado** chamado `mundo-marketing`.
-2. Envie esta pasta para o repositório.
+### Cloudflare Pages
+Workers & Pages → Create → Pages → Connect to Git → `mundo-marketing`. Framework **None**, build command vazio, output `/`. Não precisa de variáveis.
 
-### 2. Publicar no Cloudflare Pages
-1. Crie uma conta em dash.cloudflare.com com um e-mail da empresa.
-2. Vá em **Workers & Pages → Create → Pages → Connect to Git** e escolha o repositório `mundo-marketing`.
-3. Em *Build settings*: Framework preset **None**, Build command **vazio**, Build output directory **`/`**.
-4. Clique em **Save and Deploy**. O site fica em `mundo-marketing.pages.dev` (ou parecido).
-5. Cada alteração enviada ao GitHub publica o site de novo sozinha.
-
-### 3. Fechar o acesso (Cloudflare Access)
-1. No painel do Cloudflare, abra **Zero Trust** e escolha o plano **Free**.
-2. Vá em **Access → Applications → Add an application → Self-hosted**.
-3. Em *Application domain*, coloque o endereço do site (`mundo-marketing.pages.dev`). Adicione também `*.mundo-marketing.pages.dev`, para fechar as versões de pré-visualização.
-4. Crie uma *Policy* com *Action* **Allow** e, em *Include*, escolha **Emails** com o e-mail de cada pessoa autorizada. Se todos tiverem e-mail do mesmo domínio da empresa, use **Emails ending in** com `@dominio-da-empresa`.
-5. Salve. A partir daí, quem abrir o site precisa digitar o e-mail e o código que chega por e-mail.
-
-Para tirar o acesso de alguém, remova o e-mail da policy.
+### Supabase
+- Authentication → Sign In / Providers: Email ligado, "Allow new users to sign up" desligado.
+- Authentication → URL Configuration: Site URL = endereço do Cloudflare; Redirect URLs = `<endereço>/login/index.html`.
+- Convidar: Authentication → Users → Add user → Send invitation.
 
 ## O que muda em relação à Videoteca no claude.ai
 - Funciona igual: busca, filtros, prévia, carrinho, download e versões de 16 MB.

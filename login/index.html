@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Entrar · Mundo Marketing</title>
+<link rel="stylesheet" href="../assets/portal.css">
+<style>
+body{min-height:100vh;display:grid;place-items:center;padding:24px 16px;
+  background:radial-gradient(900px 500px at 80% -10%,rgba(52,174,214,.22),transparent 60%),radial-gradient(700px 500px at 0% 110%,rgba(5,122,180,.25),transparent 60%),var(--bg)}
+.box{width:100%;max-width:400px;border:1px solid var(--line-2);border-radius:24px;background:rgba(13,20,34,.92);padding:34px 30px;box-shadow:0 40px 100px -30px rgba(0,0,0,.9)}
+.logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:17px;margin-bottom:26px}
+.logo i{width:34px;height:34px;border-radius:10px;background:linear-gradient(160deg,#34AED6,#057AB4);box-shadow:0 8px 24px -8px var(--glow)}
+.logo small{display:block;font-weight:500;color:var(--muted);font-size:12px}
+h1{font-size:26px;letter-spacing:-.025em;margin:0 0 6px}
+.sub{color:var(--muted);margin:0 0 22px;font-size:14.5px}
+label{display:block;font-size:13px;font-weight:600;color:var(--muted);margin:14px 0 6px}
+input{width:100%;box-sizing:border-box;background:var(--panel-2);border:1px solid var(--line);border-radius:12px;color:var(--ink);font:inherit;font-size:15px;padding:12px 14px}
+input:focus{outline:none;border-color:var(--accent-2);box-shadow:0 0 0 3px var(--accent-soft)}
+.btn-main{width:100%;margin-top:20px;border:0;border-radius:12px;padding:13px;font:inherit;font-size:15px;font-weight:700;color:#fff;cursor:pointer;background:linear-gradient(180deg,#34AED6,var(--accent));box-shadow:0 10px 30px -12px var(--glow)}
+.btn-main:disabled{opacity:.6;cursor:wait}
+.link{background:none;border:0;color:var(--accent-2);font:inherit;font-size:13.5px;cursor:pointer;padding:0;margin-top:14px}
+.msg{margin-top:14px;font-size:13.5px;border-radius:10px;padding:10px 12px;display:none}
+.msg.err{display:block;background:rgba(255,107,107,.12);border:1px solid rgba(255,107,107,.4)}
+.msg.ok{display:block;background:rgba(138,203,189,.12);border:1px solid rgba(138,203,189,.4)}
+.foot{display:flex;justify-content:space-between;align-items:center;margin-top:22px;font-size:12px;color:#5E6B80}
+.lg button{background:none;border:1px solid var(--line);color:var(--muted);font:inherit;font-size:12px;font-weight:700;border-radius:8px;padding:4px 8px;cursor:pointer}
+.lg button[aria-pressed=true]{color:var(--ink);border-color:var(--accent-2)}
+[hidden]{display:none!important}
+</style>
+</head>
+<body data-root="../">
+<div class="box">
+  <div class="logo"><i></i><div>Mundo Marketing<small>UniCPO</small></div></div>
+
+  <!-- entrar -->
+  <form id="fEntrar">
+    <h1 data-t="Entrar|Iniciar sesión">Entrar</h1>
+    <p class="sub" data-t="Use o e-mail e a senha do seu convite.|Usa el e-mail y la contraseña de tu invitación.">Use o e-mail e a senha do seu convite.</p>
+    <label for="email">E-mail</label>
+    <input id="email" type="email" autocomplete="email" required>
+    <label for="senha" data-t="Senha|Contraseña">Senha</label>
+    <input id="senha" type="password" autocomplete="current-password" required>
+    <button class="btn-main" type="submit" data-t="Entrar|Entrar">Entrar</button>
+    <button class="link" type="button" id="esqueci" data-t="Esqueci minha senha|Olvidé mi contraseña">Esqueci minha senha</button>
+  </form>
+
+  <!-- recuperar senha -->
+  <form id="fRecuperar" hidden>
+    <h1 data-t="Recuperar senha|Recuperar contraseña">Recuperar senha</h1>
+    <p class="sub" data-t="Enviamos um link para você criar uma senha nova.|Te enviamos un enlace para crear una contraseña nueva.">Enviamos um link para você criar uma senha nova.</p>
+    <label for="email2">E-mail</label>
+    <input id="email2" type="email" autocomplete="email" required>
+    <button class="btn-main" type="submit" data-t="Enviar link|Enviar enlace">Enviar link</button>
+    <button class="link" type="button" id="voltar" data-t="← Voltar|← Volver">← Voltar</button>
+  </form>
+
+  <!-- criar senha (convite ou recuperação) -->
+  <form id="fNova" hidden>
+    <h1 data-t="Crie sua senha|Crea tu contraseña">Crie sua senha</h1>
+    <p class="sub" data-t="Mínimo de 8 caracteres.|Mínimo de 8 caracteres.">Mínimo de 8 caracteres.</p>
+    <label for="nome" data-t="Seu nome|Tu nombre">Seu nome</label>
+    <input id="nome" type="text" autocomplete="name">
+    <label for="nova" data-t="Nova senha|Nueva contraseña">Nova senha</label>
+    <input id="nova" type="password" autocomplete="new-password" minlength="8" required>
+    <label for="nova2" data-t="Repita a senha|Repite la contraseña">Repita a senha</label>
+    <input id="nova2" type="password" autocomplete="new-password" minlength="8" required>
+    <button class="btn-main" type="submit" data-t="Salvar e entrar|Guardar y entrar">Salvar e entrar</button>
+  </form>
+
+  <div class="msg" id="msg"></div>
+  <div class="foot"><span data-t="Acesso só para a equipe UniCPO.|Acceso solo para el equipo UniCPO.">Acesso só para a equipe UniCPO.</span>
+    <span class="lg"><button type="button" data-l="pt">PT</button> <button type="button" data-l="es">ES</button></span></div>
+</div>
+
+<script src="../assets/config.js"></script>
+<script src="../assets/auth.js"></script>
+<script>
+(function(){
+  var $ = function(id){ return document.getElementById(id); };
+  var lang = (function(){ try { return localStorage.getItem('mm_lang') === 'es' ? 'es' : 'pt'; } catch(e){ return 'pt'; } })();
+  var T = function(pt, es){ return lang === 'es' ? es : pt; };
+  function idioma(l){
+    lang = l; try { localStorage.setItem('mm_lang', l); } catch(e){}
+    document.documentElement.lang = l === 'es' ? 'es' : 'pt-BR';
+    document.querySelectorAll('[data-t]').forEach(function(e){ var p = e.getAttribute('data-t').split('|'); e.textContent = l === 'es' ? p[1] : p[0]; });
+    document.querySelectorAll('[data-l]').forEach(function(b){ b.setAttribute('aria-pressed', b.getAttribute('data-l') === l); });
+  }
+  document.querySelectorAll('[data-l]').forEach(function(b){ b.onclick = function(){ idioma(b.getAttribute('data-l')); }; });
+  idioma(lang);
+
+  // para onde voltar depois de entrar (só caminhos do próprio site)
+  var proximo = new URLSearchParams(location.search).get('next') || '/';
+  if (!/^\/(?!\/)/.test(proximo)) proximo = '/';
+  function msg(t, ok){ var m = $('msg'); m.textContent = t; m.className = 'msg ' + (ok ? 'ok' : 'err'); }
+  function tela(id){ ['fEntrar','fRecuperar','fNova'].forEach(function(f){ $(f).hidden = f !== id; }); $('msg').className = 'msg'; }
+  function traduzErro(e){
+    var t = (e && e.message) || '';
+    if (/Invalid login/i.test(t)) return T('E-mail ou senha incorretos.','E-mail o contraseña incorrectos.');
+    if (/Email not confirmed/i.test(t)) return T('Seu e-mail ainda não foi confirmado. Abra o convite que chegou por e-mail.','Tu e-mail todavía no fue confirmado. Abre la invitación que llegó por e-mail.');
+    if (/fetch|network/i.test(t)) return T('Sem conexão com o servidor de login. Verifique a internet e tente de novo.','Sin conexión con el servidor de login. Verifica internet e intenta de nuevo.');
+    if (/rate limit|too many/i.test(t)) return T('Muitas tentativas. Espere alguns minutos.','Demasiados intentos. Espera unos minutos.');
+    return t || T('Não deu certo. Tente de novo.','No funcionó. Intenta de nuevo.');
+  }
+  function entrarNoPortal(){ location.replace(proximo); }
+
+  // link de convite ou de recuperação de senha chega com #...type=invite|recovery
+  var hash = location.hash;
+  var veioDeLink = /type=(invite|recovery|signup|magiclink)/.test(hash);
+  var erroLink = /error_description=([^&]+)/.exec(hash);
+  if (erroLink) msg(decodeURIComponent(erroLink[1].replace(/\+/g, ' ')) + ' ' + T('Peça um convite novo.','Pide una invitación nueva.'));
+
+  MM.auth.cliente().then(function(c){
+    c.auth.onAuthStateChange(function(ev){ if (ev === 'PASSWORD_RECOVERY') tela('fNova'); });
+    return c.auth.getSession().then(function(r){
+      var s = r.data && r.data.session;
+      if (s && veioDeLink){ MM.auth.gravarCookie(s); tela('fNova'); return; }
+      if (s){ MM.auth.gravarCookie(s); entrarNoPortal(); }   // já está logado: segue direto
+    });
+  }).catch(function(){ msg(T('Não foi possível carregar o login. Verifique a internet.','No se pudo cargar el login. Verifica internet.')); });
+
+  $('fEntrar').onsubmit = function(e){
+    e.preventDefault(); var b = this.querySelector('.btn-main'); b.disabled = true;
+    MM.auth.cliente().then(function(c){ return c.auth.signInWithPassword({email:$('email').value.trim(), password:$('senha').value}); })
+      .then(function(r){ if (r.error) throw r.error; MM.auth.gravarCookie(r.data.session); entrarNoPortal(); })
+      .catch(function(err){ msg(traduzErro(err)); b.disabled = false; });
+  };
+  $('esqueci').onclick = function(){ $('email2').value = $('email').value; tela('fRecuperar'); };
+  $('voltar').onclick = function(){ tela('fEntrar'); };
+  $('fRecuperar').onsubmit = function(e){
+    e.preventDefault(); var b = this.querySelector('.btn-main'); b.disabled = true;
+    MM.auth.cliente().then(function(c){ return c.auth.resetPasswordForEmail($('email2').value.trim(), {redirectTo: location.origin + '/login/index.html'}); })
+      .then(function(r){ if (r.error) throw r.error; msg(T('Pronto! Se o e-mail estiver cadastrado, o link chega em alguns minutos.','¡Listo! Si el e-mail está registrado, el enlace llega en unos minutos.'), true); })
+      .catch(function(err){ msg(traduzErro(err)); }).then(function(){ b.disabled = false; });
+  };
+  $('fNova').onsubmit = function(e){
+    e.preventDefault();
+    if ($('nova').value !== $('nova2').value) return msg(T('As senhas não são iguais.','Las contraseñas no son iguales.'));
+    var b = this.querySelector('.btn-main'); b.disabled = true;
+    var dados = {password:$('nova').value}; if ($('nome').value.trim()) dados.data = {nome:$('nome').value.trim()};
+    MM.auth.cliente().then(function(c){ return c.auth.updateUser(dados).then(function(r){ if (r.error) throw r.error; return c.auth.getSession(); }); })
+      .then(function(r){ MM.auth.gravarCookie(r.data.session); history.replaceState(null, '', location.pathname); entrarNoPortal(); })
+      .catch(function(err){ msg(traduzErro(err)); b.disabled = false; });
+  };
+})();
+</script>
+</body>
+</html>

@@ -67,4 +67,10 @@
     document.dispatchEvent(new CustomEvent('mm:lang', {detail:l}));
   }
   apply(getLang());
+
+  // login (Supabase): carrega a configuração e a sessão em todas as páginas que usam esta barra
+  (function(){
+    function js(src, cb){ var s = document.createElement('script'); s.src = src; s.onload = cb; document.head.appendChild(s); }
+    if (window.MM_CONFIG) js(ROOT + 'assets/auth.js'); else js(ROOT + 'assets/config.js', function(){ js(ROOT + 'assets/auth.js'); });
+  })();
 })();
