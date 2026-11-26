@@ -1,3 +1,5 @@
 {
-"386": "Command '['ffmpeg', '-v', 'error', '-y', '-ss', '5.08', '-i', '/tmp/tmpfabjpxho/video.mp4', '-frames:v', '1', '-vf', 'scale=120:213:force_original_aspect_ratio=increase,crop=120:213', '/tmp/tmpfabjpxh"
+"386": "Command '['ffmpeg', '-v', 'error', '-y', '-ss', '5.08', '-i', '/tmp/tmpfabjpxho/video.mp4', '-frames:v', '1', '-vf', 'scale=120:213:force_original_aspect_ratio=increase,crop=120:213', '/tmp/tmpfabjpxh",
+"873": "sem arquivo ou sem permissão no Drive",
+"889": "sem arquivo ou sem permissão no Drive"
 }
