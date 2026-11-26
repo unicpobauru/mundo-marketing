@@ -164,7 +164,16 @@
     if (meta.childNodes.length) b.appendChild(meta);
     return b;
   }
-  function desenharCards(def, itens, root){ return el('div', {class:'grid'}, itens.map(function(it){ return cardPadrao(def, it, root); })); }
+  function desenharCards(def, itens, root){
+    // def.pastas = 'campo': separa os cartões em seções com título, na ordem em que aparecem (ex.: pastas do Drive)
+    if (!def.pastas) return el('div', {class:'grid'}, itens.map(function(it){ return cardPadrao(def, it, root); }));
+    var grupos = {}, ordem = [];
+    itens.forEach(function(it){ var g = L(it[def.pastas]) || '—'; if (!grupos[g]){ grupos[g] = []; ordem.push(g); } grupos[g].push(it); });
+    return el('div', {class:'pastas'}, ordem.map(function(g){
+      return el('section', {class:'pasta'}, [el('div', {class:'pasta-h'}, [el('h2', {text:g}), el('small', {text:String(grupos[g].length)})]),
+        el('div', {class:'grid'}, grupos[g].map(function(it){ return cardPadrao(def, it, root); }))]);
+    }));
+  }
   function desenharFaq(def, itens, root){
     var grupos = {}, ordem = [];
     itens.forEach(function(it){ var g = L(it.categoria) || '—'; if (!grupos[g]){ grupos[g] = []; ordem.push(g); } grupos[g].push(it); });

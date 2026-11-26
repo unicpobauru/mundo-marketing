@@ -636,7 +636,7 @@ var FOTOS = [
 }
 ];
 MM.area({
-  id:'fotos', layout:'galeria',
+  id:'fotos', layout:'galeria', pastas:'pasta',
   aviso:{pt:'Clique na foto para ver grande e baixar. "Original em alta" baixa o arquivo do Drive, sem compressão.', es:'Haz clic en la foto para verla grande y descargarla. "Original en alta" descarga el archivo de Drive, sin compresión.'},
   filtros:[
     {campo:'categoria', rotulo:{pt:'Prédio', es:'Edificio'}},
@@ -644,16 +644,21 @@ MM.area({
   ],
   itens: FOTOS.map(function(f){
     var piso = f.piso ? {pt:f.piso.replace('Piso','Piso'), es:f.piso} : null;
-    return {id:f.id, titulo:f.capa ? {pt:'Fachada', es:'Fachada'} : f.t, categoria:PRED[f.p], piso:piso,
+    var pasta = {pt:PRED[f.p].pt + (f.piso ? ' · ' + f.piso : ''), es:PRED[f.p].es + (f.piso ? ' · ' + f.piso : '')};
+    return {id:f.id, titulo:f.capa ? {pt:'Fachada', es:'Fachada'} : f.t, categoria:PRED[f.p], piso:piso, pasta:pasta,
       imagem:'../assets/fotos/predio/mini/' + f.id + '.jpg', detalheImagem:'../assets/fotos/predio/' + f.id + '.jpg',
-      resumo:f.piso || null,
+      resumo:null,
       links:[{rotulo:{pt:'Baixar (web, 1800 px)', es:'Descargar (web, 1800 px)'}, url:'../assets/fotos/predio/' + f.id + '.jpg', baixar:true},
              {rotulo:{pt:'Original em alta (Drive)', es:'Original en alta (Drive)'}, url:'https://drive.usercontent.google.com/download?id=' + f.d + '&export=download'}]};
   }).concat([
-    {id:'tour-3d', titulo:{pt:'Tour 3D das clínicas 3, 4, 5 e 6', es:'Tour 3D de las clínicas 3, 4, 5 y 6'}, categoria:PRED.sede,
+    {id:'tour-3d', pasta:PRED.sede, imagem:'../assets/fotos/predio/mini/sede-piso-1-clinica-3.jpg', titulo:{pt:'Tour 3D das clínicas 3, 4, 5 e 6', es:'Tour 3D de las clínicas 3, 4, 5 y 6'}, categoria:PRED.sede,
      resumo:{pt:'Passeio virtual em 360° pelas clínicas do prédio sede.', es:'Recorrido virtual en 360° por las clínicas del edificio sede.'},
      links:[{rotulo:{pt:'Abrir o tour', es:'Abrir el tour'}, url:'https://tour.panoee.net/tourclinicaunicpo/puerta-de-las-clinicas'}]},
-    {id:'funcionarios', titulo:{pt:'Fotos dos funcionários', es:'Fotos de los funcionarios'}, categoria:{pt:'Funcionários', es:'Funcionarios'}, status:'preencher',
+    {id:'funcionarios', pasta:{pt:'Funcionários', es:'Funcionarios'}, titulo:{pt:'Fotos dos funcionários', es:'Fotos de los funcionarios'}, categoria:{pt:'Funcionários', es:'Funcionarios'}, status:'preencher',
      resumo:{pt:'A receber. As fotos dos professores ficam no Perfil dos professores.', es:'Por recibir. Las fotos de los profesores están en el Perfil de los profesores.'}}
-  ])
+  ]).sort(function(a, b){
+    var ord = function(it){ var k = ['sede','homero','auxiliar','auditorio'].indexOf(Object.keys(PRED).filter(function(x){ return PRED[x] === it.categoria; })[0]); if (k < 0) k = 9;
+      var piso = it.piso ? 1 + parseInt(String(it.piso.pt).replace(/\D/g, ''), 10) : 0; return k * 100 + piso; };
+    return ord(a) - ord(b);
+  })
 });

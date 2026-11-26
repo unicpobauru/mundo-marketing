@@ -231,3 +231,10 @@ dialog.det::backdrop{background:rgba(2,5,10,.7);-webkit-backdrop-filter:blur(6px
 .det-sec summary{cursor:pointer;color:var(--accent-2);font-weight:600;font-size:13.5px}
 .det-sec details ul{margin-top:6px;color:var(--muted);font-variant-numeric:tabular-nums}
 .det-sec .acts{margin-top:10px}
+
+/* cartões separados em pastas (ex.: Banco de fotos) */
+.pasta{margin-top:30px}
+.pasta:first-child{margin-top:6px}
+.pasta-h{display:flex;align-items:baseline;gap:10px;padding-bottom:10px;margin-bottom:14px;border-bottom:1px solid var(--line)}
+.pasta-h h2{font-size:20px;letter-spacing:-.02em;margin:0}
+.pasta-h small{color:var(--muted);font-size:13px}
