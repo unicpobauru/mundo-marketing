@@ -34,7 +34,7 @@ Todas as áreas abrem em `area/index.html?id=<área>`. A Videoteca e o Manual do
 | --- | --- |
 | Videoteca | Catálogo da Videoteca (905 vídeos) |
 | Manual do Criativo | Documento do claude.ai, cópia de 28/09/2026 |
-| Kit de marca | Cores e fontes dos materiais recentes (a confirmar); logos e modelos a preencher |
+| Kit de marca | Cores anotadas pelo marketing (25/11/2026) e fontes; logos e modelos a preencher |
 | Tutoriais | Escritos a partir do funcionamento da Videoteca, do portal e do Gravações Técnicas |
 | Banco de fotos | Fotos dos coordenadores (autorização a confirmar) + exemplos |
 | Mural de novidades | Páginas que o marketing criou no claude.ai, por data |

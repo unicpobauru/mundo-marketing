@@ -12,7 +12,6 @@ function cor(id, cat, titulo, hex, rgb, cmyk, pantone, uso, paleta, extra){
     links:[{rotulo:{pt:'Paleta da marca (PNG)', es:'Paleta de la marca (PNG)'}, url:M + 'cores/' + paleta, baixar:true},
            {rotulo:{pt:'Todas as cores (.zip)', es:'Todos los colores (.zip)'}, url:M + 'downloads/cores-oficiais.zip', baixar:true}]}, extra || {});
 }
-var CONFERIR = function(txt){ return {status:'confirmar', texto:txt}; };
 MM.area({
   id:'kit', layout:'kit',
   botoes:[
@@ -24,15 +23,13 @@ MM.area({
   filtros:[{campo:'categoria', rotulo:{pt:'Tipo', es:'Tipo'}}],
   itens:[
     cor('unicpo-verde-agua', UNI, {pt:'Verde-água', es:'Verde agua'}, '#8ACBBD', '138 203 190', '50 0 32 0', 'P 130-4 C',
-        {pt:'Cor de apoio da UniCPO.', es:'Color de apoyo de UniCPO.'}, 'paleta-unicpo.png',
-        CONFERIR({pt:'Conferir: o RGB anotado (138 203 190) dá #8ACBBE, e o HEX anotado é #8ACBBD. A diferença é invisível, mas vale confirmar qual está no manual.', es:'Verificar: el RGB anotado (138 203 190) da #8ACBBE, y el HEX anotado es #8ACBBD. La diferencia es invisible, pero conviene confirmar cuál está en el manual.'})),
+        {pt:'Cor de apoio da UniCPO.', es:'Color de apoyo de UniCPO.'}, 'paleta-unicpo.png'),
     cor('unicpo-azul-claro', UNI, {pt:'Azul-claro', es:'Azul claro'}, '#34AED6', '52 174 214', '70 10 10 0', 'P 116-5 C',
         {pt:'Azul-claro da UniCPO.', es:'Azul claro de UniCPO.'}, 'paleta-unicpo.png'),
     cor('unicpo-azul-escuro', UNI, {pt:'Azul-escuro', es:'Azul oscuro'}, '#057AB4', '5 122 180', '85 43 10 0', 'P 113-8 C',
         {pt:'Azul principal da UniCPO.', es:'Azul principal de UniCPO.'}, 'paleta-unicpo.png'),
     cor('fainter-azul-escuro', FAI, {pt:'Azul-escuro', es:'Azul oscuro'}, '#002E9C', '0 45 156', '100 92 10 3', '',
-        {pt:'Azul principal da FAINTER.', es:'Azul principal de FAINTER.'}, 'paleta-fainter.png',
-        CONFERIR({pt:'Conferir: o RGB anotado (0 45 156) dá #002D9C, e o HEX anotado é #002E9C. A diferença é invisível, mas vale confirmar qual está no manual.', es:'Verificar: el RGB anotado (0 45 156) da #002D9C, y el HEX anotado es #002E9C. La diferencia es invisible, pero conviene confirmar cuál está en el manual.'})),
+        {pt:'Azul principal da FAINTER.', es:'Azul principal de FAINTER.'}, 'paleta-fainter.png'),
     cor('fainter-azul-claro', FAI, {pt:'Azul-claro', es:'Azul claro'}, '#66D3FF', '102 211 255', '51 1 0 0', '',
         {pt:'Azul-claro da FAINTER.', es:'Azul claro de FAINTER.'}, 'paleta-fainter.png'),
 
