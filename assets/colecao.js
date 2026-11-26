@@ -113,6 +113,16 @@
     if (it.cor) kids.push(el('div', {class:'swatch', style:'background:' + it.cor}));
     if (it.resumo) kids.push(el('p', {text:L(it.resumo), style:'color:var(--muted)'}));
     if (it.texto) textoBlocos(it.texto).forEach(function(b){ kids.push(b); });
+    // secoes: [{titulo, linhas:[...], recolhido:{titulo, linhas:[...]}, links:[...]}] (ex.: uma seção por turma)
+    (it.secoes || []).forEach(function(sc){
+      var box = el('section', {class:'det-sec'}, [el('h3', {text:L(sc.titulo)})]);
+      if (sc.linhas && sc.linhas.length) box.appendChild(el('ul', null, sc.linhas.map(function(x){ return el('li', {text:L(x)}); })));
+      if (sc.recolhido && sc.recolhido.linhas.length) box.appendChild(el('details', null, [el('summary', {text:L(sc.recolhido.titulo)}),
+        el('ul', null, sc.recolhido.linhas.map(function(x){ return el('li', {text:L(x)}); }))]));
+      var la = linkBtns(sc.links).filter(Boolean);
+      if (la.length) box.appendChild(el('div', {class:'acts'}, la));
+      kids.push(box);
+    });
     if (it.passos && it.passos.length){
       kids.push(el('h3', {text:U('passos')}));
       kids.push(el('ol', null, it.passos.map(function(p){ return el('li', {text:L(p)}); })));

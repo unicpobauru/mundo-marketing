@@ -23,7 +23,7 @@
       MM.el('p', {class:'lead'}, [MM.el('a', {href:'../index.html', text: window.MM_LANG === 'es' ? 'Volver al inicio' : 'Voltar ao início'})])]));
     return;
   }
-  var srcs = (reg.catalogo ? ['../videoteca/data.js'] : []).concat(['../dados/' + id + '.js']);
+  var srcs = (reg.catalogo ? ['../videoteca/data.js'] : []).concat((reg.extras || []).map(function(x){ return '../dados/' + x + '.js'; }), ['../dados/' + id + '.js']);
   MM.carregar(srcs, function(){ if (MM._area) MM.renderArea(MM._area, mount, '../'); });
 })();
 </script>

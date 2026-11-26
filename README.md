@@ -39,11 +39,11 @@ Todas as áreas abrem em `area/index.html?id=<área>`. A Videoteca e o Manual do
 | Banco de fotos | Fotos dos coordenadores (autorização a confirmar) + exemplos |
 | Mural de novidades | Páginas que o marketing criou no claude.ai, por data |
 | Glossário | Termos de marketing |
-| Materiais por curso | Cursos e turmas do Gravações Técnicas (25/11/2026) + contagem de vídeos; programa e valores a preencher |
+| Materiais por curso | Material comercial do Drive (25/11/2026): turmas, valores, cronograma de módulos, apresentações, matrizes curriculares. Gerado por `ferramentas/cursos/gerar_cursos.py` |
 | Provas sociais | Calculadas da Videoteca; números institucionais a preencher |
 | Central de dúvidas | Manual do Criativo + apresentação do Mapa UniCPO; várias respostas a preencher pelo CS |
 | Tutoriais para o aluno | Vídeos da Videoteca (matrícula, documentos, chegada, Manual de Sobrevivência) |
-| Perfil dos professores | Coordenadores do Gravações Técnicas + professores frequentes na Videoteca; bio a preencher |
+| Perfil dos professores | Coordenadores e equipes das apresentações comerciais (formação, Instagram, cursos); telefones passados pelo marketing |
 | Guia e agenda de gravação | Manual do Criativo + funcionamento do Gravações Técnicas |
 | Guia do visitante | Mapa UniCPO, Tour 3D e vídeos da Videoteca |
 

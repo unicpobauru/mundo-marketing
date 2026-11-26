@@ -14,6 +14,7 @@
    - setores    em quais setores a área aparece: marketing, comercial, cs, academico, recepcao
    - grupo      seção da página inicial: base | comercial | aluno | academico | recepcao
    - catalogo   true quando a área usa os vídeos da Videoteca
+   - extras     outros arquivos de dados/ que a área precisa (carregados antes dela)
    - href       só para páginas próprias (Videoteca, Manual); as demais usam o motor de coleções
 */
 window.MM = window.MM || {};
@@ -53,9 +54,9 @@ MM.REGISTRO = [
   {id:'glossario', grupo:'base', setores:['marketing','comercial','cs','academico','recepcao'],
    titulo:{pt:'Glossário', es:'Glosario'},
    descricao:{pt:'Termos de marketing explicados para todos os setores.', es:'Términos de marketing explicados para todos los sectores.'}},
-  {id:'cursos', grupo:'comercial', setores:['comercial','cs','marketing'], catalogo:true,
+  {id:'cursos', grupo:'comercial', setores:['comercial','cs','marketing'], catalogo:true, extras:['cursos-material'],
    titulo:{pt:'Materiais por curso', es:'Materiales por curso'},
-   descricao:{pt:'Cada curso com próximas turmas, coordenador, vídeos e materiais para enviar.', es:'Cada curso con próximos grupos, coordinador, videos y materiales para enviar.'}},
+   descricao:{pt:'Cada curso com turmas, cronograma de módulos, valores, apresentações em PDF e vídeos.', es:'Cada curso con grupos, cronograma de módulos, valores, presentaciones en PDF y videos.'}},
   {id:'provas', grupo:'comercial', setores:['comercial','marketing'], catalogo:true,
    titulo:{pt:'Provas sociais', es:'Pruebas sociales'},
    descricao:{pt:'Números e depoimentos que mais funcionam para convencer o lead.', es:'Números y testimonios que más funcionan para convencer al lead.'}},

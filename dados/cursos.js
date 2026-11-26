@@ -2,7 +2,8 @@
    CURSOS: copiado do Gravações Técnicas em 25/11/2026 (turmas canceladas ficaram de fora).
    Quando o cronograma mudar, atualize as turmas aqui (ou, no futuro, leia direto do banco de dados).
    codigo = como o curso aparece na Videoteca, para contar e abrir os vídeos.
-   Programa, valores e PDF ainda precisam ser preenchidos pelo marketing/comercial. */
+   Turmas, valores, cronograma de módulos e PDFs vêm de dados/cursos-material.js (material comercial do Drive),
+   gerado por ferramentas/cursos/gerar_cursos.py. Quando há turma nos dois, vale a do material comercial. */
 var CURSOS_COORD = {"c_eric": "Dr. Eric Tinoco", "c_vinicius": "Dr. Vinicius Porto", "c_gustavo": "Dr. Luis Gustavo Tramontin", "c_henrique": "Dr. Henrique Quevedo", "c_john": "Dr. John Alexis", "c_augusto": "Dr. Augusto Rodrigues", "c_juan": "Dr. Juan Carlos Castañeda", "c_fabricio": "Dr. Fabricio Valarelli", "c_andreia": "Dra. Andreia Pavani", "c_vanessa": "Dra. Vanessa Dainezi", "c_patrick": "Dr. Patrick Alves", "c_suedam": "Dr. Valdey Suedam", "c_mariel": "Dra. Mariel Ruivo Biancardi", "c_claudia": "Dra. Claudia Pinheiro"};
 var CURSOS = [
 {
@@ -437,7 +438,8 @@ var CURSOS = [
 "nome": "Esp. Rehabilitación Oral",
 "tipo": "esp",
 "coord": [
-"c_vinicius"
+"c_vinicius",
+"c_henrique"
 ],
 "codigo": "ESP PROTESIS",
 "turmas": [
@@ -450,7 +452,11 @@ var CURSOS = [
 ];
 MM.area({
   id:'cursos', layout:'cards',
-  aviso:{pt:'Turmas e datas de início copiadas do Gravações Técnicas em 25/11/2026. Programa, valores e PDF ainda estão a preencher.', es:'Grupos y fechas de inicio copiados de Grabaciones Técnicas el 25/11/2026. Programa, valores y PDF todavía están por completar.'},
+  aviso:{pt:'Turmas, valores e PDFs do material comercial (Drive, 25/11/2026). Valores em dólar (US$).', es:'Grupos, valores y PDF del material comercial (Drive, 25/11/2026). Valores en dólares (US$).'},
+  botoes:[
+    {rotulo:{pt:'Documento informativo comercial (PT)', es:'Documento informativo comercial (PT)'}, url:'../assets/cursos/geral/documento-informativo-comercial-pt.pdf', baixar:true},
+    {rotulo:{pt:'Documento informativo comercial (ES)', es:'Documento informativo comercial (ES)'}, url:'../assets/cursos/geral/documento-informativo-comercial-es.docx', baixar:true}
+  ],
   filtros:[
     {campo:'categoria', rotulo:{pt:'Tipo', es:'Tipo'}},
     {campo:'coordenador', rotulo:{pt:'Coordenador', es:'Coordinador'}, ordem:'alfa'},
@@ -458,34 +464,74 @@ MM.area({
   ],
   gerar: function(CAT){
     var hoje = new Date().toISOString().slice(0,10);
+    var MAT = window.CURSOS_MATERIAL || {turmas:[], cursos:{}};
     var nVid = {};
     (CAT.items || []).forEach(function(v){ if (v.c) nVid[v.c] = (nVid[v.c] || 0) + 1; });
     var fmt = MM.fmtData;
+    var iso = function(d){ var m = /^(\d\d)\/(\d\d)\/(\d{4})$/.exec(d || ''); return m ? m[3] + '-' + m[2] + '-' + m[1] : ''; };
+    var usd = function(v){ return v ? 'US$ ' + v : ''; };
     return CURSOS.map(function(c){
-      var futuras = c.turmas.filter(function(t){ return t.inicio && t.inicio >= hoje; });
-      var semData = c.turmas.filter(function(t){ return !t.inicio; }).length;
+      // turmas: as do material comercial têm prioridade; as do Gravações Técnicas completam
+      var mat = MAT.turmas.filter(function(t){ return t.curso === c.nome; });
+      var turmas = mat.map(function(t){ return {t:t.codigo.replace('-2', ' (entrada 2)'), inicio:iso(t.inicio), m:t}; });
+      c.turmas.forEach(function(t){
+        if (!turmas.some(function(x){ return t.t && x.t.indexOf(t.t.split(' ')[0]) === 0; }) && !(t.t === '' && turmas.length)) turmas.push({t:t.t, inicio:t.inicio});
+      });
+      turmas.sort(function(a,b){ return (a.inicio || '9').localeCompare(b.inicio || '9'); });
+      var futuras = turmas.filter(function(t){ return t.inicio && t.inicio >= hoje; });
+      var semData = turmas.filter(function(t){ return !t.inicio; }).length;
       var coords = c.coord.map(function(id){ return CURSOS_COORD[id] || id; });
       var nv = c.codigo ? (nVid[c.codigo] || 0) : 0;
-      var turmasTxt = c.turmas.map(function(t){ return (t.t ? t.t + ': ' : '') + (t.inicio ? fmt(t.inicio) : '—'); }).join(' · ');
+      var ger = MAT.cursos[c.nome] || {};
+      var prox = futuras[0];
+      var preco = prox && prox.m ? (prox.m.tipo === 'esp' ? {pt:' · mensalidade a partir de ' + usd(prox.m.mensalidade), es:' · cuota desde ' + usd(prox.m.mensalidade)}
+                                                         : {pt:' · ' + usd(prox.m.valor), es:' · ' + usd(prox.m.valor)}) : {pt:'', es:''};
+      // detalhe: uma seção por turma (estrutura, valores, cronograma recolhível e PDFs da turma)
+      var secoes = [], links = [], conferir = [];
+      turmas.forEach(function(t){
+        var m = t.m;
+        if (!m){ secoes.push({titulo:t.t || {pt:'Turma', es:'Grupo'}, linhas:[{pt:(t.inicio ? 'Início ' + fmt(t.inicio) + '. ' : '') + 'Sem material comercial ainda (data do Gravações Técnicas).', es:(t.inicio ? 'Inicio ' + fmt(t.inicio) + '. ' : '') + 'Sin material comercial todavía (fecha de Grabaciones Técnicas).'}]}); return; }
+        var lin = [];
+        lin.push({pt:[m.inicio && ('Início ' + m.inicio), m.termino && ('término ' + m.termino)].filter(Boolean).join(' · '),
+                  es:[m.inicio && ('Inicio ' + m.inicio), m.termino && ('fin ' + m.termino)].filter(Boolean).join(' · ')});
+        var est = [m.modulos && (m.modulos + ' módulos'), m.duracao && (m.duracao + ' meses'), m.periodicidade && m.periodicidade.toLowerCase(), m.carga && (m.carga + ' h')].filter(Boolean).join(' · ');
+        if (est) lin.push(est);
+        if (m.mensalidade){
+          lin.push({pt:'Matrícula ' + usd(m.matricula) + ' · mensalidade ' + usd(m.mensalidade) + ' com pontualidade (' + usd(m.mensalidade_cheia) + ' cheia)',
+                    es:'Matrícula ' + usd(m.matricula) + ' · cuota ' + usd(m.mensalidade) + ' con puntualidad (' + usd(m.mensalidade_cheia) + ' sin descuento)'});
+          lin.push({pt:'Total ' + usd(m.total) + ' com desconto (' + usd(m.total_cheio) + ' cheio)', es:'Total ' + usd(m.total) + ' con descuento (' + usd(m.total_cheio) + ' sin descuento)'});
+        } else if (m.valor){
+          lin.push({pt:'Matrícula ' + usd(m.matricula) + ' · valor do curso ' + usd(m.valor), es:'Matrícula ' + usd(m.matricula) + ' · valor del curso ' + usd(m.valor)});
+        }
+        if (m.conferir){ lin.push({pt:'Conferir: ' + m.conferir, es:'Verificar: ' + m.conferir}); conferir.push(t.t); }
+        var a = m.arquivos || {}, ls = [];
+        if (a.completo) ls.push({rotulo:{pt:'Apresentação (PDF)', es:'Presentación (PDF)'}, url:'../' + a.completo, baixar:true});
+        if (a.resumido) ls.push({rotulo:{pt:'Resumida (PDF)', es:'Resumida (PDF)'}, url:'../' + a.resumido, baixar:true});
+        if (a.informativo) ls.push({rotulo:{pt:'Informativo da turma', es:'Informativo del grupo'}, url:'../' + a.informativo, baixar:true});
+        if (a.cronograma) ls.push({rotulo:{pt:'Cronograma (imagem)', es:'Cronograma (imagen)'}, url:'../' + a.cronograma, baixar:true});
+        secoes.push({titulo:{pt:'Turma ' + t.t, es:'Grupo ' + t.t}, linhas:lin,
+          recolhido:{titulo:{pt:'Datas dos ' + (m.cronograma || []).length + ' módulos', es:'Fechas de los ' + (m.cronograma || []).length + ' módulos'},
+                     linhas:(m.cronograma || []).map(function(r){ return {pt:'Módulo ' + r[0] + ': ' + r[1] + ' a ' + r[2], es:'Módulo ' + r[0] + ': ' + r[1] + ' al ' + r[2]}; })},
+          links:ls});
+      });
+      if (ger.matriz) links.push({rotulo:{pt:'Matriz curricular', es:'Matriz curricular'}, url:'../' + ger.matriz, baixar:true});
+      if (ger.apoio) links.push({rotulo:{pt:'Material de apoio', es:'Material de apoyo'}, url:'../' + ger.apoio, baixar:true});
       return {
-        id: c.nome.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,''),
+        id: c.nome.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,''),
         titulo: c.nome,
         categoria: c.tipo === 'esp' ? {pt:'Especialização', es:'Especialización'} : {pt:'Diplomado', es:'Diplomado'},
         coordenador: coords,
         situacao: futuras.length ? {pt:'Com turma marcada', es:'Con grupo programado'} : (semData ? {pt:'Sem data', es:'Sin fecha'} : {pt:'Sem turma futura', es:'Sin grupo futuro'}),
-        resumo: futuras.length ? {pt:'Próximo início: ' + fmt(futuras[0].inicio) + (futuras[0].t ? ' (' + futuras[0].t + ')' : ''), es:'Próximo inicio: ' + fmt(futuras[0].inicio) + (futuras[0].t ? ' (' + futuras[0].t + ')' : '')}
-                               : {pt:'Sem turma futura com data', es:'Sin grupo futuro con fecha'},
+        resumo: prox ? {pt:'Próximo início: ' + fmt(prox.inicio) + ' (' + prox.t + ')' + preco.pt, es:'Próximo inicio: ' + fmt(prox.inicio) + ' (' + prox.t + ')' + preco.es}
+                     : {pt:'Sem turma futura com data', es:'Sin grupo futuro con fecha'},
         tags: nv ? [{pt: nv + ' vídeos', es: nv + ' videos'}] : [],
-        status: 'preencher',
+        status: conferir.length ? 'confirmar' : (mat.length ? null : 'preencher'),
+        secoes: secoes,
         campos: [
           {rotulo:{pt:'Coordenação', es:'Coordinación'}, valor: coords.join(', ')},
-          {rotulo:{pt:'Turmas', es:'Grupos'}, valor: turmasTxt},
-          {rotulo:{pt:'Vídeos na Videoteca', es:'Videos en la Videoteca'}, valor: c.codigo ? String(nv) : {pt:'sem código ligado', es:'sin código vinculado'}},
-          {rotulo:{pt:'Programa', es:'Programa'}, valor:{pt:'a preencher', es:'por completar'}},
-          {rotulo:{pt:'Carga horária', es:'Carga horaria'}, valor:{pt:'a preencher', es:'por completar'}},
-          {rotulo:{pt:'Valores', es:'Valores'}, valor:{pt:'a preencher', es:'por completar'}},
-          {rotulo:{pt:'PDF do curso', es:'PDF del curso'}, valor:{pt:'a preencher', es:'por completar'}}
+          {rotulo:{pt:'Vídeos na Videoteca', es:'Videos en la Videoteca'}, valor: c.codigo ? String(nv) : {pt:'sem código ligado', es:'sin código vinculado'}}
         ],
+        links: links,
         videos: nv ? {q: c.codigo, rotulo:{pt:'Ver os ' + nv + ' vídeos deste curso', es:'Ver los ' + nv + ' videos de este curso'}} : null
       };
     });

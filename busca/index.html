@@ -85,7 +85,7 @@
     (function prox(){
       if (i >= areas.length){ pronto = true; run(); return; }
       var r = areas[i++]; MM._area = null;
-      MM.carregar(['../dados/' + r.id + '.js'], function(){
+      MM.carregar((r.extras || []).map(function(x){ return '../dados/' + x + '.js'; }).concat(['../dados/' + r.id + '.js']), function(){
         var def = MM._area;
         if (def) MM.itensDe(def).forEach(function(it){
           var t = it.titulo, d = it.resumo || it.texto;

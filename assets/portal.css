@@ -222,3 +222,12 @@ dialog.det::backdrop{background:rgba(2,5,10,.7);-webkit-backdrop-filter:blur(6px
 .mural-n{display:inline-block;margin-left:8px;padding:2px 8px;border-radius:999px;font-size:11px;font-weight:700;color:#fff;background:var(--accent);vertical-align:3px}
 .perfil-esp{margin-top:12px;font-weight:600;font-size:14px;color:var(--accent-2)}
 .perfil-contato{margin-top:4px;font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums}
+/* detalhe: seções (ex.: turmas de um curso) */
+.det-sec{border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin:12px 0;background:rgba(255,255,255,.015)}
+.det-sec h3{margin:0 0 8px;font-size:15px}
+.det-sec ul{margin:0 0 6px;padding-left:18px;color:var(--ink);font-size:14px}
+.det-sec li{margin:3px 0}
+.det-sec details{margin:6px 0 4px;font-size:14px;color:var(--muted)}
+.det-sec summary{cursor:pointer;color:var(--accent-2);font-weight:600;font-size:13.5px}
+.det-sec details ul{margin-top:6px;color:var(--muted);font-variant-numeric:tabular-nums}
+.det-sec .acts{margin-top:10px}
