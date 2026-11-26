@@ -47,8 +47,8 @@ MM.REGISTRO = [
   {id:'professores', catalogo:true,
    titulo:{pt:'Perfil dos professores', es:'Perfil de los profesores'},
    descricao:{pt:'Coordenadores e professores, seus cursos e vídeos.', es:'Coordinadores y profesores, sus cursos y videos.'}},
-  {id:'visitante', catalogo:true,
+  {id:'visitante',
    titulo:{pt:'Ferramentas', es:'Herramientas'},
-   descricao:{pt:'Mapa UniCPO, Tour 3D da clínica e vídeos para mandar a quem vem à UniCPO.', es:'Mapa UniCPO, Tour 3D de la clínica y videos para enviar a quien viene a UniCPO.'}}
+   descricao:{pt:'Mapa UniCPO e Tour 3D da clínica, para mandar a quem vem à UniCPO.', es:'Mapa UniCPO y Tour 3D de la clínica, para enviar a quien viene a UniCPO.'}}
 ];
 MM.hrefArea = function(r, root){ return (root||'') + (r.href || ('area/index.html?id=' + r.id)); };
