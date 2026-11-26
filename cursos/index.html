@@ -311,12 +311,14 @@ dialog.cd::backdrop{background:rgba(2,4,9,.72);backdrop-filter:blur(6px)}
     if (m.duracao) facts.push([T('Duração','Duración'), m.duracao + ' ' + T('meses','meses')]);
     if (m.periodicidade) facts.push([T('Frequência','Frecuencia'), m.periodicidade]);
     if (m.carga) facts.push([T('Carga horária','Carga horaria'), m.carga + ' h']);
+    if (m.aulasPraticas) facts.push([T('Aulas práticas','Clases prácticas'), m.aulasPraticas]);
     out.push(el('div', {class:'facts'}, facts.map(function(f){ return el('div', {class:'fact'}, [el('span', {text:f[0]}), el('b', {text:f[1]})]); })));
     var pc = [];
     if (m.matricula) pc.push([T('Matrícula','Matrícula'), usd(m.matricula), '']);
     if (m.mensalidade) pc.push([T('Mensalidade com pontualidade','Cuota con puntualidad'), usd(m.mensalidade), T('cheia ','sin descuento ') + usd(m.mensalidade_cheia)]);
     if (m.total) pc.push([T('Total com desconto','Total con descuento'), usd(m.total), T('cheio ','sin descuento ') + usd(m.total_cheio)]);
     if (m.valor) pc.push([T('Valor do curso','Valor del curso'), usd(m.valor), '']);
+    if (m.local) out.push(el('div', {class:'fact', style:'margin-top:10px'}, [el('span', {text:T('Local','Lugar')}), el('b', {text:m.local, style:'font-size:15px'})]));
     if (pc.length) out.push(el('div', {class:'price'}, pc.map(function(p){ return el('div', {class:'pcard'}, [el('span', {text:p[0]}), el('b', {text:p[1]}), p[2] ? el('small', {text:p[2]}) : null]); })));
     if (m.conferir) out.push(el('div', {class:'warn', text:T('Conferir: ','Verificar: ') + m.conferir}));
     if (m.cronograma && m.cronograma.length){

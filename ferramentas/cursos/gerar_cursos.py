@@ -60,8 +60,7 @@ CORRECOES = {
     'T394': dict(inicio='01/03/2027', termino='05/03/2027', carga='60', matricula='197', valor='1.800'),
     'T377': dict(inicio='01/03/2027', termino='05/03/2027', carga='44', matricula='197', valor='1.300'),
     'T385': dict(inicio='08/03/2027', termino='12/03/2027', carga='48', matricula='197', valor='1.300'),
-    'T388': dict(inicio='15/03/2027', termino='', carga='60', matricula='197', valor='1.500',
-                 conferir='O informativo desta turma diz "01/02 a 05/02/2027" e "Dra Vanessa", diferente da pasta (15/03/2027) e do coordenador (Dr. John). Conferir com o comercial.'),
+    'T388': dict(inicio='15/03/2027', termino='20/03/2027', carga='60', matricula='197', valor='1.500'),  # datas da apresentação (o informativo veio com dados de outra turma)
     'T387': dict(inicio='29/03/2027', termino='02/04/2027', carga='40', matricula='197', valor='1.900'),
     'T392': dict(inicio='05/04/2027', termino='09/04/2027', carga='40', matricula='197', valor='1.300'),
     'T389': dict(inicio='05/04/2027', termino='09/04/2027', carga='60', matricula='197', valor='1.300'),
@@ -72,8 +71,8 @@ CORRECOES = {
     'T393': dict(inicio='10/05/2027', termino='14/05/2027', carga='40', matricula='197', valor='1.800'),
     'T399': dict(inicio='24/05/2027', termino='29/05/2027', carga='44', matricula='197', valor='1.800'),
     'T397': dict(inicio='19/07/2027', termino='23/07/2027', carga='40', matricula='197', valor='1.900'),
-    'BLEFARO': dict(inicio='30/11/2026', termino='', carga='', matricula='', valor='',
-                    conferir='Sem informativo com valores na pasta desta turma.'),
+    'BLEFARO': dict(inicio='30/11/2026', termino='04/12/2026', carga='', matricula='197', valor='1.800', aulasPraticas='5',
+                    local='São Paulo (aulas: Rua Haddock Lobo, 131, cj. 709 · prática clínica: Rua Cunha, 76)'),  # sem informativo: dados da apresentação
 }
 
 def slug(s):

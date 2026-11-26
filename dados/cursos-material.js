@@ -235,26 +235,26 @@ var CURSOS_MATERIAL = {
 "codigo": "BLEFARO",
 "tipo": "dipl",
 "inicio": "30/11/2026",
-"termino": "",
+"termino": "04/12/2026",
 "carga": "",
-"matricula": "",
-"valor": "",
-"conferir": "Sem informativo com valores na pasta desta turma.",
+"matricula": "197",
+"valor": "1.800",
 "arquivos": {
 "completo": "assets/cursos/dipl-blefaroplastia-y-lifting-de-cejas-blefaro/completo.pdf",
 "resumido": "assets/cursos/dipl-blefaroplastia-y-lifting-de-cejas-blefaro/resumido.pdf"
-}
+},
+"local": "São Paulo (aulas: Rua Haddock Lobo, 131, cj. 709 · prática clínica: Rua Cunha, 76)",
+"aulasPraticas": "5"
 },
 {
 "curso": "Dipl. Carillas de Resina",
 "codigo": "T388",
 "tipo": "dipl",
 "inicio": "15/03/2027",
-"termino": "",
+"termino": "20/03/2027",
 "carga": "60",
 "matricula": "197",
 "valor": "1.500",
-"conferir": "O informativo desta turma diz \"01/02 a 05/02/2027\" e \"Dra Vanessa\", diferente da pasta (15/03/2027) e do coordenador (Dr. John). Conferir com o comercial.",
 "arquivos": {
 "completo": "assets/cursos/dipl-carillas-de-resina-t388/completo.pdf",
 "resumido": "assets/cursos/dipl-carillas-de-resina-t388/resumido.pdf",
