@@ -154,7 +154,7 @@
     list.appendChild(el('div', {class:'lbl', text:T('Atalhos', 'Atajos')}));
     [['videoteca', T('Abrir a Videoteca','Abrir la Videoteca'), '905 ' + T('vídeos','videos')],
      ['cursos', L(R.cursos.titulo), T('próximas turmas','próximos grupos')],
-     ['duvidas', L(R.duvidas.titulo), T('para o aluno','para el alumno')],
+     ['professores', L(R.professores.titulo), T('contatos','contactos')],
      ['manual', L(R.manual.titulo), T('checklist','checklist')]].forEach(function(x){
       var a = el('a', {class:'cmd-row', href:href(x[0])}, [ico(x[0], 28), el('span', {text:x[1]}), el('small', {text:x[2]})]);
       a.querySelector('.ico').className = 'ri';
@@ -196,7 +196,7 @@
     b.appendChild(card('', 'professores', [faces, el('h3', {text:L(R.professores.titulo)}), el('p', {text:L(R.professores.descricao)})]));
 
     // Cursos
-    b.appendChild(card('', 'cursos', [ico('cursos'), el('h3', {text:L(R.cursos.titulo)}), el('p', {text:T('28 cursos com próximas turmas, coordenador e vídeos.','28 cursos con próximos grupos, coordinador y videos.')})]));
+    b.appendChild(card('', 'cursos', [ico('cursos'), el('h3', {text:L(R.cursos.titulo)}), el('p', {text:T('Turmas, valores, cronograma e apresentações em PDF.','Grupos, valores, cronograma y presentaciones en PDF.')})]));
 
     // Manual
     b.appendChild(card('', 'manual', [ico('manual'), el('h3', {text:L(R.manual.titulo)}), el('p', {text:L(R.manual.descricao)})]));
@@ -205,8 +205,8 @@
     var pills = el('div', {class:'pills'}, MM.SETORES.map(function(s){ return el('a', {href:'setores/index.html#' + s.id, text:L(s)}); }));
     b.appendChild(el('div', {class:'card tile wide'}, [el('h3', {text:T('Para o seu setor','Para tu sector')}), el('p', {text:T('Cada setor encontra só o que o marketing preparou para ele.','Cada sector encuentra solo lo que el marketing preparó para él.')}), pills]));
 
-    // Central de dúvidas
-    b.appendChild(card('', 'duvidas', [ico('duvidas'), el('h3', {text:L(R.duvidas.titulo)}), el('p', {text:T('18 perguntas com vídeos de apoio.','18 preguntas con videos de apoyo.')})]));
+    // Kit de marca
+    b.appendChild(card('', 'kit', [ico('kit'), el('h3', {text:L(R.kit.titulo)}), el('p', {text:T('Cores, fontes, logos e a base de PowerPoint.','Colores, tipografías, logos y la base de PowerPoint.')})]));
   }
 
   // ---------- todas as áreas ----------

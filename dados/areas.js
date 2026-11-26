@@ -28,8 +28,6 @@ MM.SETORES = [
 MM.GRUPOS = [
   {id:'base',      pt:'Base do marketing',   es:'Base del marketing'},
   {id:'comercial', pt:'Para vender',         es:'Para vender'},
-  {id:'aluno',     pt:'Para o aluno',        es:'Para el alumno'},
-  {id:'academico', pt:'Professores e gravação', es:'Profesores y grabación'},
   {id:'recepcao',  pt:'Para receber',        es:'Para recibir'}
 ];
 MM.REGISTRO = [
@@ -47,7 +45,7 @@ MM.REGISTRO = [
    descricao:{pt:'Trilhas de aprendizado: Integração, Mídias, Software, Dados, Vendas, Atendimento, Processos, Liderança e IA.', es:'Rutas de aprendizaje: Integración, Medios, Software, Datos, Ventas, Atención, Procesos, Liderazgo e IA.'}},
   {id:'fotos', grupo:'base', setores:['marketing','comercial','academico'],
    titulo:{pt:'Banco de fotos', es:'Banco de fotos'},
-   descricao:{pt:'Fotos da equipe, professores, alunos e estrutura, com controle de autorização de imagem.', es:'Fotos del equipo, profesores, alumnos y estructura, con control de autorización de imagen.'}},
+   descricao:{pt:'Fotos do prédio e dos funcionários, com controle de autorização de imagem.', es:'Fotos del edificio y de los funcionarios, con control de autorización de imagen.'}},
   {id:'mural', grupo:'base', setores:['marketing','comercial','cs','academico','recepcao'],
    titulo:{pt:'Mural de novidades', es:'Mural de novedades'},
    descricao:{pt:'O que o marketing entregou, em ordem de data.', es:'Lo que el marketing entregó, por fecha.'}},
@@ -57,23 +55,11 @@ MM.REGISTRO = [
   {id:'cursos', grupo:'comercial', setores:['comercial','cs','marketing'], catalogo:true, extras:['cursos-material'],
    titulo:{pt:'Materiais por curso', es:'Materiales por curso'},
    descricao:{pt:'Cada curso com turmas, cronograma de módulos, valores, apresentações em PDF e vídeos.', es:'Cada curso con grupos, cronograma de módulos, valores, presentaciones en PDF y videos.'}},
-  {id:'provas', grupo:'comercial', setores:['comercial','marketing'], catalogo:true,
-   titulo:{pt:'Provas sociais', es:'Pruebas sociales'},
-   descricao:{pt:'Números e depoimentos que mais funcionam para convencer o lead.', es:'Números y testimonios que más funcionan para convencer al lead.'}},
-  {id:'duvidas', grupo:'aluno', setores:['cs','comercial','recepcao'], catalogo:true,
-   titulo:{pt:'Central de dúvidas do aluno', es:'Central de dudas del alumno'},
-   descricao:{pt:'As perguntas mais comuns de alunos e interessados, com vídeos de apoio.', es:'Las preguntas más comunes de alumnos e interesados, con videos de apoyo.'}},
-  {id:'tutoriais-aluno', grupo:'aluno', setores:['cs','recepcao'], catalogo:true,
-   titulo:{pt:'Tutoriais em vídeo para o aluno', es:'Tutoriales en video para el alumno'},
-   descricao:{pt:'Vídeos prontos para mandar ao aluno: matrícula, viagem, documentos, chegada.', es:'Videos listos para enviar al alumno: inscripción, viaje, documentos, llegada.'}},
-  {id:'professores', grupo:'academico', setores:['academico','comercial','marketing'], catalogo:true,
+  {id:'professores', grupo:'comercial', setores:['academico','comercial','marketing'], catalogo:true,
    titulo:{pt:'Perfil dos professores', es:'Perfil de los profesores'},
    descricao:{pt:'Coordenadores e professores, seus cursos e vídeos.', es:'Coordinadores y profesores, sus cursos y videos.'}},
-  {id:'gravacao', grupo:'academico', setores:['academico','marketing'],
-   titulo:{pt:'Guia e agenda de gravação', es:'Guía y agenda de grabación'},
-   descricao:{pt:'Como gravar bem e como funciona a agenda dos vídeos técnicos.', es:'Cómo grabar bien y cómo funciona la agenda de los videos técnicos.'}},
   {id:'visitante', grupo:'recepcao', setores:['recepcao','cs','comercial'], catalogo:true,
-   titulo:{pt:'Guia do visitante', es:'Guía del visitante'},
-   descricao:{pt:'Como chegar, onde ficar e comer, e o que ver antes da visita.', es:'Cómo llegar, dónde alojarse y comer, y qué ver antes de la visita.'}}
+   titulo:{pt:'Ferramentas', es:'Herramientas'},
+   descricao:{pt:'Mapa UniCPO, Tour 3D da clínica e vídeos para mandar a quem vem à UniCPO.', es:'Mapa UniCPO, Tour 3D de la clínica y videos para enviar a quien viene a UniCPO.'}}
 ];
 MM.hrefArea = function(r, root){ return (root||'') + (r.href || ('area/index.html?id=' + r.id)); };
