@@ -201,10 +201,10 @@
     // Manual
     b.appendChild(card('', 'manual', [ico('manual'), el('h3', {text:L(R.manual.titulo)}), el('p', {text:L(R.manual.descricao)})]));
 
-    // Academy (bloco largo, com os temas)
+    // Academy (bloco largo): plataforma de cursos com abas Marketing e Comercial
     var temas = [['Integração','Integración'],['Mídias','Medios'],['Software','Software'],['Dados','Datos'],['Vendas','Ventas'],['Atendimento','Atención'],['Processos','Procesos'],['Liderança','Liderazgo'],['IA','IA']];
-    b.appendChild(card('wide', 'tutoriais', [ico('tutoriais'), el('h3', {text:L(R.tutoriais.titulo)}), el('p', {text:T('Trilhas de aprendizado do marketing para toda a empresa.','Rutas de aprendizaje del marketing para toda la empresa.')}),
-      el('div', {class:'pills'}, temas.map(function(t){ return el('span', {text:T(t[0], t[1])}); }))]));
+    b.appendChild(card('wide', 'tutoriais', [ico('tutoriais'), el('h3', {text:L(R.tutoriais.titulo)}), el('p', {text:T('Cursos em vídeo gravados pelo time. Marketing: 9 cursos. Comercial: onboarding.','Cursos en video grabados por el equipo. Marketing: 9 cursos. Comercial: onboarding.')}),
+      el('div', {class:'pills'}, temas.map(function(t){ return el('span', {text:T(t[0], t[1])}); }).concat([el('span', {text:T('Onboarding Comercial','Onboarding Comercial'), style:'border-color:var(--accent-2)'})]))]));
 
     // Kit de marca
     b.appendChild(card('', 'kit', [ico('kit'), el('h3', {text:L(R.kit.titulo)}), el('p', {text:T('Cores, fontes, logos e a base de PowerPoint.','Colores, tipografías, logos y la base de PowerPoint.')})]));

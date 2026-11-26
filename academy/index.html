@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Academy · Mundo Marketing</title>
+<link rel="stylesheet" href="../assets/portal.css">
+<style>
+.ac-hero{position:relative;margin:28px 0 0;border:1px solid var(--line);border-radius:24px;overflow:hidden;padding:44px 40px;
+  background:radial-gradient(900px 300px at 85% -10%,rgba(52,174,214,.35),transparent 60%),radial-gradient(600px 300px at 0% 120%,rgba(167,139,250,.22),transparent 60%),var(--panel)}
+.ac-hero .eyebrow{color:var(--accent-2);font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase}
+.ac-hero h1{font-size:clamp(38px,6vw,64px);letter-spacing:-.04em;margin:8px 0 10px;line-height:1}
+.ac-hero p{color:var(--muted);max-width:560px;margin:0;font-size:16px}
+.ac-tabs{display:flex;gap:6px;margin:26px 0 0;border-bottom:1px solid var(--line)}
+.ac-tabs button{background:none;border:0;border-bottom:2px solid transparent;color:var(--muted);font:inherit;font-size:16px;font-weight:700;padding:12px 16px;cursor:pointer;margin-bottom:-1px}
+.ac-tabs button.on{color:var(--ink);border-bottom-color:var(--accent-2)}
+.ac-tabs small{font-weight:500;color:var(--muted);margin-left:6px;font-size:13px}
+.ac-sec{margin-top:28px}
+.ac-sec h2{font-size:20px;letter-spacing:-.02em;margin:0 0 4px}
+.ac-sec > p{color:var(--muted);margin:0 0 14px;font-size:14px}
+.ac-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:16px}
+
+/* capa do curso */
+.co{display:flex;flex-direction:column;text-align:left;border:1px solid var(--line);border-radius:18px;background:var(--panel);overflow:hidden;cursor:pointer;color:var(--ink);font:inherit;padding:0;transition:transform .15s,border-color .15s,box-shadow .15s}
+.co:hover{transform:translateY(-3px);border-color:color-mix(in srgb,var(--c) 70%,transparent);box-shadow:0 22px 50px -26px var(--c)}
+.cover{position:relative;aspect-ratio:16/10;background:radial-gradient(120% 90% at 100% 0%,color-mix(in srgb,var(--c) 75%,#fff 0%),transparent 60%),linear-gradient(150deg,color-mix(in srgb,var(--c) 55%,#0b1222),#070b14 85%);overflow:hidden}
+.cover .num{position:absolute;right:16px;bottom:4px;font-size:64px;font-weight:900;letter-spacing:-.06em;color:rgba(255,255,255,.14);line-height:1}
+.cover svg{position:absolute;right:18px;top:18px;width:54px;height:54px;color:#fff;opacity:.95;filter:drop-shadow(0 6px 18px rgba(0,0,0,.35))}
+.cover .ttl{position:absolute;left:18px;right:90px;bottom:18px;font-size:22px;font-weight:800;letter-spacing:-.02em;text-shadow:0 2px 14px rgba(0,0,0,.4)}
+.cover .tag{position:absolute;left:14px;top:14px;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;background:rgba(0,0,0,.45);border:1px solid rgba(255,255,255,.18);border-radius:999px;padding:4px 10px}
+.co .info{padding:14px 16px 16px;display:flex;flex-direction:column;gap:10px;flex:1}
+.co .info p{margin:0;color:var(--muted);font-size:13.5px;line-height:1.45}
+.co .meta{display:flex;justify-content:space-between;align-items:center;font-size:12.5px;color:var(--muted);margin-top:auto}
+.bar{height:5px;border-radius:9px;background:var(--line);overflow:hidden}
+.bar i{display:block;height:100%;background:var(--c,var(--accent-2));border-radius:9px}
+
+/* curso aberto */
+.cv-top{display:flex;align-items:center;gap:12px;margin:24px 0 14px;flex-wrap:wrap}
+.back{border:1px solid var(--line-2);background:var(--panel-2);color:var(--ink);font:inherit;font-size:14px;font-weight:600;padding:8px 14px;border-radius:10px;cursor:pointer}
+.cv-top h1{font-size:clamp(22px,3vw,30px);letter-spacing:-.025em;margin:0}
+.cv-top .pg{margin-left:auto;min-width:180px;font-size:12.5px;color:var(--muted)}
+.cv{display:grid;grid-template-columns:minmax(0,1fr) 360px;gap:18px;align-items:start}
+@media (max-width:980px){.cv{grid-template-columns:1fr}}
+.player{position:relative;aspect-ratio:16/9;border-radius:18px;overflow:hidden;border:1px solid var(--line);background:#000}
+.player iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.soon{position:absolute;inset:0;display:grid;place-items:center;text-align:center;padding:24px;background:radial-gradient(70% 90% at 70% 10%,color-mix(in srgb,var(--c) 45%,transparent),transparent 70%),linear-gradient(160deg,#0d1526,#05080f)}
+.soon b{display:block;font-size:24px;letter-spacing:-.02em;margin:10px 0 4px}
+.soon span{color:var(--muted);font-size:14px}
+.soon svg{width:56px;height:56px;color:var(--c)}
+.aula-info{margin-top:14px}
+.aula-info h2{font-size:20px;margin:0 0 6px;letter-spacing:-.02em}
+.aula-info p{color:var(--muted);margin:0 0 12px}
+.aula-acts{display:flex;gap:8px;flex-wrap:wrap}
+.done-btn.on{background:color-mix(in srgb,var(--ok) 22%,var(--panel-2));border-color:var(--ok)}
+.side{border:1px solid var(--line);border-radius:18px;background:var(--panel);overflow:hidden;position:sticky;top:76px;max-height:calc(100vh - 96px);display:flex;flex-direction:column}
+.side-h{padding:14px 16px;border-bottom:1px solid var(--line);font-weight:700}
+.side-h small{display:block;color:var(--muted);font-weight:500;font-size:12.5px;margin-top:2px}
+.side-b{overflow:auto}
+.mod-h{padding:12px 16px 6px;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.al{display:flex;gap:10px;align-items:center;width:100%;text-align:left;background:none;border:0;border-left:3px solid transparent;color:var(--ink);font:inherit;font-size:14px;padding:10px 14px;cursor:pointer}
+.al:hover{background:rgba(255,255,255,.03)}
+.al.on{background:color-mix(in srgb,var(--c) 12%,transparent);border-left-color:var(--c)}
+.al .ck{width:22px;height:22px;border-radius:50%;border:2px solid var(--line-2);flex:none;display:grid;place-items:center;font-size:12px}
+.al .ck.ok{background:var(--ok);border-color:var(--ok);color:#05080f}
+.al small{display:block;color:var(--muted);font-size:12px}
+.side-empty{padding:18px 16px;color:var(--muted);font-size:14px}
+</style>
+</head>
+<body data-root="../" data-page="academy">
+<main class="wrap" id="app"></main>
+
+<script src="../dados/areas.js"></script>
+<script src="../assets/portal.js"></script>
+<script src="../assets/colecao.js"></script>
+<script src="../dados/academy.js"></script>
+<script>
+(function(){
+  var el = MM.el, L = MM.L, app = document.getElementById('app');
+  var T = function(pt, es){ return window.MM_LANG === 'es' ? es : pt; };
+  var ICO = {
+    integracao:'<path d="M16 11a4 4 0 1 0-8 0"/><circle cx="12" cy="7" r="3"/><path d="M4 21a8 8 0 0 1 16 0"/><path d="M19 8h4M21 6v4"/>',
+    midias:'<rect x="3" y="5" width="18" height="14" rx="3"/><path d="m10 9 5 3-5 3z"/>',
+    software:'<rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8M12 17v4M9 9l-2 2 2 2M15 9l2 2-2 2"/>',
+    dados:'<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>',
+    vendas:'<path d="M3 17l6-6 4 4 8-8"/><path d="M14 7h7v7"/>',
+    atendimento:'<path d="M4 15a8 8 0 1 1 3 3l-4 1z"/><path d="M9 11h6M9 14h4"/>',
+    processos:'<circle cx="6" cy="6" r="3"/><circle cx="18" cy="18" r="3"/><path d="M9 6h6a3 3 0 0 1 3 3v6M6 9v6a3 3 0 0 0 3 3h6"/>',
+    lideranca:'<path d="M12 2l3 6 6 .9-4.5 4.3 1 6.3L12 16.6 6.5 19.5l1-6.3L3 8.9 9 8z"/>',
+    ia:'<rect x="5" y="7" width="14" height="12" rx="3"/><path d="M12 3v4M9 12h.01M15 12h.01M9 16h6M2 12h3M19 12h3"/>'
+  };
+  function svg(nome){ var s = document.createElementNS('http://www.w3.org/2000/svg','svg'); s.setAttribute('viewBox','0 0 24 24'); s.setAttribute('fill','none'); s.setAttribute('stroke','currentColor'); s.setAttribute('stroke-width','1.8'); s.setAttribute('stroke-linecap','round'); s.setAttribute('stroke-linejoin','round'); s.innerHTML = ICO[nome] || ICO.midias; return s; }
+
+  // progresso fica neste navegador
+  var CH = 'mm_academy';
+  function prog(){ try { return JSON.parse(localStorage.getItem(CH)) || {}; } catch(e){ return {}; } }
+  function salvar(p){ try { localStorage.setItem(CH, JSON.stringify(p)); } catch(e){} }
+  function aulas(c){ var a = []; (c.modulos || []).forEach(function(m){ (m.aulas || []).forEach(function(x){ a.push({m:m, a:x, k:c.id + '/' + x.id}); }); }); return a; }
+  function pct(c){ var a = aulas(c); if (!a.length) return 0; var p = prog(); return Math.round(100 * a.filter(function(x){ return p[x.k]; }).length / a.length); }
+
+  var aba = 'marketing';
+  function rota(){
+    var h = location.hash.replace(/^#/, '').split('/');
+    if (h[0] === 'curso' && h[1]){ var c = ACADEMY.cursos.filter(function(x){ return x.id === h[1]; })[0]; if (c){ abrirCurso(c, h[2]); return; } }
+    if (h[0] === 'comercial' || h[0] === 'marketing') aba = h[0];
+    catalogo();
+  }
+
+  function catalogo(){
+    app.textContent = '';
+    app.appendChild(el('section', {class:'ac-hero'}, [el('div', {class:'eyebrow', text:'Mundo Marketing'}), el('h1', {text:'Academy'}),
+      el('p', {text:T('Cursos em vídeo gravados pelo nosso time. Assista no seu ritmo, marque as aulas concluídas e acompanhe seu progresso.','Cursos en video grabados por nuestro equipo. Mira a tu ritmo, marca las clases concluidas y sigue tu progreso.')})]));
+    var tabs = el('div', {class:'ac-tabs'});
+    ACADEMY.abas.forEach(function(a){
+      var n = ACADEMY.cursos.filter(function(c){ return c.aba === a.id; }).length;
+      tabs.appendChild(el('button', {type:'button', class:aba === a.id ? 'on' : '', onclick:function(){ aba = a.id; history.replaceState(null, '', '#' + a.id); catalogo(); }},
+        [L(a.titulo), el('small', {text:n + ' ' + (n > 1 ? T('cursos','cursos') : T('curso','curso'))})]));
+    });
+    app.appendChild(tabs);
+    var ab = ACADEMY.abas.filter(function(a){ return a.id === aba; })[0];
+    var cs = ACADEMY.cursos.filter(function(c){ return c.aba === aba; });
+    // continuar assistindo
+    var cont = cs.filter(function(c){ var x = pct(c); return x > 0 && x < 100; });
+    if (cont.length) app.appendChild(el('section', {class:'ac-sec'}, [el('h2', {text:T('Continuar assistindo','Seguir viendo')}), el('div', {class:'ac-grid'}, cont.map(capa))]));
+    app.appendChild(el('section', {class:'ac-sec'}, [el('h2', {text:T('Cursos','Cursos') + ' · ' + L(ab.titulo)}), el('p', {text:L(ab.descricao)}), el('div', {class:'ac-grid'}, cs.map(capa))]));
+  }
+
+  function capa(c, i){
+    var n = aulas(c).length, p = pct(c);
+    var idx = ACADEMY.cursos.filter(function(x){ return x.aba === c.aba; }).indexOf(c) + 1;
+    var b = el('button', {type:'button', class:'co', style:'--c:' + c.cor, onclick:function(){ location.hash = 'curso/' + c.id; }}, [
+      el('div', {class:'cover'}, [n ? null : el('span', {class:'tag', text:T('Em gravação','En grabación')}), svg(c.icone), el('span', {class:'num', text:('0' + idx).slice(-2)}), el('span', {class:'ttl', text:L(c.titulo)})]),
+      el('div', {class:'info'}, [el('p', {text:L(c.descricao)}),
+        n ? el('div', {class:'bar'}, [el('i', {style:'width:' + p + '%'})]) : null,
+        el('div', {class:'meta'}, [el('span', {text:n ? n + ' ' + (n > 1 ? T('aulas','clases') : T('aula','clase')) : T('Aulas em breve','Clases pronto')}), n ? el('span', {text:p + '%'}) : null])])
+    ]);
+    return b;
+  }
+
+  function embed(a){
+    if (a.drive) return 'https://drive.google.com/file/d/' + encodeURIComponent(a.drive) + '/preview';
+    if (a.youtube) return 'https://www.youtube-nocookie.com/embed/' + encodeURIComponent(a.youtube) + '?rel=0';
+    return null;
+  }
+
+  function abrirCurso(c, aulaId){
+    app.textContent = '';
+    var lista = aulas(c), atual = lista.filter(function(x){ return x.a.id === aulaId; })[0] || lista.filter(function(x){ return !prog()[x.k]; })[0] || lista[0];
+    var p = pct(c);
+    app.appendChild(el('div', {class:'cv-top', style:'--c:' + c.cor}, [
+      el('button', {class:'back', type:'button', text:'← ' + T('Todos os cursos','Todos los cursos'), onclick:function(){ aba = c.aba; location.hash = c.aba; }}),
+      el('h1', {text:L(c.titulo)}),
+      lista.length ? el('div', {class:'pg'}, [el('div', {text:p + '% ' + T('concluído','concluido'), style:'margin-bottom:5px'}), el('div', {class:'bar'}, [el('i', {style:'width:' + p + '%'})])]) : null]));
+    var main = el('div'), side = el('aside', {class:'side'});
+    app.appendChild(el('div', {class:'cv', style:'--c:' + c.cor}, [main, side]));
+    // player
+    var src = atual && embed(atual.a);
+    var player = el('div', {class:'player'});
+    if (src) player.appendChild(el('iframe', {src:src, allow:'autoplay; fullscreen; picture-in-picture', allowfullscreen:true, title:L(atual.a.titulo)}));
+    else player.appendChild(el('div', {class:'soon'}, [el('div', null, [svg(c.icone), el('b', {text:lista.length ? T('Vídeo em preparação','Video en preparación') : T('Em gravação','En grabación')}),
+      el('span', {text:lista.length ? T('Esta aula ainda não tem vídeo.','Esta clase todavía no tiene video.') : T('As aulas deste curso estão sendo gravadas e aparecem aqui assim que ficarem prontas.','Las clases de este curso se están grabando y aparecen aquí cuando estén listas.')})])]));
+    main.appendChild(player);
+    var info = el('div', {class:'aula-info'});
+    if (atual){
+      var feito = !!prog()[atual.k], i = lista.indexOf(atual);
+      info.appendChild(el('h2', {text:L(atual.a.titulo)}));
+      if (atual.a.descricao) info.appendChild(el('p', {text:L(atual.a.descricao)}));
+      var acts = el('div', {class:'aula-acts'});
+      acts.appendChild(el('button', {type:'button', class:'lbtn done-btn' + (feito ? ' on' : ''), text:feito ? '✓ ' + T('Concluída','Concluida') : T('Marcar como concluída','Marcar como concluida'), onclick:function(){
+        var pr = prog(); if (pr[atual.k]) delete pr[atual.k]; else pr[atual.k] = Date.now(); salvar(pr); abrirCurso(c, atual.a.id); }}));
+      if (i > 0) acts.appendChild(el('button', {type:'button', class:'lbtn', text:'← ' + T('Anterior','Anterior'), onclick:function(){ location.hash = 'curso/' + c.id + '/' + lista[i - 1].a.id; }}));
+      if (i < lista.length - 1) acts.appendChild(el('button', {type:'button', class:'lbtn pri', text:T('Próxima aula','Siguiente clase') + ' →', onclick:function(){
+        var pr = prog(); pr[atual.k] = pr[atual.k] || Date.now(); salvar(pr); location.hash = 'curso/' + c.id + '/' + lista[i + 1].a.id; }}));
+      (atual.a.materiais || []).forEach(function(m){ acts.appendChild(el('a', {class:'lbtn', href:m.url, target:'_blank', rel:'noopener', text:'↓ ' + L(m.rotulo)})); });
+      info.appendChild(acts);
+    } else {
+      info.appendChild(el('h2', {text:L(c.titulo)}));
+      info.appendChild(el('p', {text:L(c.descricao)}));
+    }
+    main.appendChild(info);
+    // lista de aulas
+    side.appendChild(el('div', {class:'side-h'}, [T('Conteúdo do curso','Contenido del curso'), el('small', {text:lista.length ? lista.length + ' ' + T('aulas','clases') + ' · ' + (c.modulos || []).length + ' ' + T('módulos','módulos') : T('Aulas em gravação','Clases en grabación')})]));
+    var sb = el('div', {class:'side-b'}); side.appendChild(sb);
+    if (!lista.length) sb.appendChild(el('div', {class:'side-empty', text:T('Nenhuma aula publicada ainda.','Ninguna clase publicada todavía.')}));
+    var pr = prog();
+    (c.modulos || []).forEach(function(m, mi){
+      sb.appendChild(el('div', {class:'mod-h', text:T('Módulo ','Módulo ') + (mi + 1) + ' · ' + L(m.titulo)}));
+      (m.aulas || []).forEach(function(a){
+        var k = c.id + '/' + a.id;
+        sb.appendChild(el('button', {type:'button', class:'al' + (atual && atual.k === k ? ' on' : ''), onclick:function(){ location.hash = 'curso/' + c.id + '/' + a.id; }}, [
+          el('span', {class:'ck' + (pr[k] ? ' ok' : ''), text:pr[k] ? '✓' : ''}), el('span', null, [L(a.titulo), a.duracao ? el('small', {text:a.duracao}) : null])]));
+      });
+    });
+    window.scrollTo(0, 0);
+  }
+
+  window.addEventListener('hashchange', rota);
+  document.addEventListener('mm:lang', rota);
+  rota();
+})();
+</script>
+</body>
+</html>
