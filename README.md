@@ -86,7 +86,7 @@ ou espanhol. Vídeos marcados como "sem legenda" no catálogo são pulados.
 Para rodar tudo em lotes, salvando no GitHub a cada lote: `bash ferramentas/quadros/rodar_tudo.sh`
 (precisa de `apt install ffmpeg tesseract-ocr tesseract-ocr-spa tesseract-ocr-por wspanish wbrazilian`).
 
-Situação em 26/11/2026: 871 dos 905 vídeos têm quadros próprios (16.519 quadros no total; a base `print-indice.js` tem 7 MB) e 772 tiveram legenda lida. Os 34 restantes, listados em `ferramentas/quadros/saida/falhas.json`, continuam com os 5 quadros da miniatura: são em geral aulas longas e vídeos internos que o Drive não deixou baixar pelo link. O #386 baixa, mas o arquivo está corrompido.
+Situação em 26/11/2026: 871 dos 905 vídeos têm quadros próprios (16.519 quadros no total; a base `print-indice.js` tem 7 MB) e 772 tiveram legenda lida. Os 34 restantes, listados em `ferramentas/quadros/saida/falhas.json`, continuam com os 5 quadros da miniatura: são em geral aulas longas e vídeos internos que o Drive não deixou baixar pelo link. O #386 baixa, mas dá erro ao extrair os quadros (o arquivo parece estar com defeito).
 
 1. Instale ffmpeg e tesseract (instruções no topo de `ferramentas/quadros/gerar_quadros.py`).
 2. Teste com poucos vídeos: `python3 ferramentas/quadros/gerar_quadros.py --baixar --limite 5`
