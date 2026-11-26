@@ -12,11 +12,17 @@
 
   // links com index.html para funcionar também abrindo os arquivos direto no computador
   var NAV = [
-    {id:'inicio',    href:'index.html',           pt:'Início',             es:'Inicio'},
-    {id:'videoteca', href:'videoteca/index.html', pt:'Videoteca',          es:'Videoteca'},
-    {id:'manual',    href:'manual/index.html',    pt:'Manual do Criativo', es:'Manual del Creativo'},
-    {id:'busca',     href:'busca/index.html',     pt:'Busca',              es:'Búsqueda'}
+    {id:'inicio',      href:'index.html',                        pt:'Início',             es:'Inicio'},
+    {id:'videoteca',   href:'videoteca/index.html',              pt:'Videoteca',          es:'Videoteca'},
+    {id:'professores', href:'area/index.html?id=professores',    pt:'Professores',        es:'Profesores'},
+    {id:'cursos',      href:'cursos/index.html',                 pt:'Cursos',             es:'Cursos'},
+    {id:'academy',     href:'academy/index.html',                pt:'Academy',            es:'Academy'},
+    {id:'kit',         href:'area/index.html?id=kit',            pt:'Kit de marca',       es:'Kit de marca'},
+    {id:'manual',      href:'manual/index.html',                 pt:'Manual',             es:'Manual'},
+    {id:'busca',       href:'busca/index.html',                  pt:'Busca',              es:'Búsqueda'}
   ];
+  // nas páginas de área (area/index.html?id=...), a área aberta fica marcada no menu
+  if (PAGE === 'areas'){ var aid = new URLSearchParams(location.search).get('id'); if (aid) PAGE = aid; }
 
   function getLang(){
     try{ var l = localStorage.getItem('mm_lang'); if(l==='es'||l==='pt') return l; }catch(e){}
