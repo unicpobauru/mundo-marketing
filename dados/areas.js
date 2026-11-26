@@ -31,7 +31,7 @@ MM.REGISTRO = [
    descricao:{pt:'Trilhas de aprendizado: Integração, Mídias, Software, Dados, Vendas, Atendimento, Processos, Liderança e IA.', es:'Rutas de aprendizaje: Integración, Medios, Software, Datos, Ventas, Atención, Procesos, Liderazgo e IA.'}},
   {id:'fotos',
    titulo:{pt:'Banco de fotos', es:'Banco de fotos'},
-   descricao:{pt:'Fotos do prédio e dos funcionários, com controle de autorização de imagem.', es:'Fotos del edificio y de los funcionarios, con control de autorización de imagen.'}},
+   descricao:{pt:'78 fotos dos prédios (sede, Homero, auxiliar e auditório) para baixar. Funcionários em breve.', es:'78 fotos de los edificios (sede, Homero, auxiliar y auditorio) para descargar. Funcionarios próximamente.'}},
   {id:'mural',
    titulo:{pt:'Mural de novidades', es:'Mural de novedades'},
    descricao:{pt:'O que o marketing entregou, em ordem de data.', es:'Lo que el marketing entregó, por fecha.'}},

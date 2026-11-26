@@ -63,6 +63,10 @@
 .pills a,.pills span{text-decoration:none;color:var(--ink);font-size:13.5px;font-weight:500;border:1px solid var(--line-2);background:var(--bg-2);border-radius:999px;padding:7px 14px}
 .pills a:hover{border-color:var(--accent)}
 
+/* banco de fotos: fachadas */
+.fach{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:6px}
+.fach img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:10px;border:1px solid var(--line)}
+
 /* mural */
 .tile .mural{border-left-color:var(--line);margin-top:6px}
 .tile .post{padding-bottom:14px}
@@ -206,7 +210,8 @@
     b.appendChild(card('', 'kit', [ico('kit'), el('h3', {text:L(R.kit.titulo)}), el('p', {text:T('Cores, fontes, logos e a base de PowerPoint.','Colores, tipografías, logos y la base de PowerPoint.')})]));
 
     // Banco de fotos, Glossário e Ferramentas: todas as áreas ficam na home
-    b.appendChild(card('', 'fotos', [ico('fotos'), el('h3', {text:L(R.fotos.titulo)}), el('p', {text:L(R.fotos.descricao)})]));
+    var fach = el('div', {class:'fach'}, ['sede-00fachada','homero-00fachada','auxiliar-00fachada','auditorio-00fachada'].map(function(f){ return el('img', {src:'assets/fotos/predio/mini/' + f + '.jpg', alt:'', loading:'lazy'}); }));
+    b.appendChild(card('', 'fotos', [fach, el('h3', {text:L(R.fotos.titulo)}), el('p', {text:L(R.fotos.descricao)})]));
     b.appendChild(card('', 'glossario', [ico('glossario'), el('h3', {text:L(R.glossario.titulo)}), el('p', {text:L(R.glossario.descricao)}),
       el('div', {class:'pills'}, ['CPL', 'CTR', 'ROAS', 'Lead'].map(function(t){ return el('span', {text:t}); }))]));
     b.appendChild(card('', 'visitante', [ico('visitante'), el('h3', {text:L(R.visitante.titulo)}), el('p', {text:L(R.visitante.descricao)}),
