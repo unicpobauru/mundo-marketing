@@ -10,7 +10,7 @@ const SUPABASE_URL = 'https://vdamtcvkuzdokwvthwqv.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_28JZI_aEE5pKdzF3sq7vvQ_j33GnsXv';
 const COOKIE = 'mm_at';
 // liberado sem login: só o necessário para a tela de entrada funcionar
-const PUBLICO = [/^\/login(\/|\/index\.html)?$/, /^\/assets\/(config|auth)\.js$/, /^\/assets\/vendor\/(supabase-js-2\.45\.4|591\.supabase)\.js$/, /^\/assets\/portal\.css$/, /^\/favicon\.(ico|svg|png)$/, /^\/robots\.txt$/];
+const PUBLICO = [/^\/login(\/|\/index\.html)?$/, /^\/assets\/(config|auth)\.js$/, /^\/assets\/vendor\/(supabase-js-2\.45\.4|591\.supabase)\.js$/, /^\/assets\/portal\.css$/, /^\/favicon\.(ico|svg|png)$/, /^\/assets\/marca\/mundo-marketing\/icone-\d+\.png$/, /^\/robots\.txt$/];
 
 let jwks = null, jwksEm = 0;
 const validados = new Map();   // token -> expiração (cache curto, para o caso HS256)

@@ -38,6 +38,11 @@
       '<div class="lang" role="group" aria-label="Idioma"><button type="button" data-l="pt">PT</button><button type="button" data-l="es">ES</button></div>'+
     '</div>';
   body.insertBefore(bar, body.firstChild);
+  // ícone do Mundo Marketing na aba do navegador e no atalho do celular
+  [['icon', 'favicon.ico'], ['apple-touch-icon', 'assets/marca/mundo-marketing/icone-180.png']].forEach(function(x){
+    if (document.querySelector('link[rel="' + x[0] + '"]')) return;
+    var l = document.createElement('link'); l.rel = x[0]; l.href = ROOT + x[1]; document.head.appendChild(l);
+  });
   bar.querySelector('.menu-btn').addEventListener('click', function(){
     var open = bar.classList.toggle('open'); this.setAttribute('aria-expanded', open);
   });
