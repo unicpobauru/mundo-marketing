@@ -109,7 +109,7 @@
       it.data ? el('span', {class:'badge ext', text:fmtData(it.data)}) : null
     ]);
     if (meta.childNodes.length) kids.push(meta);
-    if (it.imagem) kids.push(el('img', {class:'det-img', src:it.imagem, alt:L(it.titulo)}));
+    if (it.detalheImagem || it.imagem) kids.push(el('img', {class:'det-img', src:it.detalheImagem || it.imagem, alt:L(it.titulo)}));
     if (it.cor) kids.push(el('div', {class:'swatch', style:'background:' + it.cor}));
     if (it.resumo) kids.push(el('p', {text:L(it.resumo), style:'color:var(--muted)'}));
     if (it.texto) textoBlocos(it.texto).forEach(function(b){ kids.push(b); });
@@ -134,6 +134,7 @@
     var b = el('button', {class:'card', type:'button', onclick:function(){ abrirDetalhe(def, it, root); }});
     if (def.layout === 'galeria') b.appendChild(it.imagem ? el('img', {class:'thumb-img', src:it.imagem, alt:L(it.titulo), loading:'lazy'}) : el('div', {class:'thumb-img', text:L(it.categoria) || '—'}));
     if (def.layout === 'kit' && it.cor) b.appendChild(el('div', {class:'swatch', style:'background:' + it.cor}));
+    if (def.layout === 'kit' && it.imagem) b.appendChild(el('img', {class:'swatch', src:it.imagem, alt:'', loading:'lazy', style:'width:100%;object-fit:cover'}));
     if (def.layout === 'perfis'){
       var ini = L(it.titulo).replace(/^(Profª?|Prof\.|Dra?\.)\s+/g,'').replace(/^(Dra?\.|Prof\.)\s+/,'').split(/\s+/).slice(0,2).map(function(w){ return w[0]; }).join('').toUpperCase();
       b.appendChild(el('div', {class:'perfil-top'}, [

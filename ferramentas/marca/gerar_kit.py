@@ -79,7 +79,7 @@ def da_pasta(pasta, prefixo):
     if os.path.isdir(pasta):
         for raiz, _, arqs in os.walk(pasta):
             for a in sorted(arqs):
-                if a.startswith('.') or a.lower() in ('leia-me.md', 'readme.md'): continue
+                if a.startswith('.') or a.startswith('previa-') or a.lower() in ('leia-me.md', 'readme.md'): continue
                 c = os.path.join(raiz, a); out.append((c, os.path.join(prefixo, os.path.relpath(c, pasta))))
     return out
 

@@ -2,7 +2,7 @@
    Cores: anotadas pelo marketing em 25/11/2026. Os arquivos para download (paletas, .ase, zips)
    são gerados por ferramentas/marca/gerar_kit.py — se mudar uma cor, mude lá também e rode o script.
    Logos: salve em assets/marca/logos/ e troque o status do item por links de download.
-   PowerPoint: salve em assets/marca/apresentacao/ e faça o mesmo. */
+   PowerPoint: assets/marca/apresentacao/ (as imagens previa-*.jpg são só para a página). */
 var M = '../assets/marca/';
 var UNI = {pt:'Cores UniCPO', es:'Colores UniCPO'}, FAI = {pt:'Cores FAINTER', es:'Colores FAINTER'};
 var FON = {pt:'Fontes', es:'Tipografías'}, LOG = 'Logos', MOD = {pt:'Modelos', es:'Plantillas'};
@@ -16,6 +16,7 @@ MM.area({
   id:'kit', layout:'kit',
   botoes:[
     {rotulo:{pt:'Baixar kit completo', es:'Descargar kit completo'}, url:M + 'downloads/kit-de-marca-completo.zip', baixar:true},
+    {rotulo:{pt:'Base de PowerPoint', es:'Base de PowerPoint'}, url:M + 'apresentacao/Base-PowerPoint-Grupo-UniCPO.pptx', baixar:true},
     {rotulo:{pt:'Cores (.ase, PNG, TXT)', es:'Colores (.ase, PNG, TXT)'}, url:M + 'downloads/cores-oficiais.zip', baixar:true},
     {rotulo:{pt:'Fonte Montserrat', es:'Tipografía Montserrat'}, url:M + 'downloads/fonte-montserrat.zip', baixar:true},
     {rotulo:{pt:'Fonte Inter', es:'Tipografía Inter'}, url:M + 'downloads/fonte-inter.zip', baixar:true}
@@ -51,7 +52,11 @@ MM.area({
     {id:'logo-fainter', categoria:LOG, titulo:{pt:'Logo FAINTER', es:'Logo FAINTER'}, status:'preencher',
      resumo:{pt:'Versões colorida, branca e preta, em PNG e SVG.', es:'Versiones a color, blanca y negra, en PNG y SVG.'}},
 
-    {id:'base-powerpoint', categoria:MOD, titulo:{pt:'Base de PowerPoint', es:'Base de PowerPoint'}, status:'preencher',
-     resumo:{pt:'Modelo de apresentação oficial. Aguardando o arquivo do marketing.', es:'Plantilla de presentación oficial. Esperando el archivo del marketing.'}}
+    {id:'base-powerpoint', categoria:MOD, titulo:{pt:'Base de PowerPoint', es:'Base de PowerPoint'},
+     imagem:M + 'apresentacao/previa-capa.jpg',
+     resumo:{pt:'Modelo oficial do Grupo UniCPO: 16 slides com capa, história, diretor e fundos para montar a sua apresentação.', es:'Plantilla oficial del Grupo UniCPO: 16 diapositivas con portada, historia, director y fondos para armar tu presentación.'},
+     texto:{pt:'Formato 16:9, em PowerPoint (.pptx, 12 MB). Abra, duplique os slides que precisar e troque os textos. Os slides em branco já vêm com os fundos e o símbolo da marca.\n\nTambém abre no Google Apresentações: no Drive, clique em Novo → Upload de arquivo e abra com Apresentações.', es:'Formato 16:9, en PowerPoint (.pptx, 12 MB). Ábrelo, duplica las diapositivas que necesites y cambia los textos. Las diapositivas en blanco ya traen los fondos y el símbolo de la marca.\n\nTambién se abre en Google Presentaciones: en Drive, haz clic en Nuevo → Subir archivo y ábrelo con Presentaciones.'},
+     detalheImagem:M + 'apresentacao/previa-slides.jpg',
+     links:[{rotulo:{pt:'Baixar PowerPoint (.pptx)', es:'Descargar PowerPoint (.pptx)'}, url:M + 'apresentacao/Base-PowerPoint-Grupo-UniCPO.pptx', baixar:true}]}
   ]
 });
