@@ -220,3 +220,5 @@ dialog.det::backdrop{background:rgba(2,5,10,.7);-webkit-backdrop-filter:blur(6px
 .testar span{color:var(--muted);font-size:13px}
 .post .acts:empty{display:none}
 .mural-n{display:inline-block;margin-left:8px;padding:2px 8px;border-radius:999px;font-size:11px;font-weight:700;color:#fff;background:var(--accent);vertical-align:3px}
+.perfil-esp{margin-top:12px;font-weight:600;font-size:14px;color:var(--accent-2)}
+.perfil-contato{margin-top:4px;font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums}

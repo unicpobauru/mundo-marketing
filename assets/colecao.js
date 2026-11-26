@@ -141,6 +141,8 @@
         it.foto ? el('img', {class:'avatar', src:it.foto, alt:'', loading:'lazy'}) : el('div', {class:'avatar', text:ini}),
         el('div', null, [el('h3', {text:L(it.titulo)}), it.categoria ? el('div', {class:'cat', text:L(it.categoria)}) : null])
       ]));
+      if (it.especialidade) b.appendChild(el('div', {class:'perfil-esp', text:L(it.especialidade)}));
+      if (it.contato) b.appendChild(el('div', {class:'perfil-contato', text:it.contato}));
     } else {
       if (it.categoria) b.appendChild(el('div', {class:'cat', text:L(it.categoria)}));
       b.appendChild(el('h3', {text:L(it.titulo)}));
