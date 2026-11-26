@@ -68,6 +68,14 @@
 .tchips{display:flex;gap:5px;flex-wrap:wrap}
 .tchips span{font-size:11.5px;border:1px solid var(--line-2);border-radius:999px;padding:2px 8px;color:var(--muted)}
 .empty{color:var(--muted);padding:40px 0;text-align:center}
+/* turmas e cursos que já começaram ficam apagados até entrar turma nova */
+.cc.passado{opacity:.42;filter:grayscale(.75)}
+.cc.passado:hover{opacity:.7;filter:grayscale(.3)}
+.cc.passado::before{background:var(--line-2)}
+.tchips span.old{opacity:.5;text-decoration:line-through}
+.tabs button.old{opacity:.5}
+.tabs button.old.on{opacity:1}
+.ja{display:inline-block;margin-left:8px;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);border:1px solid var(--line-2);border-radius:999px;padding:2px 8px;vertical-align:3px}
 
 /* janela do curso */
 dialog.cd{width:min(860px,calc(100vw - 24px));max-height:calc(100vh - 40px);padding:0;border:1px solid var(--line-2);border-radius:22px;background:var(--panel);color:var(--ink);box-shadow:0 40px 120px rgba(0,0,0,.7)}
@@ -229,7 +237,7 @@ dialog.cd::backdrop{background:rgba(2,4,9,.72);backdrop-filter:blur(6px)}
     // seções por especialidade
     var lista = document.getElementById('lista'); lista.textContent = '';
     AREAS.forEach(function(a){
-      var cs = vis.filter(function(c){ return c.area === a; }).sort(function(x,y){ return (x.tipo === 'esp' ? 0 : 1) - (y.tipo === 'esp' ? 0 : 1) || ((x.prox && x.prox.inicio) || '9').localeCompare((y.prox && y.prox.inicio) || '9'); });
+      var cs = vis.filter(function(c){ return c.area === a; }).sort(function(x,y){ return (x.prox ? 0 : 1) - (y.prox ? 0 : 1) || (x.tipo === 'esp' ? 0 : 1) - (y.tipo === 'esp' ? 0 : 1) || ((x.prox && x.prox.inicio) || '9').localeCompare((y.prox && y.prox.inicio) || '9'); });
       if (!cs.length) return;
       var grid = el('div', {class:'grid'});
       cs.forEach(function(c){ grid.appendChild(card(c)); });
@@ -241,15 +249,15 @@ dialog.cd::backdrop{background:rgba(2,4,9,.72);backdrop-filter:blur(6px)}
 
   function card(c){
     var p = c.prox, comMat = c.turmasDet.filter(function(t){ return t.m; });
-    return el('button', {type:'button', class:'cc ' + c.area.cls, onclick:function(){ abrir(c); }}, [
+    return el('button', {type:'button', class:'cc ' + c.area.cls + (p ? '' : ' passado'), onclick:function(){ abrir(c); }}, [
       el('span', {class:'tp', text:c.tipo === 'esp' ? T('Especialização','Especialización') : 'Diplomado'}),
       el('h3', {text:c.titulo}),
       coordEl(c),
-      c.turmasDet.length ? el('div', {class:'tchips'}, c.turmasDet.map(function(t){ return el('span', {text:t.t || T('sem turma','sin grupo')}); })) : null,
+      c.turmasDet.length ? el('div', {class:'tchips'}, c.turmasDet.map(function(t){ return el('span', {class:t.inicio && t.inicio < hoje ? 'old' : '', text:t.t || T('sem turma','sin grupo')}); })) : null,
       el('div', {class:'next'}, p ? [
         el('div', null, [el('div', {class:'lbl', text:T('Próximo início','Próximo inicio')}), el('div', {class:'dt', text:dTxt(p.inicio)})]),
         p.m ? el('div', {class:'pr'}, [el('div', {class:'lbl', text:c.tipo === 'esp' ? T('mensalidade','cuota') : T('valor','valor')}), el('b', {text:c.tipo === 'esp' ? usd(p.m.mensalidade) : usd(p.m.valor)})]) : null
-      ] : [el('div', {class:'none', text:comMat.length ? T('Sem turma futura','Sin grupo futuro') : T('Sem turma marcada','Sin grupo programado')})])
+      ] : [el('div', {class:'none', text:c.turmasDet.some(function(t){ return t.inicio; }) ? T('Turmas já iniciadas · aguardando nova turma','Grupos ya iniciados · esperando nuevo grupo') : T('Sem turma marcada','Sin grupo programado')})])
     ]);
   }
 
@@ -267,10 +275,10 @@ dialog.cd::backdrop{background:rgba(2,4,9,.72);backdrop-filter:blur(6px)}
     var tabs = el('div', {class:'tabs'});
     function mostra(t){
       sel = t;
-      Array.prototype.forEach.call(tabs.children, function(b, i){ b.className = ts[i] === t ? 'on' : ''; });
+      Array.prototype.forEach.call(tabs.children, function(b, i){ b.className = (ts[i] === t ? 'on' : '') + (b.dataset.old ? ' old' : ''); });
       painel.textContent = ''; turmaPainel(c, t).forEach(function(n){ painel.appendChild(n); });
     }
-    ts.forEach(function(t){ tabs.appendChild(el('button', {type:'button', text:(t.t || T('Turma','Grupo')) + (t.inicio ? ' · ' + dTxt(t.inicio) : ''), onclick:function(){ mostra(t); }})); });
+    ts.forEach(function(t){ var b = el('button', {type:'button', text:(t.t || T('Turma','Grupo')) + (t.inicio ? ' · ' + dTxt(t.inicio) : '') + (t.inicio && t.inicio < hoje ? ' · ' + T('iniciada','iniciado') : ''), onclick:function(){ mostra(t); }}); b.dataset.old = t.inicio && t.inicio < hoje ? '1' : ''; tabs.appendChild(b); });
     var painel = el('div');
     if (ts.length > 1) body.appendChild(tabs);
     body.appendChild(painel);
@@ -282,7 +290,7 @@ dialog.cd::backdrop{background:rgba(2,4,9,.72);backdrop-filter:blur(6px)}
     if (fc.length){ body.appendChild(el('div', {class:'sub', text:T('Do curso','Del curso')})); body.appendChild(el('div', {class:'files'}, fc)); }
     dlg.appendChild(el('div', {class:'cd-head'}, [
       el('div', {class:'tp', text:T(c.area.pt, c.area.es) + ' · ' + (c.tipo === 'esp' ? T('Especialização','Especialización') : 'Diplomado')}),
-      el('h2', {text:c.titulo}), coordEl(c),
+      el('h2', null, [c.titulo, c.prox ? null : el('span', {class:'ja', text:T('Sem turma futura','Sin grupo futuro')})]), coordEl(c),
       el('button', {class:'cd-x', type:'button', 'aria-label':T('Fechar','Cerrar'), text:'×', onclick:function(){ dlg.close(); }})]));
     dlg.appendChild(body);
     if (sel) mostra(sel);
