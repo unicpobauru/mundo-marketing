@@ -76,7 +76,7 @@ Precisão medida em 400 vídeos (código do site, no navegador):
 
 **Quando o catálogo mudar**, gere a base de novo: `node ferramentas/gerar-indice-print.js` (precisa de Node e Playwright).
 
-### Quadros extras e leitura de legendas (em andamento)
+### Quadros extras e leitura de legendas
 
 Regra de quadros: **15 para vídeos de até 1 minuto**; acima disso, **1 quadro a cada 4 segundos**, com teto de 60.
 As legendas dos vídeos são dinâmicas (uma palavra por vez, no meio da tela). Por isso a leitura olha a faixa central
@@ -86,13 +86,13 @@ ou espanhol. Vídeos marcados como "sem legenda" no catálogo são pulados.
 Para rodar tudo em lotes, salvando no GitHub a cada lote: `bash ferramentas/quadros/rodar_tudo.sh`
 (precisa de `apt install ffmpeg tesseract-ocr tesseract-ocr-spa tesseract-ocr-por wspanish wbrazilian`).
 
-Hoje a base usa os 5 quadros das miniaturas. Com 15 quadros, o caso mais difícil (print de outro momento do vídeo) melhora, e as legendas lidas ajudam a descobrir países e a reorganizar vídeos.
+Situação em 26/11/2026: 871 dos 905 vídeos têm quadros próprios (16.519 quadros no total; a base `print-indice.js` tem 7 MB) e 772 tiveram legenda lida. Os 34 restantes, listados em `ferramentas/quadros/saida/falhas.json`, continuam com os 5 quadros da miniatura: são em geral aulas longas e vídeos internos que o Drive não deixou baixar pelo link. O #386 baixa, mas o arquivo está corrompido.
 
 1. Instale ffmpeg e tesseract (instruções no topo de `ferramentas/quadros/gerar_quadros.py`).
 2. Teste com poucos vídeos: `python3 ferramentas/quadros/gerar_quadros.py --baixar --limite 5`
    - ou, com os vídeos numa pasta do computador: `--pasta "caminho/da/pasta"`
 3. Rode para todos (sem `--limite`). Ele continua de onde parou se for interrompido.
-4. Gere a base de novo: `node ferramentas/gerar-indice-print.js` (fica com cerca de 6 MB).
+4. Gere a base de novo: `node ferramentas/gerar-indice-print.js` (fica com cerca de 7 MB).
 5. Revise `ferramentas/quadros/saida/sugestoes-paises.csv`: vídeos em que a legenda cita um país, cidade ou gentílico diferente do que está no catálogo. Nada muda no catálogo sem revisão.
 6. O texto de todas as legendas fica em `ferramentas/quadros/saida/legendas.json`, para reorganizar categorias depois.
 
