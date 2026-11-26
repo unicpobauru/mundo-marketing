@@ -305,7 +305,9 @@
     var i = 0;
     (function prox(){
       if (i >= srcs.length) return cb();
-      var s = document.createElement('script'); s.src = srcs[i++];
+      // arquivos de dados/ são pequenos: pede a versão nova a cada 10 minutos para não ficar preso no cache do navegador
+      var src = srcs[i++]; if (/(^|\/)dados\//.test(src)) src += (src.indexOf('?') < 0 ? '?' : '&') + 'v=' + Math.floor(Date.now() / 6e5);
+      var s = document.createElement('script'); s.src = src;
       s.onload = prox; s.onerror = prox;
       document.head.appendChild(s);
     })();
