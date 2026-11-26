@@ -102,10 +102,6 @@
   <section>
     <div class="bento" id="bento"></div>
   </section>
-  <section>
-    <div class="sec-title"><h2 data-es="Todas las áreas">Todas as áreas</h2><span id="nAreas"></span></div>
-    <div class="mini-grid" id="todas"></div>
-  </section>
 </main>
 
 <script src="dados/areas.js"></script>
@@ -208,18 +204,16 @@
 
     // Kit de marca
     b.appendChild(card('', 'kit', [ico('kit'), el('h3', {text:L(R.kit.titulo)}), el('p', {text:T('Cores, fontes, logos e a base de PowerPoint.','Colores, tipografías, logos y la base de PowerPoint.')})]));
+
+    // Banco de fotos, Glossário e Ferramentas: todas as áreas ficam na home
+    b.appendChild(card('', 'fotos', [ico('fotos'), el('h3', {text:L(R.fotos.titulo)}), el('p', {text:L(R.fotos.descricao)})]));
+    b.appendChild(card('', 'glossario', [ico('glossario'), el('h3', {text:L(R.glossario.titulo)}), el('p', {text:L(R.glossario.descricao)}),
+      el('div', {class:'pills'}, ['CPL', 'CTR', 'ROAS', 'Lead'].map(function(t){ return el('span', {text:t}); }))]));
+    b.appendChild(card('', 'visitante', [ico('visitante'), el('h3', {text:L(R.visitante.titulo)}), el('p', {text:L(R.visitante.descricao)}),
+      el('div', {class:'pills'}, [T('Mapa UniCPO','Mapa UniCPO'), 'Tour 3D', T('Vídeos','Videos')].map(function(t){ return el('span', {text:t}); }))]));
   }
 
-  // ---------- todas as áreas ----------
-  function todas(){
-    var g = document.getElementById('todas'); g.textContent = '';
-    MM.REGISTRO.forEach(function(r){
-      g.appendChild(el('a', {class:'card', href:MM.hrefArea(r, '')}, [ico(r.id), el('div', null, [el('h3', {text:L(r.titulo)}), el('p', {text:L(r.descricao)})])]));
-    });
-    document.getElementById('nAreas').textContent = MM.REGISTRO.length + ' ' + T('áreas','áreas');
-  }
-
-  function tudo(){ cmdList(); bento(); todas(); }
+  function tudo(){ cmdList(); bento(); }
   tudo();
   MM.carregar(['dados/mural.js'], function(){ MURAL = MM._area; bento(); });
   document.addEventListener('mm:lang', tudo);
