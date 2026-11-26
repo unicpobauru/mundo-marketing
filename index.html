@@ -154,9 +154,10 @@
     list.textContent = '';
     list.appendChild(el('div', {class:'lbl', text:T('Atalhos', 'Atajos')}));
     [['videoteca', T('Abrir a Videoteca','Abrir la Videoteca'), '905 ' + T('vídeos','videos')],
-     ['cursos', L(R.cursos.titulo), T('próximas turmas','próximos grupos')],
-     ['professores', L(R.professores.titulo), T('contatos','contactos')],
-     ['manual', L(R.manual.titulo), T('checklist','checklist')]].forEach(function(x){
+     ['professores', L(R.professores.titulo), T('fotos e contatos','fotos y contactos')],
+     ['cursos', L(R.cursos.titulo), T('turmas, valores e PDFs','grupos, valores y PDF')],
+     ['tutoriais', L(R.tutoriais.titulo), T('cursos em vídeo','cursos en video')],
+     ['kit', L(R.kit.titulo), T('logos, cores e PowerPoint','logos, colores y PowerPoint')]].forEach(function(x){
       var a = el('a', {class:'cmd-row', href:href(x[0])}, [ico(x[0], 28), el('span', {text:x[1]}), el('small', {text:x[2]})]);
       a.querySelector('.ico').className = 'ri';
       list.appendChild(a);
