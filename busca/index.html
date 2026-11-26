@@ -76,7 +76,7 @@
   }
 
   // carrega o catálogo e depois cada área, uma por vez, guardando os itens no índice
-  var areas = MM.REGISTRO.filter(function(r){ return !r.href; });
+  var areas = MM.REGISTRO.filter(function(r){ return !r.href || r.busca; });
   MM.carregar(['../videoteca/data.js'], function(){
     VIDEOS = ((window.CATALOGO && CATALOGO.items) || []).map(function(it){
       return {v:it.v, no:it.no, t:it.t, c:it.c, pa:it.pa, txt:norm([it.no,it.de,it.c,it.pa,it.p,it.qa,it.t,it.s,(it.ca||[]).join(' ')].join(' '))};
@@ -89,7 +89,7 @@
         var def = MM._area;
         if (def) MM.itensDe(def).forEach(function(it){
           var t = it.titulo, d = it.resumo || it.texto;
-          IDX.push({k:r.titulo, t:t, d:d, u:'../area/index.html?id=' + r.id + (it.id ? '#' + it.id : ''),
+          IDX.push({k:r.titulo, t:t, d:d, u:(r.href ? '../' + r.href : '../area/index.html?id=' + r.id) + (it.id ? '#' + it.id : ''),
             txt:norm([t && t.pt || t, t && t.es, d && d.pt || d, d && d.es, L(it.categoria)].concat((it.tags || []).map(L), (it.campos || []).map(function(c){ return L(c.valor); })).join(' '))});
         });
         prox();

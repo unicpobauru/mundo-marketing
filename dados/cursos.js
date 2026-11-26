@@ -519,6 +519,8 @@ MM.area({
       return {
         id: c.nome.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,''),
         titulo: c.nome,
+        // dados crus para a página própria de cursos (cursos/index.html)
+        tipo: c.tipo, coordIds: c.coord, turmasDet: turmas, geral: ger, nVideos: nv, codigo: c.codigo,
         categoria: c.tipo === 'esp' ? {pt:'Especialização', es:'Especialización'} : {pt:'Diplomado', es:'Diplomado'},
         coordenador: coords,
         situacao: futuras.length ? {pt:'Com turma marcada', es:'Con grupo programado'} : (semData ? {pt:'Sem data', es:'Sin fecha'} : {pt:'Sem turma futura', es:'Sin grupo futuro'}),

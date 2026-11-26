@@ -38,7 +38,7 @@ MM.REGISTRO = [
   {id:'glossario',
    titulo:{pt:'Glossário', es:'Glosario'},
    descricao:{pt:'Termos de marketing explicados para toda a empresa.', es:'Términos de marketing explicados para toda la empresa.'}},
-  {id:'cursos', catalogo:true, extras:['cursos-material'],
+  {id:'cursos', href:'cursos/index.html', busca:true, catalogo:true, extras:['cursos-material'],
    titulo:{pt:'Materiais por curso', es:'Materiales por curso'},
    descricao:{pt:'Cada curso com turmas, cronograma de módulos, valores, apresentações em PDF e vídeos.', es:'Cada curso con grupos, cronograma de módulos, valores, presentaciones en PDF y videos.'}},
   {id:'professores', catalogo:true,

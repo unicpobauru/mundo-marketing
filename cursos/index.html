@@ -1,0 +1,336 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Materiais por curso · Mundo Marketing</title>
+<link rel="stylesheet" href="../assets/portal.css">
+<style>
+/* cores por especialidade */
+.c-aof{--c:#FF7AB6}.c-dent{--c:#F4BE4F}.c-endo{--c:#FF6B6B}.c-impl{--c:#34AED6}.c-odp{--c:#8ACBBD}
+.c-orto{--c:#A78BFA}.c-perio{--c:#36C2B4}.c-reab{--c:#66D3FF}.c-cir{--c:#F59E5B}
+
+.cr-hero{padding:56px 0 18px}
+.cr-hero .eyebrow{color:var(--accent-2);font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase}
+.cr-hero h1{font-size:clamp(34px,5vw,56px);letter-spacing:-.035em;margin:8px 0 10px;line-height:1.02}
+.cr-hero p{color:var(--muted);max-width:640px;margin:0;font-size:16px}
+.cr-stats{display:flex;gap:28px;flex-wrap:wrap;margin:22px 0 4px}
+.cr-stats b{display:block;font-size:30px;letter-spacing:-.03em}
+.cr-stats span{font-size:12.5px;color:var(--muted)}
+.cr-top-acts{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px}
+
+/* barra de filtros */
+.cr-bar{position:sticky;top:60px;z-index:5;background:rgba(5,8,15,.86);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--line);margin:18px -16px 0;padding:12px 16px}
+.cr-bar .row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.cr-bar input{flex:1 1 260px;min-width:0;background:var(--panel-2);border:1px solid var(--line);border-radius:12px;color:var(--ink);font:inherit;font-size:14.5px;padding:10px 14px}
+.cr-bar input:focus{outline:none;border-color:var(--accent-2)}
+.seg{display:inline-flex;background:var(--panel-2);border:1px solid var(--line);border-radius:12px;padding:3px}
+.seg button{background:none;border:0;color:var(--muted);font:inherit;font-size:13.5px;font-weight:600;padding:7px 12px;border-radius:9px;cursor:pointer}
+.seg button.on{background:var(--accent);color:#fff}
+.chips{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}
+.chip{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--line-2);background:var(--panel);color:var(--ink);border-radius:999px;padding:6px 12px;font:inherit;font-size:13px;font-weight:500;cursor:pointer}
+.chip i{width:9px;height:9px;border-radius:50%;background:var(--c,var(--accent-2));box-shadow:0 0 10px var(--c,var(--accent-2))}
+.chip.on{border-color:var(--c,var(--accent-2));background:color-mix(in srgb,var(--c,var(--accent-2)) 16%,var(--panel))}
+.chip small{color:var(--muted)}
+
+/* próximos inícios */
+.prox{margin-top:30px}
+.prox h2,.area-h h2{font-size:20px;letter-spacing:-.02em;margin:0}
+.prox-list{display:flex;gap:12px;overflow-x:auto;padding:14px 2px 6px;scroll-snap-type:x mandatory}
+.prox-item{flex:0 0 220px;scroll-snap-align:start;border:1px solid var(--line);border-radius:16px;padding:14px;background:linear-gradient(160deg,color-mix(in srgb,var(--c) 18%,var(--panel)),var(--panel) 60%);cursor:pointer;text-align:left;color:var(--ink);font:inherit}
+.prox-item:hover{border-color:var(--c)}
+.prox-item .d{font-size:26px;font-weight:800;letter-spacing:-.03em;line-height:1}
+.prox-item .m{font-size:12px;text-transform:uppercase;letter-spacing:.1em;color:var(--c);font-weight:700;margin-top:2px}
+.prox-item .n{font-size:13.5px;margin-top:10px;font-weight:600}
+.prox-item .t{font-size:12px;color:var(--muted);margin-top:2px}
+
+/* seções por especialidade */
+.area{margin-top:38px}
+.area-h{display:flex;align-items:center;gap:12px;padding-bottom:12px;border-bottom:1px solid var(--line)}
+.area-h .dot{width:34px;height:34px;border-radius:10px;background:linear-gradient(160deg,var(--c),color-mix(in srgb,var(--c) 45%,#000));box-shadow:0 8px 24px -8px var(--c)}
+.area-h small{color:var(--muted);margin-left:auto;font-size:13px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:14px;margin-top:14px}
+
+.cc{position:relative;display:flex;flex-direction:column;gap:12px;text-align:left;border:1px solid var(--line);background:var(--panel);border-radius:18px;padding:18px;cursor:pointer;color:var(--ink);font:inherit;overflow:hidden;transition:border-color .15s,transform .15s,box-shadow .15s}
+.cc::before{content:"";position:absolute;inset:0 0 auto 0;height:4px;background:var(--c)}
+.cc:hover{border-color:color-mix(in srgb,var(--c) 70%,transparent);transform:translateY(-2px);box-shadow:0 18px 40px -22px var(--c)}
+.cc .tp{display:inline-flex;align-self:flex-start;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--c);background:color-mix(in srgb,var(--c) 14%,transparent);border-radius:6px;padding:3px 8px}
+.cc h3{margin:0;font-size:17px;line-height:1.25}
+.coord{display:flex;align-items:center;gap:9px;font-size:13px;color:var(--muted)}
+.coord img,.coord .ini{width:30px;height:30px;border-radius:50%;object-fit:cover;flex:none;border:2px solid color-mix(in srgb,var(--c) 60%,transparent)}
+.coord .ini{display:grid;place-items:center;background:var(--panel-2);color:var(--ink);font-size:11px;font-weight:700}
+.next{display:flex;align-items:flex-end;justify-content:space-between;gap:10px;border-top:1px dashed var(--line);padding-top:12px;margin-top:auto}
+.next .lbl{font-size:11.5px;color:var(--muted)}
+.next .dt{font-size:20px;font-weight:800;letter-spacing:-.02em}
+.next .pr{text-align:right}
+.next .pr b{font-size:16px}
+.next .none{color:var(--muted);font-size:13.5px}
+.tchips{display:flex;gap:5px;flex-wrap:wrap}
+.tchips span{font-size:11.5px;border:1px solid var(--line-2);border-radius:999px;padding:2px 8px;color:var(--muted)}
+.empty{color:var(--muted);padding:40px 0;text-align:center}
+
+/* janela do curso */
+dialog.cd{width:min(860px,calc(100vw - 24px));max-height:calc(100vh - 40px);padding:0;border:1px solid var(--line-2);border-radius:22px;background:var(--panel);color:var(--ink);box-shadow:0 40px 120px rgba(0,0,0,.7)}
+dialog.cd::backdrop{background:rgba(2,4,9,.72);backdrop-filter:blur(6px)}
+.cd-head{position:relative;padding:26px 26px 20px;background:linear-gradient(135deg,color-mix(in srgb,var(--c) 30%,var(--panel)),var(--panel) 70%);border-bottom:1px solid var(--line)}
+.cd-head .tp{font-size:11.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--c)}
+.cd-head h2{margin:6px 0 12px;font-size:clamp(22px,3vw,30px);letter-spacing:-.025em;line-height:1.1;padding-right:40px}
+.cd-head .coord{font-size:14px;color:var(--ink)}
+.cd-head .coord img,.cd-head .coord .ini{width:38px;height:38px}
+.cd-x{position:absolute;top:16px;right:16px;width:36px;height:36px;border-radius:10px;border:1px solid var(--line-2);background:rgba(0,0,0,.25);color:var(--ink);font-size:20px;cursor:pointer}
+.cd-body{padding:20px 26px 26px}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px}
+.tabs button{border:1px solid var(--line-2);background:var(--panel-2);color:var(--muted);font:inherit;font-size:13.5px;font-weight:600;padding:8px 14px;border-radius:10px;cursor:pointer}
+.tabs button.on{border-color:var(--c);color:var(--ink);background:color-mix(in srgb,var(--c) 18%,var(--panel-2))}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px}
+.fact{border:1px solid var(--line);border-radius:14px;padding:12px 14px;background:var(--bg-2)}
+.fact span{display:block;font-size:11.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+.fact b{display:block;font-size:17px;margin-top:4px}
+.price{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px;margin-top:12px}
+.pcard{border-radius:14px;padding:14px;border:1px solid color-mix(in srgb,var(--c) 35%,var(--line));background:color-mix(in srgb,var(--c) 8%,var(--bg-2))}
+.pcard span{font-size:12px;color:var(--muted)}
+.pcard b{display:block;font-size:24px;letter-spacing:-.02em;margin:2px 0}
+.pcard small{font-size:12px;color:var(--muted)}
+.warn{margin-top:12px;border:1px dashed var(--soon);background:var(--soon-soft);color:var(--ink);border-radius:12px;padding:10px 12px;font-size:13.5px}
+.sub{font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:22px 0 10px}
+.timeline{display:grid;grid-template-columns:repeat(auto-fill,minmax(175px,1fr));gap:8px}
+.mod{display:flex;gap:10px;align-items:center;border:1px solid var(--line);border-radius:12px;padding:9px 11px;font-size:13px}
+.mod .n{width:28px;height:28px;border-radius:8px;display:grid;place-items:center;font-weight:800;font-size:12.5px;background:color-mix(in srgb,var(--c) 22%,transparent);color:var(--c);flex:none}
+.mod.past{opacity:.45}
+.mod small{display:block;color:var(--muted);font-size:11.5px}
+.files{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:8px}
+.file{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink);border:1px solid var(--line);border-radius:12px;padding:10px 12px;background:var(--bg-2);font-size:13.5px;font-weight:600}
+.file:hover{border-color:var(--c)}
+.file .ic{width:32px;height:32px;border-radius:9px;display:grid;place-items:center;background:color-mix(in srgb,var(--c) 18%,transparent);color:var(--c);flex:none;font-size:11px;font-weight:800}
+.file small{display:block;font-weight:400;color:var(--muted);font-size:11.5px}
+@media (max-width:620px){.cd-head,.cd-body{padding-left:18px;padding-right:18px}.cr-bar{top:56px}}
+</style>
+</head>
+<body data-root="../" data-page="cursos">
+<main class="wrap">
+  <section class="cr-hero">
+    <div class="eyebrow">Mundo Marketing</div>
+    <h1 data-es="Materiales por curso">Materiais por curso</h1>
+    <p data-es="Todas las especializaciones y diplomados: grupos, fechas de cada módulo, valores y las presentaciones para enviar al lead.">Todas as especializações e diplomados: turmas, datas de cada módulo, valores e as apresentações para mandar ao lead.</p>
+    <div class="cr-stats" id="stats"></div>
+    <div class="cr-top-acts">
+      <a class="lbtn" download href="../assets/cursos/geral/documento-informativo-comercial-pt.pdf" data-es="↓ Documento informativo comercial (PT)">↓ Documento informativo comercial (PT)</a>
+      <a class="lbtn" download href="../assets/cursos/geral/documento-informativo-comercial-es.docx" data-es="↓ Documento informativo comercial (ES)">↓ Documento informativo comercial (ES)</a>
+    </div>
+  </section>
+
+  <div class="cr-bar">
+    <div class="row">
+      <input id="q" type="search" placeholder="Buscar curso, coordenador ou turma (ex.: T56)" data-es-ph="Buscar curso, coordinador o grupo (ej.: T56)" autocomplete="off">
+      <div class="seg" id="tipo"></div>
+    </div>
+    <div class="chips" id="areas"></div>
+  </div>
+
+  <section class="prox" id="proxSec">
+    <h2 data-es="Próximos inicios">Próximos inícios</h2>
+    <div class="prox-list" id="prox"></div>
+  </section>
+
+  <div id="lista"></div>
+</main>
+
+<dialog class="cd" id="cd"></dialog>
+
+<script src="../dados/areas.js"></script>
+<script src="../assets/portal.js"></script>
+<script src="../assets/colecao.js"></script>
+<script>
+(function(){
+  var el = MM.el, L = MM.L;
+  var T = function(pt, es){ return window.MM_LANG === 'es' ? es : pt; };
+  var AREAS = [
+    {id:'aof',   cls:'c-aof',   pt:'Harmonização Orofacial', es:'Armonización Orofacial', re:/AOF/},
+    {id:'dent',  cls:'c-dent',  pt:'Dentística',             es:'Odontología Restauradora', re:/Dentística|Carillas/},
+    {id:'endo',  cls:'c-endo',  pt:'Endodontia',             es:'Endodoncia', re:/Endo/},
+    {id:'impl',  cls:'c-impl',  pt:'Implantodontia',         es:'Implantología', re:/Implant|Cirugía Virtual|Tercer Molar|Master Implante/},
+    {id:'odp',   cls:'c-odp',   pt:'Odontopediatria',        es:'Odontopediatría', re:/Odontopediatr/},
+    {id:'orto',  cls:'c-orto',  pt:'Ortodontia',             es:'Ortodoncia', re:/Ortod|Alineadores|Biomecánica|Mini Implantes/},
+    {id:'perio', cls:'c-perio', pt:'Periodontia',            es:'Periodoncia', re:/Periodon|Corona/},
+    {id:'reab',  cls:'c-reab',  pt:'Reabilitação Oral',      es:'Rehabilitación Oral', re:/Rehabilitación|Laminados|Metal Free/},
+    {id:'cir',   cls:'c-cir',   pt:'Cirurgia facial',        es:'Cirugía facial', re:/Blefaroplastia/}
+  ];
+  var FOTO = {c_andreia:'andreia', c_augusto:'augusto', c_claudia:'claudia', c_eric:'eric', c_fabricio:'fabricio', c_gustavo:'gustavo',
+              c_henrique:'henrique', c_john:'john', c_juan:'juan', c_patrick:'patrick', c_suedam:'suedam', c_vanessa:'vanessa', c_vinicius:'vinicius'};
+  var MES = {pt:['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'], es:['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic']};
+  var hoje = new Date().toISOString().slice(0,10);
+  var CURS = [], estado = {q:'', tipo:'', area:''};
+
+  function areaDe(nome){ for (var i = 0; i < AREAS.length; i++) if (AREAS[i].re.test(nome)) return AREAS[i]; return AREAS[3]; }
+  function iso(d){ var m = /^(\d\d)\/(\d\d)\/(\d{4})$/.exec(d || ''); return m ? m[3] + '-' + m[2] + '-' + m[1] : (d || ''); }
+  function dParts(isoD){ var p = (isoD || '').split('-'); return p.length === 3 ? {d:p[2], m:MES[window.MM_LANG === 'es' ? 'es' : 'pt'][+p[1] - 1], y:p[0]} : null; }
+  function dTxt(isoD){ var p = dParts(isoD); return p ? p.d + ' ' + p.m + ' ' + p.y : '—'; }
+  function usd(v){ return v ? 'US$ ' + v : '—'; }
+  function avatar(id, nome){
+    var f = FOTO[id];
+    if (f) return el('img', {src:'../assets/fotos/professores/' + f + '.jpg', alt:'', loading:'lazy'});
+    return el('div', {class:'ini', text:nome.replace(/^Dra?\.\s*/, '').split(' ').slice(0,2).map(function(w){ return w[0]; }).join('')});
+  }
+  function coordEl(c){
+    var nomes = c.coordIds.map(function(id){ return CURSOS_COORD[id] || id; });
+    return el('div', {class:'coord'}, [avatar(c.coordIds[0], nomes[0] || ''), el('span', {text:nomes.join(' · ')})]);
+  }
+  function proxTurma(c){ return c.turmasDet.filter(function(t){ return t.inicio && t.inicio >= hoje; })[0]; }
+  function precoCurto(t){ if (!t || !t.m) return ''; return t.m.tipo === 'esp' ? T('mensal ', 'cuota ') + usd(t.m.mensalidade) : usd(t.m.valor); }
+
+  function carregar(){
+    var def = MM._area; if (!def) return;
+    CURS = MM.itensDe(def).map(function(it){ it.area = areaDe(it.titulo); it.prox = proxTurma(it); return it; });
+    montarFiltros(); render();
+    var h = decodeURIComponent(location.hash.slice(1)); if (h){ var c = CURS.filter(function(x){ return x.id === h; })[0]; if (c) abrir(c); }
+  }
+
+  function montarFiltros(){
+    var tipo = document.getElementById('tipo'); tipo.textContent = '';
+    [['', T('Todos','Todos')], ['esp', T('Especializações','Especializaciones')], ['dipl', T('Diplomados','Diplomados')]].forEach(function(o){
+      tipo.appendChild(el('button', {type:'button', class:estado.tipo === o[0] ? 'on' : '', text:o[1], onclick:function(){ estado.tipo = o[0]; montarFiltros(); render(); }}));
+    });
+    var ar = document.getElementById('areas'); ar.textContent = '';
+    ar.appendChild(el('button', {type:'button', class:'chip' + (estado.area ? '' : ' on'), onclick:function(){ estado.area = ''; montarFiltros(); render(); }}, [T('Todas as especialidades','Todas las especialidades')]));
+    AREAS.forEach(function(a){
+      var n = CURS.filter(function(c){ return c.area === a; }).length; if (!n) return;
+      ar.appendChild(el('button', {type:'button', class:'chip ' + a.cls + (estado.area === a.id ? ' on' : ''), onclick:function(){ estado.area = estado.area === a.id ? '' : a.id; montarFiltros(); render(); }},
+        [el('i'), T(a.pt, a.es), el('small', {text:String(n)})]));
+    });
+  }
+
+  function filtra(c){
+    if (estado.tipo && c.tipo !== estado.tipo) return false;
+    if (estado.area && c.area.id !== estado.area) return false;
+    if (estado.q){
+      var txt = MM.norm([c.titulo, c.area.pt, c.area.es, c.coordIds.map(function(id){ return CURSOS_COORD[id]; }).join(' '), c.turmasDet.map(function(t){ return t.t; }).join(' ')].join(' '));
+      return estado.q.split(/\s+/).every(function(w){ return txt.indexOf(w) >= 0; });
+    }
+    return true;
+  }
+
+  function render(){
+    var vis = CURS.filter(filtra);
+    var turmas = 0, futuras = []; CURS.forEach(function(c){ c.turmasDet.forEach(function(t){ if (t.m) turmas++; if (t.inicio && t.inicio >= hoje) futuras.push({c:c, t:t}); }); });
+    var st = document.getElementById('stats'); st.textContent = '';
+    [[CURS.filter(function(c){ return c.tipo === 'esp'; }).length, T('especializações','especializaciones')], [CURS.filter(function(c){ return c.tipo !== 'esp'; }).length, T('diplomados','diplomados')],
+     [turmas, T('turmas com material','grupos con material')], [AREAS.filter(function(a){ return CURS.some(function(c){ return c.area === a; }); }).length, T('especialidades','especialidades')]].forEach(function(x){
+      st.appendChild(el('div', null, [el('b', {text:String(x[0])}), el('span', {text:x[1]})]));
+    });
+    // próximos inícios (respeita os filtros)
+    var px = document.getElementById('prox'); px.textContent = '';
+    futuras.filter(function(f){ return filtra(f.c); }).sort(function(a,b){ return a.t.inicio.localeCompare(b.t.inicio); }).slice(0, 12).forEach(function(f){
+      var p = dParts(f.t.inicio);
+      px.appendChild(el('button', {type:'button', class:'prox-item ' + f.c.area.cls, onclick:function(){ abrir(f.c, f.t); }}, [
+        el('div', {class:'d', text:p.d}), el('div', {class:'m', text:p.m + ' ' + p.y}),
+        el('div', {class:'n', text:f.c.titulo}), el('div', {class:'t', text:f.t.t + (f.t.m ? ' · ' + precoCurto(f.t) : '')})]));
+    });
+    document.getElementById('proxSec').hidden = !px.childNodes.length;
+    // seções por especialidade
+    var lista = document.getElementById('lista'); lista.textContent = '';
+    AREAS.forEach(function(a){
+      var cs = vis.filter(function(c){ return c.area === a; }).sort(function(x,y){ return (x.tipo === 'esp' ? 0 : 1) - (y.tipo === 'esp' ? 0 : 1) || ((x.prox && x.prox.inicio) || '9').localeCompare((y.prox && y.prox.inicio) || '9'); });
+      if (!cs.length) return;
+      var grid = el('div', {class:'grid'});
+      cs.forEach(function(c){ grid.appendChild(card(c)); });
+      lista.appendChild(el('section', {class:'area ' + a.cls}, [el('div', {class:'area-h'}, [el('span', {class:'dot'}), el('h2', {text:T(a.pt, a.es)}),
+        el('small', {text:cs.length + ' ' + (cs.length > 1 ? T('cursos','cursos') : T('curso','curso'))})]), grid]));
+    });
+    if (!lista.childNodes.length) lista.appendChild(el('p', {class:'empty', text:T('Nenhum curso com esses filtros.','Ningún curso con esos filtros.')}));
+  }
+
+  function card(c){
+    var p = c.prox, comMat = c.turmasDet.filter(function(t){ return t.m; });
+    return el('button', {type:'button', class:'cc ' + c.area.cls, onclick:function(){ abrir(c); }}, [
+      el('span', {class:'tp', text:c.tipo === 'esp' ? T('Especialização','Especialización') : 'Diplomado'}),
+      el('h3', {text:c.titulo}),
+      coordEl(c),
+      c.turmasDet.length ? el('div', {class:'tchips'}, c.turmasDet.map(function(t){ return el('span', {text:t.t || T('sem turma','sin grupo')}); })) : null,
+      el('div', {class:'next'}, p ? [
+        el('div', null, [el('div', {class:'lbl', text:T('Próximo início','Próximo inicio')}), el('div', {class:'dt', text:dTxt(p.inicio)})]),
+        p.m ? el('div', {class:'pr'}, [el('div', {class:'lbl', text:c.tipo === 'esp' ? T('mensalidade','cuota') : T('valor','valor')}), el('b', {text:c.tipo === 'esp' ? usd(p.m.mensalidade) : usd(p.m.valor)})]) : null
+      ] : [el('div', {class:'none', text:comMat.length ? T('Sem turma futura','Sin grupo futuro') : T('Sem turma marcada','Sin grupo programado')})])
+    ]);
+  }
+
+  // ---------- janela do curso ----------
+  var dlg = document.getElementById('cd');
+  dlg.addEventListener('click', function(e){ if (e.target === dlg) dlg.close(); });
+  dlg.addEventListener('close', function(){ history.replaceState(null, '', location.pathname + location.search); });
+  var atual = null;
+  function abrir(c, turma){
+    atual = c;
+    var ts = c.turmasDet.filter(function(t){ return t.m; }).concat(c.turmasDet.filter(function(t){ return !t.m; }));
+    var sel = turma || c.prox || ts[0];
+    dlg.className = 'cd ' + c.area.cls; dlg.textContent = '';
+    var body = el('div', {class:'cd-body'});
+    var tabs = el('div', {class:'tabs'});
+    function mostra(t){
+      sel = t;
+      Array.prototype.forEach.call(tabs.children, function(b, i){ b.className = ts[i] === t ? 'on' : ''; });
+      painel.textContent = ''; turmaPainel(c, t).forEach(function(n){ painel.appendChild(n); });
+    }
+    ts.forEach(function(t){ tabs.appendChild(el('button', {type:'button', text:(t.t || T('Turma','Grupo')) + (t.inicio ? ' · ' + dTxt(t.inicio) : ''), onclick:function(){ mostra(t); }})); });
+    var painel = el('div');
+    if (ts.length > 1) body.appendChild(tabs);
+    body.appendChild(painel);
+    // arquivos do curso
+    var g = c.geral || {}, fc = [];
+    if (g.matriz) fc.push(arq(T('Matriz curricular','Matriz curricular'), 'PDF', '../' + g.matriz));
+    if (g.apoio) fc.push(arq(T('Material de apoio','Material de apoyo'), 'PDF', '../' + g.apoio));
+    if (c.nVideos) fc.push(el('a', {class:'file', href:'../videoteca/index.html?q=' + encodeURIComponent(c.codigo)}, [el('span', {class:'ic', text:'▶'}), el('span', null, [T('Vídeos na Videoteca','Videos en la Videoteca'), el('small', {text:c.nVideos + ' ' + T('vídeos','videos')})])]));
+    if (fc.length){ body.appendChild(el('div', {class:'sub', text:T('Do curso','Del curso')})); body.appendChild(el('div', {class:'files'}, fc)); }
+    dlg.appendChild(el('div', {class:'cd-head'}, [
+      el('div', {class:'tp', text:T(c.area.pt, c.area.es) + ' · ' + (c.tipo === 'esp' ? T('Especialização','Especialización') : 'Diplomado')}),
+      el('h2', {text:c.titulo}), coordEl(c),
+      el('button', {class:'cd-x', type:'button', 'aria-label':T('Fechar','Cerrar'), text:'×', onclick:function(){ dlg.close(); }})]));
+    dlg.appendChild(body);
+    if (sel) mostra(sel);
+    if (!dlg.open) dlg.showModal();
+    history.replaceState(null, '', '#' + c.id);
+  }
+  function arq(nome, tipo, url, nota){
+    return el('a', {class:'file', href:url, download:url.split('/').pop()}, [el('span', {class:'ic', text:tipo}), el('span', null, [nome, nota ? el('small', {text:nota}) : null])]);
+  }
+  function turmaPainel(c, t){
+    var out = [], m = t.m;
+    if (!m){
+      out.push(el('p', {style:'color:var(--muted)', text:(t.inicio ? T('Início ','Inicio ') + dTxt(t.inicio) + '. ' : '') + T('Esta turma ainda não tem material comercial (a data vem do Gravações Técnicas).','Este grupo todavía no tiene material comercial (la fecha viene de Grabaciones Técnicas).')}));
+      return out;
+    }
+    var facts = [[T('Início','Inicio'), dTxt(iso(m.inicio))], [T('Término','Fin'), m.termino ? dTxt(iso(m.termino)) : '—']];
+    if (m.modulos) facts.push([T('Módulos','Módulos'), m.modulos]);
+    if (m.duracao) facts.push([T('Duração','Duración'), m.duracao + ' ' + T('meses','meses')]);
+    if (m.periodicidade) facts.push([T('Frequência','Frecuencia'), m.periodicidade]);
+    if (m.carga) facts.push([T('Carga horária','Carga horaria'), m.carga + ' h']);
+    out.push(el('div', {class:'facts'}, facts.map(function(f){ return el('div', {class:'fact'}, [el('span', {text:f[0]}), el('b', {text:f[1]})]); })));
+    var pc = [];
+    if (m.matricula) pc.push([T('Matrícula','Matrícula'), usd(m.matricula), '']);
+    if (m.mensalidade) pc.push([T('Mensalidade com pontualidade','Cuota con puntualidad'), usd(m.mensalidade), T('cheia ','sin descuento ') + usd(m.mensalidade_cheia)]);
+    if (m.total) pc.push([T('Total com desconto','Total con descuento'), usd(m.total), T('cheio ','sin descuento ') + usd(m.total_cheio)]);
+    if (m.valor) pc.push([T('Valor do curso','Valor del curso'), usd(m.valor), '']);
+    if (pc.length) out.push(el('div', {class:'price'}, pc.map(function(p){ return el('div', {class:'pcard'}, [el('span', {text:p[0]}), el('b', {text:p[1]}), p[2] ? el('small', {text:p[2]}) : null]); })));
+    if (m.conferir) out.push(el('div', {class:'warn', text:T('Conferir: ','Verificar: ') + m.conferir}));
+    if (m.cronograma && m.cronograma.length){
+      out.push(el('div', {class:'sub', text:T('Datas dos módulos','Fechas de los módulos')}));
+      out.push(el('div', {class:'timeline'}, m.cronograma.map(function(r){
+        var fim = iso(r[2]);
+        return el('div', {class:'mod' + (fim < hoje ? ' past' : '')}, [el('span', {class:'n', text:r[0]}), el('div', null, [dTxt(iso(r[1])), el('small', {text:T('até ','hasta ') + dTxt(fim)})])]);
+      })));
+    }
+    var a = m.arquivos || {}, fs = [];
+    if (a.completo) fs.push(arq(T('Apresentação completa','Presentación completa'), 'PDF', '../' + a.completo, T('para mandar ao lead','para enviar al lead')));
+    if (a.resumido) fs.push(arq(T('Apresentação resumida','Presentación resumida'), 'PDF', '../' + a.resumido, T('versão curta','versión corta')));
+    if (a.informativo) fs.push(arq(T('Informativo da turma','Informativo del grupo'), 'PDF', '../' + a.informativo, T('estrutura e valores','estructura y valores')));
+    if (a.cronograma) fs.push(arq(T('Cronograma','Cronograma'), 'IMG', '../' + a.cronograma, T('imagem para WhatsApp','imagen para WhatsApp')));
+    if (fs.length){ out.push(el('div', {class:'sub', text:T('Arquivos da turma ','Archivos del grupo ') + t.t})); out.push(el('div', {class:'files'}, fs)); }
+    return out;
+  }
+
+  document.getElementById('q').addEventListener('input', function(e){ estado.q = MM.norm(e.target.value.trim()); render(); });
+  document.addEventListener('mm:lang', function(){ montarFiltros(); render(); if (dlg.open && atual) abrir(atual); });
+  MM.carregar(['../videoteca/data.js', '../dados/cursos-material.js', '../dados/cursos.js'], carregar);
+})();
+</script>
+</body>
+</html>
