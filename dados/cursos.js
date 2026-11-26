@@ -494,7 +494,8 @@ var CURSOS = [
 ]
 ],
 "cronogramaNome": "Encontros presenciais",
-"arquivos": {}
+"arquivos": {},
+"termino": "02/07/2028"
 }
 }
 ]
