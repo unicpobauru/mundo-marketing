@@ -1,5 +1,5 @@
 /* Mundo Marketing — sessão do usuário (Supabase Auth).
-   - Mantém o login renovado e grava o token no cookie que o Cloudflare confere (functions/_middleware.js).
+   - Mantém o login renovado e grava o token no cookie que o Cloudflare confere (src/worker.js).
    - Mostra o nome da pessoa e o botão "Sair" na barra do portal.
    - No GitHub Pages ou abrindo os arquivos no computador, não faz nada (lá não existe login).
    Uso: MM.auth.pronto.then(function(sessao){ ... })  (sessao = null quando não há login) */

@@ -109,12 +109,13 @@ Depois abra http://localhost:8000.
 - **Contas:** Supabase Auth (e-mail e senha, por convite). Configuração pública em `assets/config.js`.
 - **Tela de entrada:** `login/` (entrar, esqueci a senha, criar senha pelo convite).
 - **Sessão:** `assets/auth.js` mantém o login renovado, grava o token no cookie `mm_at` e mostra "Sair" na barra.
-- **Porteiro:** `functions/_middleware.js` roda no Cloudflare Pages antes de entregar qualquer arquivo. Sem login: página vai para `/login/`, arquivo dá 401. Confere a assinatura do token pelas chaves públicas do Supabase (não precisa de segredo).
+- **Porteiro:** `src/worker.js` roda no Cloudflare (Worker com arquivos estáticos, configurado em `wrangler.jsonc`) antes de entregar qualquer arquivo. Sem login: página vai para `/login/`, arquivo dá 401. Confere a assinatura do token pelas chaves públicas do Supabase (não precisa de segredo).
 - **Banco:** `supabase/01-tabelas.sql` (perfis, progresso da Academy, Mural visto), com RLS: cada pessoa só vê o que é dela.
 - No GitHub Pages e abrindo os arquivos no computador o login não existe (o porteiro só roda no Cloudflare).
 
-### Cloudflare Pages
-Workers & Pages → Create → Pages → Connect to Git → `mundo-marketing`. Framework **None**, build command vazio, output `/`. Não precisa de variáveis.
+### Cloudflare
+Worker `mundo-marketing` ligado ao GitHub (Settings → Build → Connect). Cada envio ao `main` publica sozinho (`npx wrangler deploy` lê `wrangler.jsonc`).
+O que não vai para o site fica em `.assetsignore` (ferramentas, SQL, código do Worker).
 
 ### Supabase
 - Authentication → Sign In / Providers: Email ligado, "Allow new users to sign up" desligado.

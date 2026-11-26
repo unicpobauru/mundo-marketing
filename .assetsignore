@@ -1,0 +1,12 @@
+# arquivos que NÃO vão para o site no Cloudflare
+.git
+.github
+node_modules
+ferramentas
+supabase
+functions
+src
+wrangler.jsonc
+.assetsignore
+.gitignore
+*.md

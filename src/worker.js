@@ -1,4 +1,4 @@
-/* Mundo Marketing — porteiro do site no Cloudflare Pages.
+/* Mundo Marketing — porteiro do site no Cloudflare (Worker com arquivos estáticos).
    Roda antes de entregar QUALQUER arquivo (páginas, PDFs, fotos, dados). Sem login válido:
    - páginas: redireciona para /login/
    - outros arquivos: responde 401
@@ -51,21 +51,24 @@ async function valido(token, env){
   validados.set(token, dados.exp); return true;
 }
 
-export async function onRequest(context){
-  const {request, env, next} = context;
-  const u = new URL(request.url);
-  if (PUBLICO.some(re => re.test(u.pathname))) return next();
-  const token = lerCookie(request);
-  let ok = false;
-  if (token){ try { ok = await valido(token, env); } catch(e){ ok = false; } }
-  if (ok){
-    const resp = await next();
-    const r = new Response(resp.body, resp);
-    r.headers.set('Cache-Control', 'private, max-age=300');   // nada de conteúdo interno em cache compartilhado
-    r.headers.set('X-Robots-Tag', 'noindex, nofollow');
-    return r;
+// arquivos estáticos do site vêm de env.ASSETS (configurado em wrangler.jsonc); este código roda antes de cada um
+export default {
+  async fetch(request, env){
+    const u = new URL(request.url);
+    if (u.pathname === '/' ) u.pathname = '/index.html';
+    if (PUBLICO.some(re => re.test(u.pathname))) return env.ASSETS.fetch(request);
+    const token = lerCookie(request);
+    let ok = false;
+    if (token){ try { ok = await valido(token, env); } catch(e){ ok = false; } }
+    if (ok){
+      const resp = await env.ASSETS.fetch(request);
+      const r = new Response(resp.body, resp);
+      r.headers.set('Cache-Control', 'private, max-age=300');   // nada de conteúdo interno em cache compartilhado
+      r.headers.set('X-Robots-Tag', 'noindex, nofollow');
+      return r;
+    }
+    const pagina = request.method === 'GET' && (/text\/html/.test(request.headers.get('Accept') || '') || u.pathname.endsWith('/') || u.pathname.endsWith('.html'));
+    if (pagina) return Response.redirect(u.origin + '/login/index.html?next=' + encodeURIComponent(new URL(request.url).pathname + u.search), 302);
+    return new Response('Login necessário', {status:401, headers:{'Cache-Control':'no-store'}});
   }
-  const pagina = request.method === 'GET' && (/text\/html/.test(request.headers.get('Accept') || '') || u.pathname.endsWith('/') || u.pathname.endsWith('.html'));
-  if (pagina) return Response.redirect(u.origin + '/login/index.html?next=' + encodeURIComponent(u.pathname + u.search + u.hash), 302);
-  return new Response('Login necessário', {status:401, headers:{'Cache-Control':'no-store'}});
-}
+};
