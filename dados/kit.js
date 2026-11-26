@@ -43,9 +43,6 @@ MM.area({
      texto:{pt:'Gratuita (licença SIL Open Font). O pacote traz Regular, Medium, Semi Bold, Bold, Extra Bold e Black. Também é a fonte deste portal.\n\nConfirmar: a página do manual com a Inter é da FAINTER.', es:'Gratuita (licencia SIL Open Font). El paquete trae Regular, Medium, Semi Bold, Bold, Extra Bold y Black. También es la tipografía de este portal.\n\nConfirmar: la página del manual con la Inter es de FAINTER.'},
      links:[{rotulo:{pt:'Baixar Inter (.zip)', es:'Descargar Inter (.zip)'}, url:M + 'downloads/fonte-inter.zip', baixar:true},
             {rotulo:{pt:'Ver no Google Fonts', es:'Ver en Google Fonts'}, url:'https://fonts.google.com/specimen/Inter'}]},
-    {id:'fonte-logo-fainter', categoria:FON, titulo:{pt:'Letreiro FAINTER (personalizado)', es:'Logotipo FAINTER (personalizado)'},
-     resumo:{pt:'Letras ajustadas à mão, só para o logo. Não é uma fonte para baixar nem para escrever textos.', es:'Letras ajustadas a mano, solo para el logo. No es una tipografía para descargar ni para escribir textos.'},
-     texto:{pt:'No manual, o letreiro FAINTER parte de uma fonte sem serifa em caixa alta, com espaçamento e espessura personalizados e a circunferência completando o A e o E. Use sempre o arquivo do logo.', es:'En el manual, el logotipo FAINTER parte de una tipografía sin serifa en mayúsculas, con espaciado y grosor personalizados y la circunferencia completando la A y la E. Usa siempre el archivo del logo.'}},
 
     {id:'logo-unicpo', categoria:LOG, titulo:{pt:'Logo UniCPO', es:'Logo UniCPO'}, status:'preencher',
      resumo:{pt:'Versões colorida, branca e preta, em PNG e SVG.', es:'Versiones a color, blanca y negra, en PNG y SVG.'}},
